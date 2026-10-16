@@ -37,6 +37,7 @@ class PermissionSeeder extends Seeder
             'case.assign' => ['cases', 'Assign cases'],
             'case.update_status' => ['cases', 'Change case status'],
             'case.close' => ['cases', 'Close cases'],
+            'case.notify_new' => ['cases', 'Receive alerts (email/SMS) for new cases'],
             'chat.use' => ['chat', 'Use live chat'],
             'chat.moderate' => ['chat', 'Moderate / answer chats'],
             'file.upload' => ['files', 'Upload files'],

@@ -3,6 +3,10 @@
 namespace App\Providers;
 
 use App\Services\OrganizationContext;
+use App\Services\Sms\AfricasTalkingSmsGateway;
+use App\Services\Sms\BrevoSmsGateway;
+use App\Services\Sms\LogSmsGateway;
+use App\Services\Sms\SmsGateway;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -13,6 +17,13 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->scoped(OrganizationContext::class);   // fresh per request / queue job
+
+        // SMS provider is a configuration choice (SMS_DRIVER), not a code change.
+        $this->app->bind(SmsGateway::class, fn () => match (config('ops.sms.driver')) {
+            'brevo' => new BrevoSmsGateway(),
+            'africastalking' => new AfricasTalkingSmsGateway(),
+            default => new LogSmsGateway(),
+        });
     }
 
     public function boot(): void

@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\AuditLog;
 use App\Models\Department;
 use App\Models\Membership;
+use App\Models\LookupValue;
 use App\Models\Role;
+use App\Models\SupportCase;
 use App\Models\DashboardWidget;
 use App\Services\OrganizationContext;
 use Illuminate\Support\Facades\DB;
@@ -54,7 +56,18 @@ class DashboardController extends Controller
             })->values(),
             'list_recent_activity' => AuditLog::with('user')->where('organization_id', $org)->latest('created_at')->limit(8)->get()
                 ->map(fn ($l) => ['action' => $l->action, 'user' => $l->user?->name, 'at' => $l->created_at->toIso8601String()])->values(),
+            'stat_open_cases' => SupportCase::whereHas('status', fn ($q) => $q->whereNotIn('code', ['resolved', 'closed', 'cancelled']))->count(),
+            'stat_my_cases' => SupportCase::where('requester_id', request()->user()->id)->whereHas('status', fn ($q) => $q->whereNotIn('code', ['resolved', 'closed', 'cancelled']))->count(),
+            'chart_cases_by_status' => $this->casesByStatus(),
             default => null,
         };
+    }
+
+    private function casesByStatus()
+    {
+        $counts = SupportCase::selectRaw('status_id, count(*) as c')->groupBy('status_id')->pluck('c', 'status_id');
+        $lang = request()->user()->language_id;
+        return LookupValue::with('translations')->whereIn('id', $counts->keys())->orderBy('sort_order')->get()
+            ->map(fn ($v) => ['name' => $v->label($lang), 'value' => (int) $counts[$v->id], 'color' => ($v->color ?: 'gray') . '.6'])->values();
     }
 }

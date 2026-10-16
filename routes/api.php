@@ -72,6 +72,31 @@ Route::prefix('v1')->group(function () {
             Route::delete('roles/{id}', [V1\RoleController::class, 'destroy']);
         });
 
+        // ---- service desk: cases, notifications, chat ----------------------------------------------
+        Route::get('notifications', [V1\NotificationController::class, 'index']);
+        Route::post('notifications/read-all', [V1\NotificationController::class, 'readAll']);
+        Route::post('notifications/{id}/read', [V1\NotificationController::class, 'read']);
+
+        Route::get('cases', [V1\CaseController::class, 'index'])->middleware('perm:case.view_own,case.view_all');
+        Route::get('cases/assignees', [V1\CaseController::class, 'assignees'])->middleware('perm:case.assign');
+        Route::post('cases', [V1\CaseController::class, 'store'])->middleware('perm:case.create');
+        Route::get('cases/{id}', [V1\CaseController::class, 'show'])->middleware('perm:case.view_own,case.view_all');
+        Route::patch('cases/{id}', [V1\CaseController::class, 'update'])->middleware('perm:case.update_status,case.assign');
+        Route::post('cases/{id}/comments', [V1\CaseController::class, 'comment'])->middleware('perm:case.comment');
+
+        Route::middleware('perm:chat.use')->group(function () {
+            Route::get('chat/conversation', [V1\ChatController::class, 'mine']);
+            Route::post('chat/conversation/messages', [V1\ChatController::class, 'send'])->middleware('throttle:30,1');
+            Route::post('chat/conversation/escalate', [V1\ChatController::class, 'escalate']);
+            Route::post('chat/conversation/close', [V1\ChatController::class, 'close']);
+        });
+        Route::middleware('perm:chat.moderate')->prefix('chat/conversations')->group(function () {
+            Route::get('/', [V1\ChatController::class, 'agentIndex']);
+            Route::get('{id}', [V1\ChatController::class, 'agentShow']);
+            Route::post('{id}/messages', [V1\ChatController::class, 'agentSend'])->middleware('throttle:60,1');
+            Route::post('{id}/close', [V1\ChatController::class, 'agentClose']);
+        });
+
         Route::get('audit-logs', [V1\AuditLogController::class, 'index'])->middleware('perm:audit_log.view');
         Route::get('audit-logs/{id}', [V1\AuditLogController::class, 'show'])->middleware('perm:audit_log.view');
     });

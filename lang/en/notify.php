@@ -38,4 +38,42 @@ return [
         'title' => 'Deletion request :decision',
         'body' => 'Your deletion request for ":file" was :decision by :user.',
     ],
+    'movement_requested' => [
+        'title' => 'Equipment movement :ref',
+        'body' => 'The request :ref by :user (to :dest) awaits your approval.',
+    ],
+    'movement_decided' => [
+        'title' => 'Movement :ref :decision',
+        'body' => 'Your equipment movement request :ref was :decision by :user.',
+    ],
+    'movement_overdue' => [
+        'title' => 'Equipment overdue :ref',
+        'body' => 'Equipment from :ref (:user) was due back on :date.',
+    ],
+    'incident_reported' => [
+        'title' => 'Incident :ref (:priority)',
+        'body' => '(:priority) :user reported ":title".',
+        'sms' => ':app: INCIDENT :ref (:priority) from :user. Please check the platform.',
+    ],
+    'incident_sla_containment' => [
+        'title' => 'Containment overdue :ref',
+        'body' => 'Incident :ref ":title" has not been contained within its target.',
+        'sms' => 'Containment overdue for :ref. Please act now.',
+    ],
+    'incident_sla_rca' => [
+        'title' => 'Root cause analysis overdue :ref',
+        'body' => 'Incident :ref ":title" has no completed root cause analysis within its target.',
+    ],
+    'incident_contained' => [
+        'title' => 'Incident :ref contained',
+        'body' => 'The incident ":title" has been contained by :user.',
+    ],
+    'access_granted' => [
+        'title' => 'Access granted',
+        'body' => 'You were granted access (:level) to :res by :user.',
+    ],
+    'access_revoked' => [
+        'title' => 'Access revoked',
+        'body' => 'Your access to :res was revoked by :user.',
+    ],
 ];

@@ -38,4 +38,42 @@ return [
         'title' => 'Ombi la kufuta :decision',
         'body' => 'Ombi la kufuta ":file" limeshughulikiwa na :user: :decision.',
     ],
+    'movement_requested' => [
+        'title' => 'Uhamisho wa vifaa :ref',
+        'body' => 'Ombi :ref la :user (kwenda :dest) linasubiri idhini yako.',
+    ],
+    'movement_decided' => [
+        'title' => 'Uhamisho :ref :decision',
+        'body' => 'Ombi lako la kuhamisha vifaa :ref limeshughulikiwa na :user: :decision.',
+    ],
+    'movement_overdue' => [
+        'title' => 'Vifaa vimechelewa :ref',
+        'body' => 'Vifaa vya :ref (:user) vilitakiwa kurudishwa tarehe :date.',
+    ],
+    'incident_reported' => [
+        'title' => 'Tukio :ref (:priority)',
+        'body' => '(:priority) :user ameripoti « :title ».',
+        'sms' => ':app: TUKIO :ref (:priority) kutoka :user. Tafadhali angalia jukwaa.',
+    ],
+    'incident_sla_containment' => [
+        'title' => 'Udhibiti umechelewa :ref',
+        'body' => 'Tukio :ref « :title » halijadhibitiwa ndani ya muda lengwa.',
+        'sms' => 'Udhibiti umechelewa kwa :ref. Chukua hatua sasa.',
+    ],
+    'incident_sla_rca' => [
+        'title' => 'Uchambuzi wa chanzo umechelewa :ref',
+        'body' => 'Tukio :ref « :title » halina uchambuzi wa chanzo uliokamilika ndani ya muda lengwa.',
+    ],
+    'incident_contained' => [
+        'title' => 'Tukio :ref limedhibitiwa',
+        'body' => 'Tukio « :title » limedhibitiwa na :user.',
+    ],
+    'access_granted' => [
+        'title' => 'Ufikiaji umetolewa',
+        'body' => 'Umepewa ufikiaji (:level) wa :res na :user.',
+    ],
+    'access_revoked' => [
+        'title' => 'Ufikiaji umeondolewa',
+        'body' => 'Ufikiaji wako wa :res umeondolewa na :user.',
+    ],
 ];

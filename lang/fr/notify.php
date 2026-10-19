@@ -38,4 +38,42 @@ return [
         'title' => 'Demande de suppression :decision',
         'body' => 'La demande de suppression de « :file » a été :decision par :user.',
     ],
+    'movement_requested' => [
+        'title' => 'Sortie de matériel :ref',
+        'body' => 'La demande :ref de :user (vers :dest) attend votre approbation.',
+    ],
+    'movement_decided' => [
+        'title' => 'Sortie :ref :decision',
+        'body' => 'Votre demande de sortie de matériel :ref a été :decision par :user.',
+    ],
+    'movement_overdue' => [
+        'title' => 'Matériel en retard :ref',
+        'body' => 'Le matériel de :ref (:user) devait être retourné le :date.',
+    ],
+    'incident_reported' => [
+        'title' => 'Incident :ref (:priority)',
+        'body' => '(:priority) :user a signalé « :title ».',
+        'sms' => ':app : INCIDENT :ref (:priority) de :user. Consultez la plateforme.',
+    ],
+    'incident_sla_containment' => [
+        'title' => 'Confinement en retard :ref',
+        'body' => 'L\'incident :ref « :title » n\'a pas été confiné dans le délai cible.',
+        'sms' => 'Confinement en retard pour :ref. Agissez maintenant.',
+    ],
+    'incident_sla_rca' => [
+        'title' => 'Analyse des causes en retard :ref',
+        'body' => 'L\'incident :ref « :title » n\'a pas d\'analyse des causes terminée dans le délai cible.',
+    ],
+    'incident_contained' => [
+        'title' => 'Incident :ref confiné',
+        'body' => 'L\'incident « :title » a été confiné par :user.',
+    ],
+    'access_granted' => [
+        'title' => 'Accès accordé',
+        'body' => 'Vous avez reçu un accès (:level) à :res de la part de :user.',
+    ],
+    'access_revoked' => [
+        'title' => 'Accès révoqué',
+        'body' => 'Votre accès à :res a été révoqué par :user.',
+    ],
 ];

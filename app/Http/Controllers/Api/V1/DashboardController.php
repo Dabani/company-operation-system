@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\AuditLog;
 use App\Models\Department;
 use App\Models\Membership;
+use App\Models\Asset;
+use App\Models\EquipmentMovement;
 use App\Models\FileAsset;
 use App\Models\FileDeletionRequest;
 use App\Models\LookupValue;
@@ -66,6 +68,10 @@ class DashboardController extends Controller
             'stat_files' => FileAccess::scopeVisible(FileAsset::query())->whereHas('status', fn ($q) => $q->where('code', 'active'))
                 ->whereDoesntHave('links', fn ($l) => $l->whereIn('link_type_id', [Lookup::id('file_link_type', 'user_avatar'), Lookup::id('file_link_type', 'org_logo')]))->count(),
             'stat_pending_deletions' => FileDeletionRequest::whereHas('status', fn ($q) => $q->where('code', 'pending'))->count(),
+            'stat_assets' => Asset::whereHas('status', fn ($q) => $q->where('code', '!=', 'retired'))->count(),
+            'stat_overdue_equipment' => EquipmentMovement::whereHas('status', fn ($q) => $q->where('code', 'checked_out'))->whereDate('expected_return_date', '<', today())->count(),
+            'stat_open_incidents' => SupportCase::whereHas('type', fn ($q) => $q->where('code', 'incident'))->whereHas('status', fn ($q) => $q->whereNotIn('code', ['resolved', 'closed', 'cancelled']))->count(),
+            'chart_assets_by_status' => $this->assetsByStatus(),
             default => null,
         };
     }
@@ -73,6 +79,14 @@ class DashboardController extends Controller
     private function casesByStatus()
     {
         $counts = SupportCase::selectRaw('status_id, count(*) as c')->groupBy('status_id')->pluck('c', 'status_id');
+        $lang = request()->user()->language_id;
+        return LookupValue::with('translations')->whereIn('id', $counts->keys())->orderBy('sort_order')->get()
+            ->map(fn ($v) => ['name' => $v->label($lang), 'value' => (int) $counts[$v->id], 'color' => ($v->color ?: 'gray') . '.6'])->values();
+    }
+
+    private function assetsByStatus()
+    {
+        $counts = Asset::selectRaw('status_id, count(*) as c')->groupBy('status_id')->pluck('c', 'status_id');
         $lang = request()->user()->language_id;
         return LookupValue::with('translations')->whereIn('id', $counts->keys())->orderBy('sort_order')->get()
             ->map(fn ($v) => ['name' => $v->label($lang), 'value' => (int) $counts[$v->id], 'color' => ($v->color ?: 'gray') . '.6'])->values();

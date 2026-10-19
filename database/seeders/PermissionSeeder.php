@@ -55,6 +55,10 @@ class PermissionSeeder extends Seeder
             'asset.view' => ['assets', 'View IT assets'],
             'asset.manage' => ['assets', 'Manage IT assets'],
             'asset.approve_movement' => ['assets', 'Approve equipment movement'],
+            'asset.request_movement' => ['assets', 'Request equipment movement'],
+            'access.view' => ['access', 'View the access control register'],
+            'access.manage' => ['access', 'Grant, review and revoke system access'],
+            'incident.manage' => ['cases', 'Manage incidents (containment, root cause, breach notices)'],
             'report.view' => ['reports', 'View reports'],
             'report.export' => ['reports', 'Export reports'],
         ];

@@ -118,6 +118,36 @@ Route::prefix('v1')->group(function () {
         Route::get('cases/{id}/attachments', [V1\FileController::class, 'caseAttachments'])->middleware('perm:case.view_own,case.view_all');
         Route::post('cases/{id}/attachments', [V1\FileController::class, 'caseUpload'])->middleware('perm:file.upload');
 
+        // ---- IT infrastructure: assets, equipment movement, access register, incidents -------------
+        Route::get('assets', [V1\AssetController::class, 'index'])->middleware('perm:asset.view');
+        Route::post('assets', [V1\AssetController::class, 'store'])->middleware('perm:asset.manage');
+        Route::post('assets/import', [V1\AssetController::class, 'import'])->middleware('perm:asset.manage');
+        Route::get('assets/{id}', [V1\AssetController::class, 'show'])->middleware('perm:asset.view');
+        Route::patch('assets/{id}', [V1\AssetController::class, 'update'])->middleware('perm:asset.manage');
+        Route::post('assets/{id}/assign', [V1\AssetController::class, 'assign'])->middleware('perm:asset.manage');
+        Route::post('assets/{id}/report-lost', [V1\AssetController::class, 'reportLost'])->middleware('perm:asset.view');
+
+        Route::get('equipment-movements', [V1\MovementController::class, 'index'])->middleware('perm:asset.request_movement,asset.approve_movement,asset.manage');
+        Route::get('equipment-movements/candidates', [V1\MovementController::class, 'candidates'])->middleware('perm:asset.request_movement');
+        Route::post('equipment-movements', [V1\MovementController::class, 'store'])->middleware('perm:asset.request_movement');
+        Route::get('equipment-movements/{id}', [V1\MovementController::class, 'show'])->middleware('perm:asset.request_movement,asset.approve_movement,asset.manage');
+        Route::get('equipment-movements/{id}/pdf', [V1\MovementController::class, 'pdf'])->middleware('perm:asset.request_movement,asset.approve_movement,asset.manage');
+        Route::post('equipment-movements/{id}/approve', [V1\MovementController::class, 'approve'])->middleware('perm:asset.approve_movement');
+        Route::post('equipment-movements/{id}/reject', [V1\MovementController::class, 'reject'])->middleware('perm:asset.approve_movement');
+        Route::post('equipment-movements/{id}/checkout', [V1\MovementController::class, 'checkout'])->middleware('perm:asset.manage');
+        Route::post('equipment-movements/{id}/return', [V1\MovementController::class, 'returnBack'])->middleware('perm:asset.manage');
+        Route::post('equipment-movements/{id}/cancel', [V1\MovementController::class, 'cancel'])->middleware('perm:asset.request_movement,asset.manage');
+
+        Route::get('access-grants', [V1\AccessGrantController::class, 'index'])->middleware('perm:access.view');
+        Route::post('access-grants', [V1\AccessGrantController::class, 'store'])->middleware('perm:access.manage');
+        Route::post('access-grants/{id}/revoke', [V1\AccessGrantController::class, 'revoke'])->middleware('perm:access.manage');
+        Route::post('access-grants/{id}/review', [V1\AccessGrantController::class, 'review'])->middleware('perm:access.manage');
+
+        Route::get('incidents', [V1\IncidentController::class, 'index'])->middleware('perm:case.view_own,case.view_all');
+        Route::post('incidents', [V1\IncidentController::class, 'store'])->middleware('perm:case.create');
+        Route::get('cases/{caseId}/incident', [V1\IncidentController::class, 'show'])->middleware('perm:case.view_own,case.view_all');
+        Route::put('cases/{caseId}/incident', [V1\IncidentController::class, 'update'])->middleware('perm:incident.manage');
+
         Route::get('audit-logs', [V1\AuditLogController::class, 'index'])->middleware('perm:audit_log.view');
         Route::get('audit-logs/{id}', [V1\AuditLogController::class, 'show'])->middleware('perm:audit_log.view');
     });

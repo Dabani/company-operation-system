@@ -22,4 +22,5 @@ class SupportCase extends Model
     public function department() { return $this->belongsTo(Department::class)->withoutGlobalScopes(); }
     public function comments() { return $this->hasMany(CaseComment::class, 'case_id'); }
     public function events() { return $this->hasMany(CaseEvent::class, 'case_id'); }
+    public function incident() { return $this->hasOne(IncidentDetail::class, 'case_id'); }
 }

@@ -38,4 +38,42 @@ return [
         'title' => 'Ubusabe bwo gusiba :decision',
         'body' => 'Ubusabe bwo gusiba « :file » bwarasuzumwe na :user.',
     ],
+    'movement_requested' => [
+        'title' => 'Gusohora ibikoresho :ref',
+        'body' => 'Ubusabe :ref bwa :user (bijya :dest) butegereje kwemezwa nawe.',
+    ],
+    'movement_decided' => [
+        'title' => 'Gusohora :ref :decision',
+        'body' => 'Ubusabe bwawe bwo gusohora ibikoresho :ref bwasuzumwe na :user: :decision.',
+    ],
+    'movement_overdue' => [
+        'title' => 'Ibikoresho byatinze :ref',
+        'body' => 'Ibikoresho bya :ref (:user) byagombaga kugaruka ku wa :date.',
+    ],
+    'incident_reported' => [
+        'title' => 'Ikibazo cyabaye :ref (:priority)',
+        'body' => '(:priority) :user yatanze raporo ya « :title ».',
+        'sms' => ':app: IKIBAZO :ref (:priority) cya :user. Reba ku rubuga.',
+    ],
+    'incident_sla_containment' => [
+        'title' => 'Gukumira byatinze :ref',
+        'body' => 'Ikibazo :ref « :title » ntikirakumirwa mu gihe cyagenwe.',
+        'sms' => 'Gukumira byatinze kuri :ref. Kora ubu.',
+    ],
+    'incident_sla_rca' => [
+        'title' => 'Isesengura ry\'intandaro ryatinze :ref',
+        'body' => 'Ikibazo :ref « :title » nta sesengura ry\'intandaro rirarangira mu gihe cyagenwe.',
+    ],
+    'incident_contained' => [
+        'title' => 'Ikibazo :ref cyakumiriwe',
+        'body' => 'Ikibazo « :title » cyakumiriwe na :user.',
+    ],
+    'access_granted' => [
+        'title' => 'Wahawe uburenganzira',
+        'body' => 'Wahawe uburenganzira (:level) kuri :res na :user.',
+    ],
+    'access_revoked' => [
+        'title' => 'Uburenganzira bwakuweho',
+        'body' => 'Uburenganzira bwawe kuri :res bwakuweho na :user.',
+    ],
 ];

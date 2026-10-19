@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\FileScanner;
+use App\Services\NullFileScanner;
 use App\Services\OrganizationContext;
 use App\Services\Sms\AfricasTalkingSmsGateway;
 use App\Services\Sms\BrevoSmsGateway;
@@ -17,6 +19,8 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->scoped(OrganizationContext::class);   // fresh per request / queue job
+
+        $this->app->bind(FileScanner::class, NullFileScanner::class);   // swap for a ClamAV-backed scanner when available
 
         // SMS provider is a configuration choice (SMS_DRIVER), not a code change.
         $this->app->bind(SmsGateway::class, fn () => match (config('ops.sms.driver')) {

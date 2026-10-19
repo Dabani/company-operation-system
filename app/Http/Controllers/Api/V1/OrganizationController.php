@@ -7,7 +7,7 @@ use App\Http\Resources\Api\V1\OrganizationResource;
 use App\Services\AuditLogger;
 use App\Services\OrganizationContext;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use App\Services\FileService;
 
 class OrganizationController extends Controller
 {
@@ -39,12 +39,11 @@ class OrganizationController extends Controller
 
     public function logo(Request $request, OrganizationContext $ctx)
     {
-        $request->validate(['logo' => 'required|image|mimes:png,jpg,jpeg,webp,svg|max:2048']);
+        // Raster images only (SVG can carry script).
+        $request->validate(['logo' => 'required|image|mimes:png,jpg,jpeg,webp|max:2048']);
         $org = $ctx->organization();
-        if ($org->logo_path) {
-            Storage::disk('local')->delete($org->logo_path);
-        }
-        $org->update(['logo_path' => $request->file('logo')->store('logos', 'local')]);
+        $asset = FileService::storeSingle($request->file('logo'), $request->user(), 'org_logo', $org->id);
+        $org->update(['logo_path' => $asset->currentVersion->storage_path]);
         AuditLogger::log('organization.logo_changed', $org);
         return response()->json(['message' => __('api.saved')]);
     }

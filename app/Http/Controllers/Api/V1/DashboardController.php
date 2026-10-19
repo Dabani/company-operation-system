@@ -6,7 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\AuditLog;
 use App\Models\Department;
 use App\Models\Membership;
+use App\Models\FileAsset;
+use App\Models\FileDeletionRequest;
 use App\Models\LookupValue;
+use App\Services\FileAccess;
+use App\Support\Lookup;
 use App\Models\Role;
 use App\Models\SupportCase;
 use App\Models\DashboardWidget;
@@ -59,6 +63,9 @@ class DashboardController extends Controller
             'stat_open_cases' => SupportCase::whereHas('status', fn ($q) => $q->whereNotIn('code', ['resolved', 'closed', 'cancelled']))->count(),
             'stat_my_cases' => SupportCase::where('requester_id', request()->user()->id)->whereHas('status', fn ($q) => $q->whereNotIn('code', ['resolved', 'closed', 'cancelled']))->count(),
             'chart_cases_by_status' => $this->casesByStatus(),
+            'stat_files' => FileAccess::scopeVisible(FileAsset::query())->whereHas('status', fn ($q) => $q->where('code', 'active'))
+                ->whereDoesntHave('links', fn ($l) => $l->whereIn('link_type_id', [Lookup::id('file_link_type', 'user_avatar'), Lookup::id('file_link_type', 'org_logo')]))->count(),
+            'stat_pending_deletions' => FileDeletionRequest::whereHas('status', fn ($q) => $q->where('code', 'pending'))->count(),
             default => null,
         };
     }

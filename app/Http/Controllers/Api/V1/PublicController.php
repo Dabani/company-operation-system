@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Language;
 use App\Models\Organization;
+use App\Services\FileService;
 use Illuminate\Support\Facades\Storage;
 
 class PublicController extends Controller
@@ -24,7 +25,7 @@ class PublicController extends Controller
     public function logo()
     {
         $org = Organization::whereNotNull('logo_path')->orderBy('created_at')->first();
-        abort_unless($org && Storage::disk('local')->exists($org->logo_path), 404);
-        return Storage::disk('local')->response($org->logo_path);
+        abort_unless($org && Storage::disk(FileService::disk())->exists($org->logo_path), 404);
+        return Storage::disk(FileService::disk())->response($org->logo_path, null, ['X-Content-Type-Options' => 'nosniff']);
     }
 }

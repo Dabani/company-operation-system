@@ -10,6 +10,7 @@ use App\Services\AuditLogger;
 use App\Services\OrganizationContext;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Services\FileService;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
@@ -70,19 +71,18 @@ class MeController extends Controller
     {
         $request->validate(['avatar' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048']);
         $user = $request->user();
-        if ($user->avatar_path) {
-            Storage::disk('local')->delete($user->avatar_path);
-        }
-        $path = $request->file('avatar')->store('avatars', 'local');   // private disk, served via authenticated route
-        $user->update(['avatar_path' => $path]);
+        // Stored as a managed file (versioned, audited); avatar_path points at the current version.
+        $asset = FileService::storeSingle($request->file('avatar'), $user, 'user_avatar', $user->id);
+        $user->update(['avatar_path' => $asset->currentVersion->storage_path]);
         AuditLogger::log('profile.avatar_changed', $user);
         return response()->json(['message' => __('api.saved')]);
     }
 
     public function avatarFile(User $user)
     {
-        abort_unless($user->avatar_path && Storage::disk('local')->exists($user->avatar_path), 404);
-        return Storage::disk('local')->response($user->avatar_path);
+        $sameOrg = Membership::where('organization_id', app(OrganizationContext::class)->organizationId())->where('user_id', $user->id)->exists();
+        abort_unless($sameOrg && $user->avatar_path && Storage::disk(FileService::disk())->exists($user->avatar_path), 404);
+        return Storage::disk(FileService::disk())->response($user->avatar_path, null, ['X-Content-Type-Options' => 'nosniff']);
     }
 
     public function switchOrganization(Request $request)

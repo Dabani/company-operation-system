@@ -30,4 +30,12 @@ return [
         'title' => 'Chat needs an agent',
         'body' => ':user is waiting for support.',
     ],
+    'file_delete_requested' => [
+        'title' => 'File deletion requested',
+        'body' => ':user asked to delete the file ":file". Open it to approve or reject.',
+    ],
+    'file_delete_decided' => [
+        'title' => 'Deletion request :decision',
+        'body' => 'Your deletion request for ":file" was :decision by :user.',
+    ],
 ];

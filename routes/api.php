@@ -97,6 +97,27 @@ Route::prefix('v1')->group(function () {
             Route::post('{id}/close', [V1\ChatController::class, 'agentClose']);
         });
 
+        // ---- files ---------------------------------------------------------------------------------
+        Route::get('files', [V1\FileController::class, 'index'])->middleware('perm:file.view');
+        Route::post('files', [V1\FileController::class, 'store'])->middleware('perm:file.upload');
+        Route::get('files/{id}', [V1\FileController::class, 'show'])->middleware('perm:file.view');
+        Route::patch('files/{id}', [V1\FileController::class, 'update'])->middleware('perm:file.view');
+        Route::get('files/{id}/download', [V1\FileController::class, 'download'])->middleware('perm:file.download');
+        Route::get('files/{id}/preview', [V1\FileController::class, 'preview'])->middleware('perm:file.view');
+        Route::post('files/{id}/versions', [V1\FileController::class, 'addVersion'])->middleware('perm:file.replace');
+        Route::post('files/{id}/archive', [V1\FileController::class, 'archive'])->middleware('perm:file.archive');
+        Route::post('files/{id}/restore', [V1\FileController::class, 'restore'])->middleware('perm:file.archive,file.restore');
+        Route::post('files/{id}/legal-hold', [V1\FileController::class, 'legalHold'])->middleware('perm:file.legal_hold');
+        Route::get('files/{id}/comments', [V1\FileController::class, 'comments'])->middleware('perm:file.view');
+        Route::post('files/{id}/comments', [V1\FileController::class, 'addComment'])->middleware('perm:file.view');
+        Route::get('files/{id}/activity', [V1\FileController::class, 'activity'])->middleware('perm:file.view');
+        Route::post('files/{id}/deletion-requests', [V1\FileController::class, 'requestDeletion'])->middleware('perm:file.delete_request');
+        Route::get('file-deletion-requests', [V1\FileController::class, 'deletionRequests'])->middleware('perm:file.view');
+        Route::post('file-deletion-requests/{id}/approve', [V1\FileController::class, 'approveDeletion'])->middleware('perm:file.view');
+        Route::post('file-deletion-requests/{id}/reject', [V1\FileController::class, 'rejectDeletion'])->middleware('perm:file.view');
+        Route::get('cases/{id}/attachments', [V1\FileController::class, 'caseAttachments'])->middleware('perm:case.view_own,case.view_all');
+        Route::post('cases/{id}/attachments', [V1\FileController::class, 'caseUpload'])->middleware('perm:file.upload');
+
         Route::get('audit-logs', [V1\AuditLogController::class, 'index'])->middleware('perm:audit_log.view');
         Route::get('audit-logs/{id}', [V1\AuditLogController::class, 'show'])->middleware('perm:audit_log.view');
     });

@@ -30,4 +30,12 @@ return [
         'title' => 'Un chat attend un agent',
         'body' => ':user attend de l\'aide.',
     ],
+    'file_delete_requested' => [
+        'title' => 'Suppression de fichier demandée',
+        'body' => ':user demande la suppression du fichier « :file ». Ouvrez-le pour approuver ou rejeter.',
+    ],
+    'file_delete_decided' => [
+        'title' => 'Demande de suppression :decision',
+        'body' => 'La demande de suppression de « :file » a été :decision par :user.',
+    ],
 ];

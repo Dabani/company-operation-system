@@ -30,4 +30,12 @@ return [
         'title' => 'Gumzo linahitaji wakala',
         'body' => ':user anasubiri msaada.',
     ],
+    'file_delete_requested' => [
+        'title' => 'Ombi la kufuta faili',
+        'body' => ':user ameomba kufuta faili ":file". Ifungue ili ukubali au ukatae.',
+    ],
+    'file_delete_decided' => [
+        'title' => 'Ombi la kufuta :decision',
+        'body' => 'Ombi la kufuta ":file" limeshughulikiwa na :user: :decision.',
+    ],
 ];

@@ -48,6 +48,7 @@ class PermissionSeeder extends Seeder
             'file.restore' => ['files', 'Restore archived files'],
             'file.delete_request' => ['files', 'Request file deletion'],
             'file.delete_approve' => ['files', 'Approve / execute file deletion'],
+            'file.legal_hold' => ['files', 'Place / release legal hold on files'],
             'archive.view' => ['archive', 'View archive records'],
             'archive.manage' => ['archive', 'Manage archive records'],
             'archive.approve_disposal' => ['archive', 'Approve disposal'],

@@ -14,6 +14,13 @@ return [
 
     'phone_country_code' => env('OPS_PHONE_COUNTRY', '250'),   // used to turn 078... into 25078...
 
+    'files' => [
+        'disk' => env('FILES_DISK', 'local'),                        // private disk; never publicly served
+        'max_mb' => (int) env('FILES_MAX_MB', 20),                   // also raise upload_max_filesize / post_max_size in php.ini
+        'purge_after_days' => (int) env('FILES_PURGE_DAYS', 30),     // content of deleted files is removed after this window
+        'allowed_extensions' => ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'csv', 'txt', 'rtf', 'odt', 'ods', 'png', 'jpg', 'jpeg', 'gif', 'webp'],
+    ],
+
     'sms' => [
         'driver' => env('SMS_DRIVER', 'log'),                  // log | brevo | africastalking
         'sender' => env('SMS_SENDER', 'OPSPLATFORM'),          // alphanumeric, max 11; must be registered in Rwanda

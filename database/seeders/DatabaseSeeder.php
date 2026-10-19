@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             ServiceDeskSeeder::class,        // Bundle 2: case/chat lookups, bot knowledge, menu, widgets
             DemoOrganizationSeeder::class,   // generic demo tenant; remove for production installs
             ServiceDeskRolesSeeder::class,   // Bundle 2: widgets per role + admin phone (runs after roles exist)
+            FilesSeeder::class,              // Bundle 3: file lookups, classification levels, menu, widgets, role grants
         ]);
     }
 }

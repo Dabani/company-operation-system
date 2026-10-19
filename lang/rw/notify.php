@@ -30,4 +30,12 @@ return [
         'title' => 'Ikiganiro gikeneye umukozi',
         'body' => ':user ategereje ubufasha.',
     ],
+    'file_delete_requested' => [
+        'title' => 'Hasabwe gusiba dosiye',
+        'body' => ':user yasabye gusiba dosiye « :file ». Yifungure wemeze cyangwa wange.',
+    ],
+    'file_delete_decided' => [
+        'title' => 'Ubusabe bwo gusiba :decision',
+        'body' => 'Ubusabe bwo gusiba « :file » bwarasuzumwe na :user.',
+    ],
 ];

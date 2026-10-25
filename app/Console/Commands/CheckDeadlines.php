@@ -2,6 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\ArchiveRecord;
+use App\Models\ComplianceObligation;
+use App\Models\User;
 use App\Models\EquipmentMovement;
 use App\Models\IncidentDetail;
 use App\Services\Notifier;
@@ -40,6 +43,34 @@ class CheckDeadlines extends Command
                 $to = Notifier::usersWithPermission($m->organization_id, 'asset.manage')->push($m->requester)->unique('id');
                 Notifier::send($to, 'movement_overdue', ['ref' => $m->reference, 'user' => $m->requester->name, 'date' => $m->expected_return_date->toDateString()], null, ['in_app', 'email'], '/assets/movements?open=' . $m->id, $m->organization_id);
                 $m->update(['overdue_alerted_at' => now()]); $n++;
+            });
+
+        // Inactive physical records that missed the transfer-to-archive window (one alert per organization per run).
+        ArchiveRecord::withoutGlobalScopes()->whereHas('status', fn ($s) => $s->where('code', 'inactive'))->whereNull('transfer_alerted_at')->whereDate('transfer_due_on', '<', today())->get()
+            ->groupBy('organization_id')->each(function ($recs, $org) use (&$n) {
+                Notifier::send(Notifier::usersWithPermission($org, 'archive.manage'), 'record_transfer_due', ['count' => $recs->count()], null, ['in_app', 'email'], '/archive/records?due=transfer', $org);
+                ArchiveRecord::withoutGlobalScopes()->whereIn('id', $recs->pluck('id'))->update(['transfer_alerted_at' => now()]); $n++;
+            });
+
+        // Archived records whose retention ended and that are free to be proposed for disposal.
+        ArchiveRecord::withoutGlobalScopes()->whereHas('status', fn ($s) => $s->where('code', 'archived'))->whereNull('retention_alerted_at')->where('legal_hold', false)->whereDate('retention_until', '<', today())->get()
+            ->groupBy('organization_id')->each(function ($recs, $org) use (&$n) {
+                $to = Notifier::usersWithPermission($org, 'archive.manage')->merge(Notifier::usersWithPermission($org, 'archive.approve_disposal'))->unique('id');
+                Notifier::send($to, 'record_retention_due', ['count' => $recs->count()], null, ['in_app', 'email'], '/archive/disposal', $org);
+                ArchiveRecord::withoutGlobalScopes()->whereIn('id', $recs->pluck('id'))->update(['retention_alerted_at' => now()]); $n++;
+            });
+
+        // Compliance calendar: one alert per due date, to the responsible person/role and the compliance managers.
+        ComplianceObligation::withoutGlobalScopes()->where('is_active', true)->whereDate('next_due_on', '<=', today())
+            ->where(fn ($q) => $q->whereNull('alerted_for')->orWhereColumn('alerted_for', '!=', 'next_due_on'))->get()->each(function ($o) use (&$n) {
+                $org = $o->organization_id;
+                $to = Notifier::usersWithPermission($org, 'compliance.manage');
+                if ($o->responsible_user_id) $to = $to->push(User::with('language')->find($o->responsible_user_id))->filter();
+                if ($o->responsible_role_id) {
+                    $to = $to->merge(User::with('language')->whereHas('memberships', fn ($m) => $m->where('organization_id', $org)->whereHas('roles', fn ($r) => $r->whereKey($o->responsible_role_id)))->get());
+                }
+                Notifier::send($to->unique('id'), 'obligation_due', ['title' => $o->title, 'date' => $o->next_due_on->toDateString()], null, ['in_app', 'email'], $o->link_route ?: '/compliance/calendar', $org);
+                $o->update(['alerted_for' => $o->next_due_on]); $n++;
             });
 
         $this->info("Sent {$n} deadline alert(s).");

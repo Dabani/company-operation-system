@@ -60,6 +60,12 @@ class PermissionSeeder extends Seeder
             'access.manage' => ['access', 'Grant, review and revoke system access'],
             'incident.manage' => ['cases', 'Manage incidents (containment, root cause, breach notices)'],
             'report.view' => ['reports', 'View reports'],
+            'backup.manage' => ['assets', 'Record backup verifications'],
+            'training.view' => ['reports', 'View own training and the training calendar'],
+            'training.manage' => ['reports', 'Organise training and record attendance'],
+            'report.receive' => ['reports', 'Receive management reports (training, audit)'],
+            'compliance.view' => ['reports', 'View compliance information and legal references'],
+            'compliance.manage' => ['reports', 'Manage compliance (retention rules, legal references, discrepancy reports)'],
             'report.export' => ['reports', 'Export reports'],
         ];
     }

@@ -76,4 +76,52 @@ return [
         'title' => 'Accès révoqué',
         'body' => 'Votre accès à :res a été révoqué par :user.',
     ],
+    'record_transfer_due' => [
+        'title' => 'Documents en retard de transfert',
+        'body' => ':count document(s) inactif(s) ont dépassé le délai de transfert aux archives.',
+    ],
+    'record_retention_due' => [
+        'title' => 'Documents à examiner pour élimination',
+        'body' => ':count document(s) archivé(s) ont atteint la fin de leur durée de conservation.',
+    ],
+    'archive_access_requested' => [
+        'title' => 'Demande d\'accès aux archives :ref',
+        'body' => ':user demande l\'accès au document :ref.',
+    ],
+    'archive_access_decided' => [
+        'title' => 'Accès aux archives :decision',
+        'body' => ':user : votre demande d\'accès pour :ref a été :decision.',
+    ],
+    'inventory_discrepancy' => [
+        'title' => 'Écart d\'inventaire : :title',
+        'body' => ':missing document(s) introuvable(s) dans l\'inventaire « :title » (contrôlé par :user).',
+    ],
+    'disposal_proposed' => [
+        'title' => 'Lot d\'élimination :ref',
+        'body' => ':user a proposé :count document(s) pour élimination. Votre approbation est nécessaire.',
+    ],
+    'disposal_decided' => [
+        'title' => 'Lot d\'élimination :ref :decision',
+        'body' => 'Votre proposition d\'élimination :ref a été :decision par :user.',
+    ],
+    'backup_issue' => [
+        'title' => 'Vérification de sauvegarde : :result',
+        'body' => ':user a vérifié la sauvegarde du :date (:loc) : :result. Action requise.',
+    ],
+    'management_report' => [
+        'title' => 'Rapport à la direction : :title',
+        'body' => ':user a soumis le rapport :title (:period).',
+    ],
+    'training_invited' => [
+        'title' => 'Formation : :title',
+        'body' => 'Vous êtes invité(e) à la formation « :title » le :date.',
+    ],
+    'audit_finding_assigned' => [
+        'title' => 'Constat d\'audit assigné (:ref)',
+        'body' => ':user vous a assigné le constat « :title ».',
+    ],
+    'obligation_due' => [
+        'title' => 'Obligation de conformité à échéance : :title',
+        'body' => '« :title » était à échéance le :date.',
+    ],
 ];

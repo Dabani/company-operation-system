@@ -76,4 +76,52 @@ return [
         'title' => 'Access revoked',
         'body' => 'Your access to :res was revoked by :user.',
     ],
+    'record_transfer_due' => [
+        'title' => 'Records overdue for transfer',
+        'body' => ':count inactive record(s) missed the transfer-to-archive window.',
+    ],
+    'record_retention_due' => [
+        'title' => 'Records ready for disposal review',
+        'body' => ':count archived record(s) have reached the end of their retention period.',
+    ],
+    'archive_access_requested' => [
+        'title' => 'Archive access request :ref',
+        'body' => ':user asks to access record :ref.',
+    ],
+    'archive_access_decided' => [
+        'title' => 'Archive access :decision',
+        'body' => ':user: your access request for :ref was :decision.',
+    ],
+    'inventory_discrepancy' => [
+        'title' => 'Inventory discrepancy: :title',
+        'body' => ':missing record(s) were not found in the inventory ":title" (checked by :user).',
+    ],
+    'disposal_proposed' => [
+        'title' => 'Disposal batch :ref',
+        'body' => ':user proposed :count record(s) for disposal. Your approval is needed.',
+    ],
+    'disposal_decided' => [
+        'title' => 'Disposal batch :ref :decision',
+        'body' => 'Your disposal proposal :ref was :decision by :user.',
+    ],
+    'backup_issue' => [
+        'title' => 'Backup verification: :result',
+        'body' => ':user verified the :date backup at :loc: :result. Action needed.',
+    ],
+    'management_report' => [
+        'title' => 'Management report: :title',
+        'body' => ':user submitted the report :title (:period).',
+    ],
+    'training_invited' => [
+        'title' => 'Training: :title',
+        'body' => 'You are invited to the training ":title" on :date.',
+    ],
+    'audit_finding_assigned' => [
+        'title' => 'Audit finding assigned (:ref)',
+        'body' => ':user assigned you the finding ":title".',
+    ],
+    'obligation_due' => [
+        'title' => 'Compliance duty due: :title',
+        'body' => '":title" was due on :date.',
+    ],
 ];

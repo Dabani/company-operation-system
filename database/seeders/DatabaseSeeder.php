@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             ServiceDeskRolesSeeder::class,   // Bundle 2: widgets per role + admin phone (runs after roles exist)
             FilesSeeder::class,              // Bundle 3: file lookups, classification levels, menu, widgets, role grants
             ITOperationsSeeder::class,       // Bundle 4: assets, movements, access register, incidents, IT manager role
+            ArchiveSeeder::class,            // Bundle 5: records, retention, disposal, legal references, records manager + compliance officer roles
+            ComplianceSeeder::class,         // Bundle 6: backups, training, compliance calendar, audits
         ]);
     }
 }

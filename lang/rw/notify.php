@@ -76,4 +76,52 @@ return [
         'title' => 'Uburenganzira bwakuweho',
         'body' => 'Uburenganzira bwawe kuri :res bwakuweho na :user.',
     ],
+    'record_transfer_due' => [
+        'title' => 'Inyandiko zatinze kwimurirwa mu bubiko',
+        'body' => ':count inyandiko zidakora zarengeje igihe cyo kwimurirwa mu bubiko.',
+    ],
+    'record_retention_due' => [
+        'title' => 'Inyandiko zigomba gusuzumwa ngo zisibwe',
+        'body' => ':count inyandiko zabitswe zageze ku iherezo ry\'igihe cyo kubikwa.',
+    ],
+    'archive_access_requested' => [
+        'title' => 'Ubusabe bwo kwinjira mu bubiko :ref',
+        'body' => ':user arasaba kubona inyandiko :ref.',
+    ],
+    'archive_access_decided' => [
+        'title' => 'Kwinjira mu bubiko :decision',
+        'body' => ':user: ubusabe bwawe ku nyandiko :ref bwasuzumwe: :decision.',
+    ],
+    'inventory_discrepancy' => [
+        'title' => 'Itandukaniro mu ibarura: :title',
+        'body' => ':missing inyandiko ntizabonetse mu ibarura « :title » (ryagenzuwe na :user).',
+    ],
+    'disposal_proposed' => [
+        'title' => 'Itsinda ry\'isibwa :ref',
+        'body' => ':user yatanze inyandiko :count ngo zisibwe. Hakenewe uburenganzira bwawe.',
+    ],
+    'disposal_decided' => [
+        'title' => 'Itsinda ry\'isibwa :ref :decision',
+        'body' => 'Icyifuzo cyawe cy\'isibwa :ref cyasuzumwe na :user: :decision.',
+    ],
+    'backup_issue' => [
+        'title' => 'Kugenzura kopi: :result',
+        'body' => ':user yagenzuye kopi yo ku wa :date kuri :loc: :result. Hakenewe igikorwa.',
+    ],
+    'management_report' => [
+        'title' => 'Raporo ku buyobozi: :title',
+        'body' => ':user yatanze raporo :title (:period).',
+    ],
+    'training_invited' => [
+        'title' => 'Amahugurwa: :title',
+        'body' => 'Watumiwe mu mahugurwa « :title » ku wa :date.',
+    ],
+    'audit_finding_assigned' => [
+        'title' => 'Ikibazo cy\'igenzura wahawe (:ref)',
+        'body' => ':user yaguhaye ikibazo « :title ».',
+    ],
+    'obligation_due' => [
+        'title' => 'Inshingano igeze igihe: :title',
+        'body' => '« :title » yagombaga gukorwa ku wa :date.',
+    ],
 ];

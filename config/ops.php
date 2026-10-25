@@ -11,7 +11,7 @@ return [
     'asset_prefix' => env('OPS_ASSET_PREFIX', 'AST'),
 
     // Request fields that carry rich text (Tiptap HTML). Purified server-side before validation.
-    'rich_text_fields' => ['description', 'address', 'body', 'notes', 'impact', 'immediate_action', 'root_cause', 'preventive_action_plan'],
+    'rich_text_fields' => ['description', 'address', 'body', 'notes', 'impact', 'immediate_action', 'root_cause', 'preventive_action_plan', 'summary'],
 
     'phone_country_code' => env('OPS_PHONE_COUNTRY', '250'),   // used to turn 078... into 25078...
 

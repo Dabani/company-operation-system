@@ -6,7 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\AuditLog;
 use App\Models\Department;
 use App\Models\Membership;
+use App\Models\ArchiveRecord;
 use App\Models\Asset;
+use App\Models\AuditFinding;
+use App\Models\BackupVerification;
+use App\Models\ComplianceObligation;
 use App\Models\EquipmentMovement;
 use App\Models\FileAsset;
 use App\Models\FileDeletionRequest;
@@ -72,6 +76,12 @@ class DashboardController extends Controller
             'stat_overdue_equipment' => EquipmentMovement::whereHas('status', fn ($q) => $q->where('code', 'checked_out'))->whereDate('expected_return_date', '<', today())->count(),
             'stat_open_incidents' => SupportCase::whereHas('type', fn ($q) => $q->where('code', 'incident'))->whereHas('status', fn ($q) => $q->whereNotIn('code', ['resolved', 'closed', 'cancelled']))->count(),
             'chart_assets_by_status' => $this->assetsByStatus(),
+            'stat_transfer_due' => ArchiveRecord::whereHas('status', fn ($q) => $q->where('code', 'inactive'))->whereDate('transfer_due_on', '<=', today())->count(),
+            'stat_disposal_due' => ArchiveRecord::whereHas('status', fn ($q) => $q->where('code', 'archived'))->whereDate('retention_until', '<=', today())->where('legal_hold', false)->count(),
+            'chart_records_by_status' => $this->recordsByStatus(),
+            'stat_obligations_overdue' => ComplianceObligation::where('is_active', true)->whereDate('next_due_on', '<', today())->count(),
+            'stat_open_findings' => AuditFinding::whereHas('audit')->whereHas('status', fn ($q) => $q->whereNotIn('code', ['resolved', 'accepted_risk']))->count(),
+            'stat_backup_age' => ($b = BackupVerification::orderByDesc('backup_date')->first()) ? $b->backup_date->diffInDays(today()) . ' d' : '—',
             default => null,
         };
     }
@@ -87,6 +97,14 @@ class DashboardController extends Controller
     private function assetsByStatus()
     {
         $counts = Asset::selectRaw('status_id, count(*) as c')->groupBy('status_id')->pluck('c', 'status_id');
+        $lang = request()->user()->language_id;
+        return LookupValue::with('translations')->whereIn('id', $counts->keys())->orderBy('sort_order')->get()
+            ->map(fn ($v) => ['name' => $v->label($lang), 'value' => (int) $counts[$v->id], 'color' => ($v->color ?: 'gray') . '.6'])->values();
+    }
+
+    private function recordsByStatus()
+    {
+        $counts = ArchiveRecord::selectRaw('status_id, count(*) as c')->groupBy('status_id')->pluck('c', 'status_id');
         $lang = request()->user()->language_id;
         return LookupValue::with('translations')->whereIn('id', $counts->keys())->orderBy('sort_order')->get()
             ->map(fn ($v) => ['name' => $v->label($lang), 'value' => (int) $counts[$v->id], 'color' => ($v->color ?: 'gray') . '.6'])->values();

@@ -8,6 +8,7 @@ Route::prefix('v1')->group(function () {
     // ---- public ------------------------------------------------------------------------------
     Route::get('public/config', [V1\PublicController::class, 'config']);
     Route::get('public/logo', [V1\PublicController::class, 'logo']);
+    Route::get('health', [V1\HealthController::class, 'ping'])->middleware('throttle:health');   // Bundle 7: minimal readiness probe
 
     Route::post('auth/login', [V1\AuthController::class, 'login'])->middleware('throttle:login');
     Route::post('auth/forgot-password', [V1\AuthController::class, 'forgotPassword'])->middleware('throttle:login');
@@ -230,6 +231,12 @@ Route::prefix('v1')->group(function () {
         Route::post('audits/{id}/findings', [V1\AuditController::class, 'addFinding'])->middleware('perm:compliance.manage');
         Route::patch('audit-findings/{id}', [V1\AuditController::class, 'updateFinding'])->middleware('perm:compliance.view');
         Route::get('management-reports', [V1\ManagementReportController::class, 'index'])->middleware('perm:report.receive,compliance.view');
+
+        // ---- Bundle 7: reports (view and export are separate permissions; each report also needs its module permission) ----
+        Route::get('reports', [V1\ReportController::class, 'index'])->middleware('perm:report.view,report.receive');
+        Route::get('reports/{code}', [V1\ReportController::class, 'show'])->middleware(['perm:report.view,report.receive', 'throttle:reports']);
+        Route::get('reports/{code}/export', [V1\ReportController::class, 'export'])->middleware(['perm:report.export', 'throttle:report-export']);
+        Route::get('health/details', [V1\HealthController::class, 'details'])->middleware('perm:audit_log.view');
 
         Route::get('audit-logs', [V1\AuditLogController::class, 'index'])->middleware('perm:audit_log.view');
         Route::get('audit-logs/{id}', [V1\AuditLogController::class, 'show'])->middleware('perm:audit_log.view');

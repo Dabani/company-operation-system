@@ -1,0 +1,6 @@
+# crontab -u www-data -e   - the ONLY cron entry the application needs (runs the Laravel scheduler:
+# ops:heartbeat, ops:prune, ops:check-deadlines, files:purge-deleted ... registered in earlier bundles)
+* * * * * cd /var/www/company-ops-api && php artisan schedule:run >> /dev/null 2>&1
+
+# Backups (see deploy/backup.sh) - nightly at 01:30, keep 30 days
+30 1 * * * /var/www/company-ops-api/deploy/backup.sh >> /var/log/ops/backup.log 2>&1

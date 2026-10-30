@@ -30,4 +30,19 @@ return [
         'at_key' => env('AT_API_KEY'),
         'at_url' => env('AT_URL', 'https://api.africastalking.com/version1/messaging'),
     ],
+
+    // Bundle 7 ---------------------------------------------------------------------------------------------------
+    'retention' => [
+        // Operational logs only. The audit log, case/record history and disposal evidence are never pruned automatically.
+        'delivery_log_days' => (int) env('OPS_RETAIN_DELIVERY_DAYS', 365),
+        'read_notification_days' => (int) env('OPS_RETAIN_NOTIFICATION_DAYS', 180),
+    ],
+    'health' => [
+        'scheduler_max_age' => (int) env('OPS_HEALTH_SCHEDULER_MAX_AGE', 180),       // seconds without a heartbeat before the scheduler counts as down
+        'backup_max_age_days' => (int) env('OPS_HEALTH_BACKUP_MAX_AGE_DAYS', 14),    // days since the last backup verified OK
+    ],
+    'security' => [
+        'hsts' => (bool) env('OPS_HSTS', true),                                       // sent only on HTTPS requests
+        'force_https' => (bool) env('OPS_FORCE_HTTPS', true),                         // production only
+    ],
 ];

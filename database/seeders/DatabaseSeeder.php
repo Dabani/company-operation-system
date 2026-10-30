@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             ITOperationsSeeder::class,       // Bundle 4: assets, movements, access register, incidents, IT manager role
             ArchiveSeeder::class,            // Bundle 5: records, retention, disposal, legal references, records manager + compliance officer roles
             ComplianceSeeder::class,         // Bundle 6: backups, training, compliance calendar, audits
+            ReportsSeeder::class,            // Bundle 7: reports menu and report permissions per role
         ]);
     }
 }

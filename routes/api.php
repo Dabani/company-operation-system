@@ -13,6 +13,8 @@ Route::prefix('v1')->group(function () {
     Route::post('auth/login', [V1\AuthController::class, 'login'])->middleware('throttle:login');
     Route::post('auth/forgot-password', [V1\AuthController::class, 'forgotPassword'])->middleware('throttle:login');
     Route::post('auth/reset-password', [V1\AuthController::class, 'resetPassword'])->middleware('throttle:login');
+    Route::get('auth/activation', [V1\AuthController::class, 'activationCheck'])->middleware('throttle:login');
+    Route::post('auth/activate', [V1\AuthController::class, 'activate'])->middleware('throttle:login');
 
     // ---- authenticated + tenant context -------------------------------------------------------
     Route::middleware(['auth:sanctum', 'org.context'])->group(function () {
@@ -57,12 +59,17 @@ Route::prefix('v1')->group(function () {
             Route::delete('locations/{id}', [V1\LocationController::class, 'destroy']);
         });
 
+        Route::get('users/summary', [V1\UserController::class, 'summary'])->middleware('perm:user.view');
+        Route::post('users/bulk', [V1\UserController::class, 'bulk'])->middleware('perm:user.suspend,user.create');
         Route::get('users', [V1\UserController::class, 'index'])->middleware('perm:user.view');
         Route::get('users/{id}', [V1\UserController::class, 'show'])->middleware('perm:user.view');
         Route::post('users', [V1\UserController::class, 'store'])->middleware('perm:user.create');
         Route::post('users/import', [V1\UserController::class, 'import'])->middleware('perm:data.import,user.create');
         Route::patch('users/{id}', [V1\UserController::class, 'update'])->middleware('perm:user.update');
         Route::post('users/{id}/status', [V1\UserController::class, 'setStatus'])->middleware('perm:user.suspend');
+        Route::post('users/{id}/invite', [V1\UserController::class, 'invite'])->middleware('perm:user.create');
+        Route::delete('users/{id}', [V1\UserController::class, 'destroy'])->middleware('perm:user.create');
+        Route::get('users/{id}/activity', [V1\UserController::class, 'activity'])->middleware('perm:audit_log.view');
 
         Route::get('roles', [V1\RoleController::class, 'index'])->middleware('perm:role.view');
         Route::get('permissions', [V1\RoleController::class, 'permissions'])->middleware('perm:role.view');

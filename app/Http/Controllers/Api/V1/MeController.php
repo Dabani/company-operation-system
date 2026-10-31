@@ -57,7 +57,7 @@ class MeController extends Controller
         $user = $request->user();
         $data = $request->validate([
             'current_password' => 'required|string',
-            'password' => ['required', 'confirmed', Password::min(12)->letters()->numbers()->symbols()],
+            'password' => ['required', 'confirmed', ...\App\Support\PasswordRules::for($user->email)],
         ]);
         if (!Hash::check($data['current_password'], $user->password)) {
             throw ValidationException::withMessages(['current_password' => [__('api.invalid_credentials')]]);

@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Services\OrganizationContext;
 use App\Support\Lookup;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Password;
+use App\Services\InvitationService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -21,12 +21,19 @@ class UsersImport implements ToCollection, WithHeadingRow
     public int $created = 0;
     public array $errors = [];
 
+    public int $mail_failed = 0;
+
     public function __construct(private OrganizationContext $ctx) {}
 
     public function collection(Collection $rows): void
     {
+        $invitations = app(InvitationService::class);
+        $seen = [];
         foreach ($rows as $i => $row) {
             $line = $i + 2;
+            $row['email'] = mb_strtolower(trim((string) ($row['email'] ?? '')));
+            if (isset($seen[$row['email']])) { $this->errors[] = ['line' => $line, 'message' => 'duplicate in file']; continue; }
+            $seen[$row['email']] = true;
             $v = Validator::make($row->toArray(), [
                 'name' => 'required|string|max:150', 'email' => 'required|email|unique:users,email', 'role_code' => 'required|string',
             ]);
@@ -47,7 +54,8 @@ class UsersImport implements ToCollection, WithHeadingRow
                 'status_id' => Lookup::id('membership_status', 'active'), 'is_default' => true,
             ]);
             $m->roles()->attach($role->id, ['assigned_by' => request()->user()->id]);
-            try { Password::sendResetLink(['email' => $user->email]); } catch (\Throwable $e) { report($e); }
+            [, $sent] = $invitations->issue($user->load('language'), request()->user(), $this->ctx->organizationId());
+            if (!$sent) $this->mail_failed++;
             $this->created++;
         }
     }

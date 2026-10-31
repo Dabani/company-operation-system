@@ -32,6 +32,7 @@ return [
     ],
 
     // Bundle 7 ---------------------------------------------------------------------------------------------------
+    'invitation_days' => (int) env('OPS_INVITATION_DAYS', 7),     // validity of the activation link e-mailed to new users
     'retention' => [
         // Operational logs only. The audit log, case/record history and disposal evidence are never pruned automatically.
         'delivery_log_days' => (int) env('OPS_RETAIN_DELIVERY_DAYS', 365),

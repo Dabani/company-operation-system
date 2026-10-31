@@ -28,4 +28,7 @@ class User extends Authenticatable
     public function status() { return $this->belongsTo(LookupValue::class, 'status_id'); }
     public function language() { return $this->belongsTo(Language::class); }
     public function memberships() { return $this->hasMany(Membership::class); }
+    public function invitations() { return $this->hasMany(UserInvitation::class); }
+    /** Latest invitation (accepted or not) - for display. */
+    public function invitation() { return $this->hasOne(UserInvitation::class)->latestOfMany(); }
 }

@@ -26,6 +26,14 @@ class UserResource extends JsonResource
             'role_ids' => $m ? $m->roles->pluck('id') : [],
             'roles' => $m ? $m->roles->map(fn ($r) => ['id' => $r->id, 'name' => $r->name, 'color' => $r->color, 'level' => $r->level])->values() : [],
             'last_login_at' => $this->last_login_at?->toIso8601String(),
+            'activated' => (bool) $this->email_verified_at,
+            // Present only for people who have not activated yet: lets the list show "sent 2 days ago / expired".
+            'invitation' => $this->when($this->relationLoaded('invitation') && $this->invitation && !$this->invitation->accepted_at, fn () => [
+                'last_sent_at' => $this->invitation->last_sent_at?->toIso8601String(),
+                'expires_at' => $this->invitation->expires_at->toIso8601String(),
+                'expired' => $this->invitation->isExpired(),
+                'send_count' => $this->invitation->send_count,
+            ]),
             'created_at' => $this->created_at?->toIso8601String(),
         ];
     }

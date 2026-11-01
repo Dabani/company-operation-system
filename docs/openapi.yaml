@@ -1,0 +1,1756 @@
+openapi: 3.1.0
+info:
+  title: Company Operations Platform API
+  version: 1.0.0
+  description: |
+    Route inventory generated from routes/api.php (Bundle 7). It lists every endpoint, its method, controller action and required permission (x-permission).
+    Request/response bodies are not yet modelled - treat this as the API surface contract and extend it per endpoint.
+    Errors use the standard envelope (message, errors). All authenticated routes use Sanctum cookie auth and the organization context.
+servers:
+  - url: /api/v1
+paths:
+  '//':
+    get:
+      operationId: ChatController.agentIndex.get
+      tags: [Chat]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/access-grants':
+    get:
+      operationId: AccessGrantController.index.get
+      tags: [AccessGrant]
+      x-permission: 'access.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: AccessGrantController.store.post
+      tags: [AccessGrant]
+      x-permission: 'access.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/access-grants/{id}/review':
+    post:
+      operationId: AccessGrantController.review.post
+      tags: [AccessGrant]
+      x-permission: 'access.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/access-grants/{id}/revoke':
+    post:
+      operationId: AccessGrantController.revoke.post
+      tags: [AccessGrant]
+      x-permission: 'access.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/archive-access':
+    get:
+      operationId: ArchiveAccessController.index.get
+      tags: [ArchiveAccess]
+      x-permission: 'archive.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: ArchiveAccessController.store.post
+      tags: [ArchiveAccess]
+      x-permission: 'archive.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/archive-access/{id}/authorize':
+    post:
+      operationId: ArchiveAccessController.authorizeAccess.post
+      tags: [ArchiveAccess]
+      x-permission: 'archive.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/archive-access/{id}/deny':
+    post:
+      operationId: ArchiveAccessController.deny.post
+      tags: [ArchiveAccess]
+      x-permission: 'archive.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/archive-access/{id}/return':
+    post:
+      operationId: ArchiveAccessController.returned.post
+      tags: [ArchiveAccess]
+      x-permission: 'archive.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/archive-settings':
+    put:
+      operationId: RetentionController.settings.put
+      tags: [Retention]
+      x-permission: 'compliance.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/assets':
+    get:
+      operationId: AssetController.index.get
+      tags: [Asset]
+      x-permission: 'asset.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: AssetController.store.post
+      tags: [Asset]
+      x-permission: 'asset.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/assets/import':
+    post:
+      operationId: AssetController.import.post
+      tags: [Asset]
+      x-permission: 'asset.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/assets/{id}':
+    get:
+      operationId: AssetController.show.get
+      tags: [Asset]
+      x-permission: 'asset.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    patch:
+      operationId: AssetController.update.patch
+      tags: [Asset]
+      x-permission: 'asset.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/assets/{id}/assign':
+    post:
+      operationId: AssetController.assign.post
+      tags: [Asset]
+      x-permission: 'asset.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/assets/{id}/report-lost':
+    post:
+      operationId: AssetController.reportLost.post
+      tags: [Asset]
+      x-permission: 'asset.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/audit-findings/{id}':
+    patch:
+      operationId: AuditController.updateFinding.patch
+      tags: [Audit]
+      x-permission: 'compliance.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/audit-logs':
+    get:
+      operationId: AuditLogController.index.get
+      tags: [AuditLog]
+      x-permission: 'audit_log.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/audit-logs/{id}':
+    get:
+      operationId: AuditLogController.show.get
+      tags: [AuditLog]
+      x-permission: 'audit_log.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/audits':
+    get:
+      operationId: AuditController.index.get
+      tags: [Audit]
+      x-permission: 'compliance.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: AuditController.store.post
+      tags: [Audit]
+      x-permission: 'compliance.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/audits/{id}':
+    get:
+      operationId: AuditController.show.get
+      tags: [Audit]
+      x-permission: 'compliance.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    patch:
+      operationId: AuditController.update.patch
+      tags: [Audit]
+      x-permission: 'compliance.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/audits/{id}/complete':
+    post:
+      operationId: AuditController.complete.post
+      tags: [Audit]
+      x-permission: 'compliance.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/audits/{id}/findings':
+    post:
+      operationId: AuditController.addFinding.post
+      tags: [Audit]
+      x-permission: 'compliance.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/audits/{id}/report':
+    post:
+      operationId: AuditController.report.post
+      tags: [Audit]
+      x-permission: 'compliance.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/audits/{id}/start':
+    post:
+      operationId: AuditController.start.post
+      tags: [Audit]
+      x-permission: 'compliance.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/auth/forgot-password':
+    post:
+      operationId: AuthController.forgotPassword.post
+      tags: [Auth]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/auth/login':
+    post:
+      operationId: AuthController.login.post
+      tags: [Auth]
+      security: []
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/auth/logout':
+    post:
+      operationId: AuthController.logout.post
+      tags: [Auth]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/auth/reset-password':
+    post:
+      operationId: AuthController.resetPassword.post
+      tags: [Auth]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/backup-verifications':
+    get:
+      operationId: BackupController.index.get
+      tags: [Backup]
+      x-permission: 'backup.manage,compliance.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: BackupController.store.post
+      tags: [Backup]
+      x-permission: 'backup.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/backup-verifications/summary':
+    get:
+      operationId: BackupController.summary.get
+      tags: [Backup]
+      x-permission: 'backup.manage,compliance.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/backup-verifications/{id}/attachments':
+    get:
+      operationId: BackupController.attachments.get
+      tags: [Backup]
+      x-permission: 'backup.manage,compliance.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: BackupController.attach.post
+      tags: [Backup]
+      x-permission: 'backup.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/cases':
+    get:
+      operationId: CaseController.index.get
+      tags: [Case]
+      x-permission: 'case.view_own,case.view_all'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: CaseController.store.post
+      tags: [Case]
+      x-permission: 'case.create'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/cases/assignees':
+    get:
+      operationId: CaseController.assignees.get
+      tags: [Case]
+      x-permission: 'case.assign'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/cases/{caseId}/incident':
+    get:
+      operationId: IncidentController.show.get
+      tags: [Incident]
+      x-permission: 'case.view_own,case.view_all'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    put:
+      operationId: IncidentController.update.put
+      tags: [Incident]
+      x-permission: 'incident.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/cases/{id}':
+    get:
+      operationId: CaseController.show.get
+      tags: [Case]
+      x-permission: 'case.view_own,case.view_all'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    patch:
+      operationId: CaseController.update.patch
+      tags: [Case]
+      x-permission: 'case.update_status,case.assign'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/cases/{id}/attachments':
+    get:
+      operationId: FileController.caseAttachments.get
+      tags: [File]
+      x-permission: 'case.view_own,case.view_all'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: FileController.caseUpload.post
+      tags: [File]
+      x-permission: 'file.upload'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/cases/{id}/comments':
+    post:
+      operationId: CaseController.comment.post
+      tags: [Case]
+      x-permission: 'case.comment'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/chat/conversation':
+    get:
+      operationId: ChatController.mine.get
+      tags: [Chat]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/chat/conversation/close':
+    post:
+      operationId: ChatController.close.post
+      tags: [Chat]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/chat/conversation/escalate':
+    post:
+      operationId: ChatController.escalate.post
+      tags: [Chat]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/chat/conversation/messages':
+    post:
+      operationId: ChatController.send.post
+      tags: [Chat]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/dashboard':
+    get:
+      operationId: DashboardController.index.get
+      tags: [Dashboard]
+      x-permission: 'dashboard.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/dashboard-widgets':
+    get:
+      operationId: RoleController.widgets.get
+      tags: [Role]
+      x-permission: 'role.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/departments':
+    get:
+      operationId: DepartmentController.index.get
+      tags: [Department]
+      x-permission: 'department.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: DepartmentController.store.post
+      tags: [Department]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/departments/{id}':
+    patch:
+      operationId: DepartmentController.update.patch
+      tags: [Department]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    delete:
+      operationId: DepartmentController.destroy.delete
+      tags: [Department]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/disposal-batches':
+    get:
+      operationId: DisposalController.index.get
+      tags: [Disposal]
+      x-permission: 'archive.manage,archive.approve_disposal'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: DisposalController.propose.post
+      tags: [Disposal]
+      x-permission: 'archive.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/disposal-batches/{id}':
+    get:
+      operationId: DisposalController.show.get
+      tags: [Disposal]
+      x-permission: 'archive.manage,archive.approve_disposal'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/disposal-batches/{id}/approve':
+    post:
+      operationId: DisposalController.approve.post
+      tags: [Disposal]
+      x-permission: 'archive.approve_disposal'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/disposal-batches/{id}/certificate':
+    get:
+      operationId: DisposalController.certificate.get
+      tags: [Disposal]
+      x-permission: 'archive.manage,archive.approve_disposal'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/disposal-batches/{id}/execute':
+    post:
+      operationId: DisposalController.execute.post
+      tags: [Disposal]
+      x-permission: 'archive.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/disposal-batches/{id}/reject':
+    post:
+      operationId: DisposalController.reject.post
+      tags: [Disposal]
+      x-permission: 'archive.approve_disposal'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/disposal/eligible':
+    get:
+      operationId: DisposalController.eligible.get
+      tags: [Disposal]
+      x-permission: 'archive.manage,archive.approve_disposal'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/equipment-movements':
+    get:
+      operationId: MovementController.index.get
+      tags: [Movement]
+      x-permission: 'asset.request_movement,asset.approve_movement,asset.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: MovementController.store.post
+      tags: [Movement]
+      x-permission: 'asset.request_movement'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/equipment-movements/candidates':
+    get:
+      operationId: MovementController.candidates.get
+      tags: [Movement]
+      x-permission: 'asset.request_movement'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/equipment-movements/{id}':
+    get:
+      operationId: MovementController.show.get
+      tags: [Movement]
+      x-permission: 'asset.request_movement,asset.approve_movement,asset.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/equipment-movements/{id}/approve':
+    post:
+      operationId: MovementController.approve.post
+      tags: [Movement]
+      x-permission: 'asset.approve_movement'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/equipment-movements/{id}/cancel':
+    post:
+      operationId: MovementController.cancel.post
+      tags: [Movement]
+      x-permission: 'asset.request_movement,asset.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/equipment-movements/{id}/checkout':
+    post:
+      operationId: MovementController.checkout.post
+      tags: [Movement]
+      x-permission: 'asset.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/equipment-movements/{id}/pdf':
+    get:
+      operationId: MovementController.pdf.get
+      tags: [Movement]
+      x-permission: 'asset.request_movement,asset.approve_movement,asset.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/equipment-movements/{id}/reject':
+    post:
+      operationId: MovementController.reject.post
+      tags: [Movement]
+      x-permission: 'asset.approve_movement'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/equipment-movements/{id}/return':
+    post:
+      operationId: MovementController.returnBack.post
+      tags: [Movement]
+      x-permission: 'asset.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/file-deletion-requests':
+    get:
+      operationId: FileController.deletionRequests.get
+      tags: [File]
+      x-permission: 'file.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/file-deletion-requests/{id}/approve':
+    post:
+      operationId: FileController.approveDeletion.post
+      tags: [File]
+      x-permission: 'file.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/file-deletion-requests/{id}/reject':
+    post:
+      operationId: FileController.rejectDeletion.post
+      tags: [File]
+      x-permission: 'file.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/files':
+    get:
+      operationId: FileController.index.get
+      tags: [File]
+      x-permission: 'file.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: FileController.store.post
+      tags: [File]
+      x-permission: 'file.upload'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/files/{id}':
+    get:
+      operationId: FileController.show.get
+      tags: [File]
+      x-permission: 'file.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    patch:
+      operationId: FileController.update.patch
+      tags: [File]
+      x-permission: 'file.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/files/{id}/activity':
+    get:
+      operationId: FileController.activity.get
+      tags: [File]
+      x-permission: 'file.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/files/{id}/archive':
+    post:
+      operationId: FileController.archive.post
+      tags: [File]
+      x-permission: 'file.archive'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/files/{id}/comments':
+    get:
+      operationId: FileController.comments.get
+      tags: [File]
+      x-permission: 'file.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: FileController.addComment.post
+      tags: [File]
+      x-permission: 'file.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/files/{id}/deletion-requests':
+    post:
+      operationId: FileController.requestDeletion.post
+      tags: [File]
+      x-permission: 'file.delete_request'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/files/{id}/download':
+    get:
+      operationId: FileController.download.get
+      tags: [File]
+      x-permission: 'file.download'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/files/{id}/legal-hold':
+    post:
+      operationId: FileController.legalHold.post
+      tags: [File]
+      x-permission: 'file.legal_hold'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/files/{id}/preview':
+    get:
+      operationId: FileController.preview.get
+      tags: [File]
+      x-permission: 'file.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/files/{id}/restore':
+    post:
+      operationId: FileController.restore.post
+      tags: [File]
+      x-permission: 'file.archive,file.restore'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/files/{id}/versions':
+    post:
+      operationId: FileController.addVersion.post
+      tags: [File]
+      x-permission: 'file.replace'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/health':
+    get:
+      operationId: HealthController.ping.get
+      tags: [Health]
+      security: []
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/health/details':
+    get:
+      operationId: HealthController.details.get
+      tags: [Health]
+      x-permission: 'audit_log.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/incidents':
+    get:
+      operationId: IncidentController.index.get
+      tags: [Incident]
+      x-permission: 'case.view_own,case.view_all'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: IncidentController.store.post
+      tags: [Incident]
+      x-permission: 'case.create'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/inventory-counts':
+    get:
+      operationId: InventoryController.index.get
+      tags: [Inventory]
+      x-permission: 'archive.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: InventoryController.store.post
+      tags: [Inventory]
+      x-permission: 'archive.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/inventory-counts/{id}':
+    get:
+      operationId: InventoryController.show.get
+      tags: [Inventory]
+      x-permission: 'archive.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/inventory-counts/{id}/complete':
+    post:
+      operationId: InventoryController.complete.post
+      tags: [Inventory]
+      x-permission: 'archive.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/inventory-counts/{id}/items':
+    get:
+      operationId: InventoryController.items.get
+      tags: [Inventory]
+      x-permission: 'archive.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/inventory-counts/{id}/items/{itemId}':
+    post:
+      operationId: InventoryController.mark.post
+      tags: [Inventory]
+      x-permission: 'archive.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/languages':
+    get:
+      operationId: LookupController.languages.get
+      tags: [Lookup]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/legal-references':
+    get:
+      operationId: LegalReferenceController.index.get
+      tags: [LegalReference]
+      x-permission: 'archive.view,compliance.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: LegalReferenceController.store.post
+      tags: [LegalReference]
+      x-permission: 'compliance.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/legal-references/{id}':
+    patch:
+      operationId: LegalReferenceController.update.patch
+      tags: [LegalReference]
+      x-permission: 'compliance.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/legal-references/{id}/verify':
+    post:
+      operationId: LegalReferenceController.verify.post
+      tags: [LegalReference]
+      x-permission: 'compliance.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/locations':
+    get:
+      operationId: LocationController.index.get
+      tags: [Location]
+      x-permission: 'location.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: LocationController.store.post
+      tags: [Location]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/locations/{id}':
+    patch:
+      operationId: LocationController.update.patch
+      tags: [Location]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    delete:
+      operationId: LocationController.destroy.delete
+      tags: [Location]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/lookup-types':
+    get:
+      operationId: LookupController.types.get
+      tags: [Lookup]
+      x-permission: 'lookup.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/lookup-values':
+    post:
+      operationId: LookupController.store.post
+      tags: [Lookup]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/lookup-values/{id}':
+    patch:
+      operationId: LookupController.update.patch
+      tags: [Lookup]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    delete:
+      operationId: LookupController.destroy.delete
+      tags: [Lookup]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/lookups':
+    get:
+      operationId: LookupController.index.get
+      tags: [Lookup]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/management-reports':
+    get:
+      operationId: ManagementReportController.index.get
+      tags: [ManagementReport]
+      x-permission: 'report.receive,compliance.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/me':
+    get:
+      operationId: MeController.show.get
+      tags: [Me]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    patch:
+      operationId: MeController.update.patch
+      tags: [Me]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/me/avatar':
+    post:
+      operationId: MeController.avatar.post
+      tags: [Me]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/me/organization':
+    post:
+      operationId: MeController.switchOrganization.post
+      tags: [Me]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/me/password':
+    post:
+      operationId: MeController.password.post
+      tags: [Me]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/menu':
+    get:
+      operationId: MenuController.index.get
+      tags: [Menu]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/notifications':
+    get:
+      operationId: NotificationController.index.get
+      tags: [Notification]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/notifications/read-all':
+    post:
+      operationId: NotificationController.readAll.post
+      tags: [Notification]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/notifications/{id}/read':
+    post:
+      operationId: NotificationController.read.post
+      tags: [Notification]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/obligations':
+    get:
+      operationId: ObligationController.index.get
+      tags: [Obligation]
+      x-permission: 'compliance.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: ObligationController.store.post
+      tags: [Obligation]
+      x-permission: 'compliance.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/obligations/{id}':
+    patch:
+      operationId: ObligationController.update.patch
+      tags: [Obligation]
+      x-permission: 'compliance.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/obligations/{id}/complete':
+    post:
+      operationId: ObligationController.complete.post
+      tags: [Obligation]
+      x-permission: 'compliance.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/obligations/{id}/completions':
+    get:
+      operationId: ObligationController.completions.get
+      tags: [Obligation]
+      x-permission: 'compliance.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/organizations/current':
+    get:
+      operationId: OrganizationController.show.get
+      tags: [Organization]
+      x-permission: 'organization.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    patch:
+      operationId: OrganizationController.update.patch
+      tags: [Organization]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/organizations/current/logo':
+    post:
+      operationId: OrganizationController.logo.post
+      tags: [Organization]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/permissions':
+    get:
+      operationId: RoleController.permissions.get
+      tags: [Role]
+      x-permission: 'role.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/public/config':
+    get:
+      operationId: PublicController.config.get
+      tags: [Public]
+      security: []
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/public/logo':
+    get:
+      operationId: PublicController.logo.get
+      tags: [Public]
+      security: []
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/records':
+    get:
+      operationId: RecordController.index.get
+      tags: [Record]
+      x-permission: 'archive.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: RecordController.store.post
+      tags: [Record]
+      x-permission: 'archive.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/records/import':
+    post:
+      operationId: RecordController.import.post
+      tags: [Record]
+      x-permission: 'archive.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/records/{id}':
+    get:
+      operationId: RecordController.show.get
+      tags: [Record]
+      x-permission: 'archive.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    patch:
+      operationId: RecordController.update.patch
+      tags: [Record]
+      x-permission: 'archive.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/records/{id}/attachments':
+    get:
+      operationId: RecordController.attachments.get
+      tags: [Record]
+      x-permission: 'archive.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: RecordController.attach.post
+      tags: [Record]
+      x-permission: 'archive.manage,file.upload'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/records/{id}/hold':
+    post:
+      operationId: RecordController.hold.post
+      tags: [Record]
+      x-permission: 'archive.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/records/{id}/inactive':
+    post:
+      operationId: RecordController.inactive.post
+      tags: [Record]
+      x-permission: 'archive.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/records/{id}/move':
+    post:
+      operationId: RecordController.move.post
+      tags: [Record]
+      x-permission: 'archive.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/records/{id}/release':
+    post:
+      operationId: RecordController.release.post
+      tags: [Record]
+      x-permission: 'archive.approve_disposal'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/records/{id}/transfer':
+    post:
+      operationId: RecordController.transfer.post
+      tags: [Record]
+      x-permission: 'archive.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/reports':
+    get:
+      operationId: ReportController.index.get
+      tags: [Report]
+      x-permission: 'report.view,report.receive'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/reports/{code}':
+    get:
+      operationId: ReportController.show.get
+      tags: [Report]
+      x-permission: 'report.view,report.receive'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/reports/{code}/export':
+    get:
+      operationId: ReportController.export.get
+      tags: [Report]
+      x-permission: 'report.export'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/retention-rules':
+    get:
+      operationId: RetentionController.index.get
+      tags: [Retention]
+      x-permission: 'archive.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/retention-rules/{categoryId}':
+    put:
+      operationId: RetentionController.upsert.put
+      tags: [Retention]
+      x-permission: 'compliance.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    delete:
+      operationId: RetentionController.destroy.delete
+      tags: [Retention]
+      x-permission: 'compliance.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/roles':
+    get:
+      operationId: RoleController.index.get
+      tags: [Role]
+      x-permission: 'role.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: RoleController.store.post
+      tags: [Role]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/roles/{id}':
+    patch:
+      operationId: RoleController.update.patch
+      tags: [Role]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    delete:
+      operationId: RoleController.destroy.delete
+      tags: [Role]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/training-attendance':
+    get:
+      operationId: TrainingController.register.get
+      tags: [Training]
+      x-permission: 'training.view,training.manage,compliance.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/training-report':
+    get:
+      operationId: TrainingController.report.get
+      tags: [Training]
+      x-permission: 'training.manage,compliance.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/training-report/submit':
+    post:
+      operationId: TrainingController.submitReport.post
+      tags: [Training]
+      x-permission: 'training.manage,compliance.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/training-sessions':
+    get:
+      operationId: TrainingController.index.get
+      tags: [Training]
+      x-permission: 'training.view,training.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: TrainingController.store.post
+      tags: [Training]
+      x-permission: 'training.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/training-sessions/{id}':
+    get:
+      operationId: TrainingController.show.get
+      tags: [Training]
+      x-permission: 'training.view,training.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    patch:
+      operationId: TrainingController.update.patch
+      tags: [Training]
+      x-permission: 'training.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/training-sessions/{id}/attendance':
+    post:
+      operationId: TrainingController.mark.post
+      tags: [Training]
+      x-permission: 'training.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/training-sessions/{id}/attendees':
+    put:
+      operationId: TrainingController.setAttendees.put
+      tags: [Training]
+      x-permission: 'training.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/training-sessions/{id}/cancel':
+    post:
+      operationId: TrainingController.cancel.post
+      tags: [Training]
+      x-permission: 'training.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/training-sessions/{id}/complete':
+    post:
+      operationId: TrainingController.complete.post
+      tags: [Training]
+      x-permission: 'training.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/training-sessions/{id}/confirm':
+    post:
+      operationId: TrainingController.confirm.post
+      tags: [Training]
+      x-permission: 'training.view,training.manage'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/users':
+    get:
+      operationId: UserController.index.get
+      tags: [User]
+      x-permission: 'user.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    post:
+      operationId: UserController.store.post
+      tags: [User]
+      x-permission: 'user.create'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/users/import':
+    post:
+      operationId: UserController.import.post
+      tags: [User]
+      x-permission: 'data.import,user.create'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/users/{id}':
+    get:
+      operationId: UserController.show.get
+      tags: [User]
+      x-permission: 'user.view'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+    patch:
+      operationId: UserController.update.patch
+      tags: [User]
+      x-permission: 'user.update'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/users/{id}/status':
+    post:
+      operationId: UserController.setStatus.post
+      tags: [User]
+      x-permission: 'user.suspend'
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/users/{user}/avatar':
+    get:
+      operationId: MeController.avatarFile.get
+      tags: [Me]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/{id}':
+    get:
+      operationId: ChatController.agentShow.get
+      tags: [Chat]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/{id}/close':
+    post:
+      operationId: ChatController.agentClose.post
+      tags: [Chat]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}
+  '/{id}/messages':
+    post:
+      operationId: ChatController.agentSend.post
+      tags: [Chat]
+      responses:
+        '200': {description: OK}
+        '401': {description: Unauthenticated}
+        '403': {description: Forbidden}
+        '422': {description: Validation error}

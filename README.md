@@ -174,7 +174,7 @@ COPS is feature-rich and used as a foundation for real deployments, but it is yo
 
 ## License
 
-Released under the [MIT License](LICENSE). *(Choose the license that fits your goals before publishing and add the `LICENSE` file.)*
+Released under the [MIT License](LICENSE).
 
 ## Acknowledgements
 

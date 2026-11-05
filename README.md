@@ -1,60 +1,181 @@
-# COPS Enhancement - Bundle 08: Phase 0 shared foundations
+<div align="center">
 
-Implements **Phase 0** of *COPS Enhancement - Requirements & Developer Guide v1.2* on top of the existing repositories
-(`company-operation-system` API, `company-operations-systems-frontend` web). Later phases (Projects, Billing, Portal, HR, Meetings,
-Procurement) consume these services; none of them should introduce their own approval, scope or settings tables.
+# COPS API
 
-## What is in this bundle
-| Guide section | Delivered |
+**Company Operations Platform - backend**
+
+Service desk, controlled files, IT infrastructure, archive and records, and compliance - in one role-based, multilingual platform.
+
+![Laravel](https://img.shields.io/badge/Laravel-13-FF2D20?logo=laravel&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-8.4-777BB4?logo=php&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-8.4-4479A1?logo=mysql&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-green)
+![PRs welcome](https://img.shields.io/badge/PRs-welcome-3773b8)
+
+[Frontend repository](https://github.com/Dabani/company-operations-systems-frontend) · [Report a bug](https://github.com/Dabani/company-operation-system/issues) · [Request a feature](https://github.com/Dabani/company-operation-system/issues)
+
+</div>
+
+---
+
+## What is COPS?
+
+Most organizations run their support requests, equipment lists, paper archives and compliance duties in separate spreadsheets, inboxes and shared folders.
+**COPS** brings them together in one auditable system that any organization can adopt - it is not tied to a single company.
+
+This repository is the **REST API** (Laravel). The user interface lives in [cops-web](https://github.com/Dabani/company-operations-systems-frontend) (React PWA).
+
+### What it does
+
+| Module | Highlights |
 |---|---|
-| 3.1 Approval engine | `approval_flows/steps/requests/actions/delegations`, `ApprovalEngine` (role / department head / line manager / named user steps, delegation, escalation job, no self-approval, no two-step approver, immutable decisions), inbox UI, flow admin with two-person activation |
-| 3.2 Department scope | `user_department_assignments`, `DepartmentScope` + `HasDepartmentScope::visibleTo()`, admin screen, department-head resolution |
-| 3.3 Employee master | `hr_employees` (optional one-to-one login), lookup categories, encrypted national ID / bank account, audited reveal endpoint, employees screen |
-| 3.4 Clients / external identity | `clients`, `client_contacts`, separate `client_identities` + `client` guard, `BelongsToClient` scope, portal login/me/contacts with automated cross-client 404 test |
-| 3.5 Money, files | `MoneyService` (decimal-string maths, rounding once), `ClamAvScanner` (fail-closed) bound when `CLAMAV_ENABLED=true` |
-| 3.7 Rules engine | `rule_sets/versions/conditions/outcomes/activations`, `legal_parameters`, `RuleResolver` (specific > priority > latest, per-org cache), validator (overlap, thresholds, statutory floors, coverage), lifecycle Draft > Impact check > Pending approval > Active > Superseded/Expired, legal sign-off, rules UI |
-| 8.7 CI | GitHub Actions for API and web |
-| 10 | Tests, OpenAPI fragment, regression checklist, 4-language strings |
+| **Service desk** | Every request is a *case* with a unique reference, status workflow, comments (internal and public), assignment, due dates and history. Live chat with a support bot. E-mail and SMS notifications (Brevo or Africa's Talking). |
+| **Controlled files** | Upload, view, download, replace, archive, restore and delete under permission rules. Deletion is allowed only to the owner or an admin after a formal request. Full file history. |
+| **IT infrastructure** | Asset register and lifecycle, assignments, equipment movements, access register, security incidents. |
+| **Archive and records** | Records register with retention rules and legal references, physical access requests, inventory counts, disposal batches with printable destruction certificates. |
+| **Compliance** | Recurring duties calendar, backup verification, training sessions and attendance, audits and findings, management reports. |
+| **Reports** | Seven cross-module reports with charts, CSV/Excel export, and a documented calculation method. View and export are separate permissions. |
+| **Administration** | Dynamic role and permission matrix (add your own roles), users with e-mail invitation and activation, departments, locations, lookups, languages, organization settings, audit log, notification delivery log, health endpoint. |
 
-## Install (API)
+### Design principles
+
+- **Server-side authority.** Every route checks permissions on the server; hiding a button in the UI is never the control.
+- **Multi-tenant by design.** Business data is scoped to an organization through a global scope.
+- **No enums, no JSON columns.** Every list of choices (statuses, priorities, types...) is a row in a lookup table, so administrators can extend them without a deployment.
+- **Everything important is audited**, including report views and exports.
+- **Multilingual.** English (default), French, Kinyarwanda and Swahili; more languages can be added from data plus a translation file.
+
+## Tech stack
+
+Laravel 13 · PHP 8.4 · MySQL 8.4 · Sanctum (cookie sessions) · Reverb (WebSockets) · Laravel Excel · Dompdf · queue and scheduler.
+
+## Getting started
+
+### Requirements
+
+PHP 8.4 (with `mbstring`, `xml`, `curl`, `zip`, `gd`, `intl`, `pdo_mysql`), Composer 2, MySQL 8.4, and a mail account (SMTP, for example Brevo) for invitations and notifications.
+On Windows, [Laragon](https://laragon.org) provides all of this.
+
+### Install
+
 ```bash
-cp -r api/. /path/to/company-operation-system/
-python3 scripts/apply-bundle-08.py /path/to/company-operation-system   # idempotent small edits (routes, auth guard, providers, seeder, notify texts)
-cd /path/to/company-operation-system
-composer install                 # ext-bcmath is now required (enabled by default in Laragon)
+git clone https://github.com/Dabani/company-operation-system.git
+cd cops-api
+composer install
+cp .env.example .env
+php artisan key:generate
+```
+
+Create an empty MySQL database, then edit `.env` (the real-time keys `REVERB_*` and the mail/SMS settings are described in the `.env.*` files shipped with the project):
+
+```ini
+DB_DATABASE=cops
+DB_USERNAME=root
+DB_PASSWORD=
+
+APP_URL=http://localhost:8000
+FRONTEND_URL=http://localhost:5173
+SANCTUM_STATEFUL_DOMAINS=localhost:5173
+
+MAIL_MAILER=smtp            # or "log" to read e-mails in storage/logs while developing
+SMS_DRIVER=log              # log | brevo | africastalking
+OPS_ADMIN_EMAIL=you@example.com
+OPS_ADMIN_PASSWORD=choose-a-strong-password
+```
+
+```bash
 php artisan migrate
-php artisan db:seed --class=CopsFoundationSeeder
+php artisan db:seed          # lookups, roles, permissions, menu, first administrator
+php artisan serve            # http://localhost:8000
+```
+
+### Background services (separate terminals)
+
+```bash
+php artisan queue:work       # e-mail / SMS delivery
+php artisan schedule:work    # deadline alerts, clean-up, health heartbeat
+php artisan reverb:start     # live chat and notifications (optional in development)
+```
+
+Then start the frontend ([cops-web](https://github.com/Dabani/company-operations-systems-frontend)) and sign in with the administrator you seeded.
+
+### Your first steps
+
+1. Sign in as the administrator and open **Administration > Organization** to set your name, logo, time zone and currency.
+2. **Administration > Roles** - review the permission matrix or create your own roles.
+3. **Administration > Users > New user** - invite colleagues. They receive an activation e-mail, choose their password and are signed in.
+4. Optional: seed the Rwanda starter data (legal references and retention rules) with `php artisan db:seed --class=RwandaStarterSeeder`.
+
+### Tests and quality
+
+```bash
 php artisan test
 ```
-Optional `.env`: `CLAMAV_ENABLED=true CLAMAV_HOST=clamav CLAMAV_PORT=3310` (see Docker note below).
-Scheduler needs the usual `php artisan schedule:run` every minute (hourly escalation, daily rule expiry).
 
-## Install (web)
-```bash
-cp -r web/. /path/to/company-operations-systems-frontend/
-python3 scripts/apply-bundle-08-web.py /path/to/company-operations-systems-frontend
-npm run typecheck && npm test && npm run build:check
+Use a **separate** database for tests (see `.env.testing.example`); the test suite wipes it.
+
+## Project layout
+
+```
+app/Http/Controllers/Api/V1   thin controllers, one per resource
+app/Models                    Eloquent models (tenant scope via BelongsToOrganization)
+app/Services                  business rules (AuditLogger, Notifier, InvitationService, ReportService ...)
+database/migrations           schema (read in file-name order)
+database/seeders              lookups, roles, permissions, menu, starter data
+lang/{en,fr,rw,sw}            server-side texts (API messages, e-mails, reports, PDFs)
+routes/api.php                every endpoint with its required permission
 ```
 
-## Decisions I made (please confirm)
-- **Safe default.** With no active rule, every request takes `default_two_level` (department head, then top authority). If a step has nobody resolvable, the engine falls back to holders of the highest role level, never the requester. No thresholds or statutory values are seeded.
-- **Who may activate a rule.** The seeded `rule_activation` flow routes to role `manager` holding `rules.approve`; the author cannot approve. An organization needs at least two privileged people.
-- **Flow versions** are activated by someone other than the author (two-person rule) rather than through a full approval request, to avoid a flow that approves its own change.
-- **Coverage gaps** block activation only for rule sets marked "require full coverage"; otherwise they warn, because an uncovered amount safely falls back to explicit approval (Guide 3.7.2 says gaps block; this is my reading of it).
-- **Portal** is the identity boundary only. Login is by organization slug + email + password; invitation e-mail, MFA (default required), project views and uploads belong to Phase 3. Create a test login with `php artisan cops:client-identity <org-slug> <client-code> <email>`.
-- Employee master holds the core person record. Employment history, positions/grades and payroll fields arrive in Phase 4.
-- Permissions are new and granted per role by the seeder: staff `approval.view`; team leader adds `approval.act`, employees/clients view; manager adds oversight, `rules.approve`, client manage; admin everything. Adjust in the role matrix.
+## Deployment
 
-## Not verified here
-- PHP code is lint-clean (PHP 8.3 locally) and the pure logic (rule matching, coverage, money rounding) was run against golden scenarios. **The Laravel feature tests and migrations were not executed**: this environment cannot install Composer packages. Run `php artisan test` against MySQL and send me any failure.
-- Web: typecheck, existing Vitest suite and production build pass. `build:check` reports 465 KB initial JS against the 400 KB budget; the unmodified repository already reports 458 KB (the charts chunk loads eagerly). This bundle adds about 7 KB (mostly the four-language strings). Fixing the overage belongs in the next bundle.
-- rw / sw strings are first-pass; have native speakers review them. Legal and tax content must come from your counsel and accountant (Guide Appendix C).
+Production material (Nginx, Supervisor, cron, release and backup scripts, hardening and regression checklists) is in the `deploy/` and `docs/` folders - see `docs/DEPLOYMENT.md`.
+A route inventory with required permissions is in `docs/openapi.yaml`.
 
-## Docker note (ClamAV)
-```yaml
-services:
-  clamav: { image: clamav/clamav:stable, ports: ["3310:3310"], volumes: ["clamdb:/var/lib/clamav"] }
-```
+## Contributing
 
-## Next bundle (Phase 1 - Projects core)
-Projects, departments/roles, tasks, comments, attachments via Controlled Files, Kanban; it will register `task_review` approvals through `config/cops.php` handlers.
+Contributions of every size are welcome - code, translations, documentation, bug reports, ideas and testing in real organizations.
+
+1. Look at the [open issues](https://github.com/Dabani/company-operation-system/issues), especially those labelled `good first issue` and `help wanted`, or open one to discuss your idea first.
+2. Fork, create a branch (`feature/short-name`), make your change.
+3. Keep to the project rules: **permissions checked on the server**, **no enums or JSON columns** (use lookup tables), **every user-facing text translated** in all four languages, **sensitive actions audited**.
+4. Add or update tests, run `php artisan test`, and open a pull request describing what and why.
+
+Please read `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md` before your first pull request. Security problems: do **not** open a public issue - follow `SECURITY.md`.
+
+### Where help is most valuable
+
+- Native-speaker review of the **Kinyarwanda** and **Swahili** translations (first-pass today), and new languages.
+- Tests: feature tests for every module, and end-to-end scenarios.
+- Real-world feedback: tell us what your organization needed that was missing.
+
+## Roadmap
+
+**Now available**: service desk, controlled files, IT infrastructure, archive and records, compliance, reports, invitations and user management, PWA, health monitoring.
+
+**Next**
+
+- [ ] Two-factor authentication (administrators and managers first)
+- [ ] Antivirus scanning of uploaded files before they become downloadable
+- [ ] Complete OpenAPI schemas (requests and responses) and generated API documentation
+- [ ] Continuous integration (tests, static analysis, dependency audit) and a Docker development setup
+- [ ] Scheduled report delivery by e-mail and dashboard widgets fed by reports
+- [ ] Asynchronous exports for very large datasets
+- [ ] Single sign-on (OIDC / SAML) and directory import
+- [ ] Bulk role changes, user offboarding checklist
+- [ ] Web push notifications
+- [ ] Configurable thresholds for report indicators
+- [ ] Additional languages
+
+Have an idea that is not here? [Open an issue](https://github.com/Dabani/company-operation-system/issues) - this roadmap is meant to be shaped by the people who use the platform.
+
+## Project status
+
+COPS is feature-rich and used as a foundation for real deployments, but it is young: expect rough edges, and please run the regression checklist in `docs/REGRESSION-CHECKLIST.md` on a staging copy before going live. Kinyarwanda and Swahili translations are first-pass.
+
+## License
+
+Released under the [MIT License](LICENSE).
+
+## Acknowledgements
+
+Built with [Laravel](https://laravel.com), [Laravel Excel](https://laravel-excel.com), [Dompdf](https://github.com/dompdf/dompdf) and the open-source community.

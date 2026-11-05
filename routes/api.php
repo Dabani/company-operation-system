@@ -4,6 +4,8 @@ use App\Http\Controllers\Api\V1 as V1;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
+    require __DIR__ . '/portal.php';          // COPS Phase 0: external client portal (own guard)
+
 
     // ---- public ------------------------------------------------------------------------------
     Route::get('public/config', [V1\PublicController::class, 'config']);
@@ -18,6 +20,8 @@ Route::prefix('v1')->group(function () {
 
     // ---- authenticated + tenant context -------------------------------------------------------
     Route::middleware(['auth:sanctum', 'org.context'])->group(function () {
+        require __DIR__ . '/foundation.php';   // COPS Phase 0: approvals, rules, scope, employees, clients
+
         Route::post('auth/logout', [V1\AuthController::class, 'logout']);
 
         Route::get('me', [V1\MeController::class, 'show']);

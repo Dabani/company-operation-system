@@ -124,4 +124,25 @@ return [
         'title' => 'Inshingano igeze igihe: :title',
         'body' => '« :title » yagombaga gukorwa ku wa :date.',
     ],
+    // COPS Phase 0 approvals
+    'approval_requested' => [
+        'title' => 'Kwemeza birakenewe: :title',
+        'body' => '\':requester\' yatanze ":title" kandi icyemezo cyawe kirakenewe.',
+    ],
+    'approval_approved' => [
+        'title' => 'Byemejwe: :title',
+        'body' => '":title" cyemejwe na :actor.',
+    ],
+    'approval_rejected' => [
+        'title' => 'Byanzwe: :title',
+        'body' => '":title" cyanzwe na :actor. Impamvu: :comment',
+    ],
+    'approval_returned' => [
+        'title' => 'Byasubijwe ngo bikosorwe: :title',
+        'body' => '":title" cyasubijwe inyuma na :actor. Igitekerezo: :comment',
+    ],
+    'approval_escalated' => [
+        'title' => 'Wibutswe: :title kiratetegereje',
+        'body' => '":title" cya :requester kimaze amasaha arenga :hours gitegereje icyemezo.',
+    ],
 ];

@@ -37,6 +37,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'org.context' => ResolveOrganizationContext::class,
             'perm' => RequirePermission::class,
+            'client.context' => \App\Http\Middleware\ResolveClientContext::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

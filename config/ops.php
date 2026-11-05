@@ -46,4 +46,14 @@ return [
         'hsts' => (bool) env('OPS_HSTS', true),                                       // sent only on HTTPS requests
         'force_https' => (bool) env('OPS_FORCE_HTTPS', true),                         // production only
     ],
+
+    // COPS Phase 0 ----------------------------------------------------------------------------------------------------
+    'clamav' => [
+        'enabled' => (bool) env('CLAMAV_ENABLED', false),           // true in production; REQUIRED before client uploads go live
+        'host' => env('CLAMAV_HOST', '127.0.0.1'),
+        'port' => (int) env('CLAMAV_PORT', 3310),
+        'socket' => env('CLAMAV_SOCKET'),                           // e.g. /var/run/clamav/clamd.ctl (takes precedence over host/port)
+        'timeout' => (int) env('CLAMAV_TIMEOUT', 10),
+        'fail_closed' => (bool) env('CLAMAV_FAIL_CLOSED', true),    // daemon unreachable => file rejected
+    ],
 ];

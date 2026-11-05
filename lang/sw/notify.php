@@ -124,4 +124,25 @@ return [
         'title' => 'Jukumu la utiifu limefika: :title',
         'body' => '« :title » ilikuwa inatakiwa tarehe :date.',
     ],
+    // COPS Phase 0 approvals
+    'approval_requested' => [
+        'title' => 'Idhini inahitajika: :title',
+        'body' => '\':requester\' amewasilisha ":title" na uamuzi wako unahitajika.',
+    ],
+    'approval_approved' => [
+        'title' => 'Imeidhinishwa: :title',
+        'body' => '":title" imeidhinishwa na :actor.',
+    ],
+    'approval_rejected' => [
+        'title' => 'Imekataliwa: :title',
+        'body' => '":title" imekataliwa na :actor. Sababu: :comment',
+    ],
+    'approval_returned' => [
+        'title' => 'Imerudishwa kwa marekebisho: :title',
+        'body' => '":title" imerudishwa na :actor. Maoni: :comment',
+    ],
+    'approval_escalated' => [
+        'title' => 'Ukumbusho: :title inasubiri',
+        'body' => '":title" ya :requester imesubiri zaidi ya saa :hours kwa uamuzi.',
+    ],
 ];

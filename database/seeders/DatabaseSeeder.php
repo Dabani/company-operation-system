@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             ArchiveSeeder::class,            // Bundle 5: records, retention, disposal, legal references, records manager + compliance officer roles
             ComplianceSeeder::class,         // Bundle 6: backups, training, compliance calendar, audits
             ReportsSeeder::class,            // Bundle 7: reports menu and report permissions per role
+            CopsFoundationSeeder::class,     // COPS Phase 0: approvals, rules, scope, employees, clients
         ]);
     }
 }

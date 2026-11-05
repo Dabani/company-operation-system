@@ -42,6 +42,17 @@ class OrganizationContext
         return true;
     }
 
+
+    /** Tenant context without a user membership: portal requests and console jobs. Grants no permissions. */
+    public function resolveForOrganization(Organization $organization): void
+    {
+        $this->organization = $organization;
+        $this->membership = null;
+        $this->permissions = [];
+        $this->roleIds = [];
+        $this->level = 0;
+    }
+
     public function resolved(): bool { return $this->organization !== null; }
     public function organization(): ?Organization { return $this->organization; }
     public function organizationId(): ?string { return $this->organization?->id; }

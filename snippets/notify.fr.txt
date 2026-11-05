@@ -1,0 +1,20 @@
+    'approval_requested' => [
+        'title' => 'Approbation requise : :title',
+        'body' => '« :requester » a soumis « :title » et votre décision est attendue.',
+    ],
+    'approval_approved' => [
+        'title' => 'Approuvé : :title',
+        'body' => '« :title » a été approuvé par :actor.',
+    ],
+    'approval_rejected' => [
+        'title' => 'Rejeté : :title',
+        'body' => '« :title » a été rejeté par :actor. Motif : :comment',
+    ],
+    'approval_returned' => [
+        'title' => 'Renvoyé pour modification : :title',
+        'body' => '« :title » a été renvoyé par :actor. Commentaire : :comment',
+    ],
+    'approval_escalated' => [
+        'title' => 'Rappel : :title est en attente',
+        'body' => '« :title » de :requester attend une décision depuis plus de :hours heures.',
+    ],

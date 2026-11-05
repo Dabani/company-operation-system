@@ -1,0 +1,27 @@
+# Merge into docs/openapi.yaml (paths only; all routes are under /api/v1 and use the Sanctum cookie session unless noted).
+paths:
+  /approvals/inbox:        { get:  { summary: Requests waiting for my decision, x-permission: approval.act, x-scope: current step approver } }
+  /approvals/mine:         { get:  { summary: Requests I raised, x-permission: "approval.view | approval.act" } }
+  /approvals:              { get:  { summary: All requests (oversight), x-permission: approval.view_all } }
+  /approvals/{id}:         { get:  { summary: Request with decision history, x-scope: requester, current approver, past actor or approval.view_all; otherwise 404 } }
+  /approvals/{id}/act:     { post: { summary: "Decide. body {decision: approve|reject|return, comment?}", x-permission: approval.act, responses: { "422": { description: self approval, segregation, comment required } } } }
+  /approvals/{id}/resubmit: { post: { summary: Resubmit a returned request, x-scope: requester } }
+  /approvals/{id}/cancel:  { post: { summary: Cancel a pending or returned request, x-scope: requester } }
+  /approval-delegations:   { get: {}, post: { summary: "body {delegate_id, valid_from, valid_to}" }, x-permission: approval.act }
+  /approval-flows:         { get: { x-permission: "approval.configure | approval.view_all" }, post: { summary: Create an inactive flow version, x-permission: approval.configure } }
+  /approval-flows/{id}/activate: { post: { summary: Go live (must not be the author), x-permission: approval.configure } }
+  /rule-sets:              { get: { x-permission: rules.view }, post: { x-permission: rules.configure } }
+  /rule-sets/{id}/versions: { post: { summary: Create draft version with conditions and outcomes, x-permission: rules.configure } }
+  /rule-versions/{id}:     { get: { x-permission: rules.view }, put: { summary: Edit a draft, x-permission: rules.configure } }
+  /rule-versions/{id}/impact: { post: { summary: "What-if on samples. body {samples:[{amount, department, ...}]}", x-permission: rules.configure } }
+  /rule-versions/{id}/submit: { post: { summary: Submit for independent approval (impact check required), x-permission: rules.configure } }
+  /rule-versions/{id}/signoff: { post: { summary: Legal sign-off (not the author), x-permission: rules.signoff } }
+  /legal-parameters:       { get: { x-permission: rules.view }, post: { x-permission: rules.configure } }
+  /legal-parameters/{id}/verify: { post: { x-permission: rules.signoff } }
+  /department-access:      { get: {}, post: { summary: Assign own/team/department/organization scope and head flag }, x-permission: scope.manage }
+  /employees:              { get: { x-permission: employee.view, x-scope: department }, post: { x-permission: employee.manage } }
+  /employees/{id}/sensitive: { get: { summary: National ID and bank account (audited), x-permission: employee.view_sensitive } }
+  /clients:                { get: { x-permission: client.view }, post: { x-permission: client.manage } }
+  /portal/auth/login:      { post: { summary: "External login. body {organization(slug), email, password}", security: [] } }
+  /portal/me:              { get: { summary: Portal identity, x-guard: client } }
+  /portal/contacts/{id}:   { get: { summary: Own client's contact; other client's id => 404, x-guard: client } }

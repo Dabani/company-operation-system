@@ -24,6 +24,8 @@ class UserInvitationTest extends TestCase
         parent::setUp();
         config(['ops.seed_admin_password' => 'Test-Password-123!', 'ops.seed_admin_email' => 'admin@example.com']);
         $this->seed(DatabaseSeeder::class);
+        config(['sanctum.stateful' => ['spa.test']]);                       // do not depend on the developer's SANCTUM_STATEFUL_DOMAINS
+        $this->withHeaders(['Referer' => 'http://spa.test']);               // the SPA is a stateful Sanctum frontend: activation and login start a session
     }
 
     /** Invite a user as admin and return [user, raw token taken from the e-mailed link]. */
@@ -83,7 +85,7 @@ class UserInvitationTest extends TestCase
     public function test_weak_password_is_refused(): void
     {
         [$user, $token] = $this->invite();
-        $this->postJson('/api/v1/auth/activate', ['email' => $user->email, 'token' => $token, 'password' => 'short', 'password_confirmation' => 'short'])->assertStatus(422)->assertJsonValidationErrors('password');
+        $this->postJson('/api/v1/auth/activate', ['email' => $user->email, 'token' => $token, 'password' => 'short', 'password_confirmation' => 'short'])->assertStatus(422)->assertJsonStructure(['error' => ['details' => ['password']]]);
     }
 
     public function test_resend_replaces_the_old_link_and_is_throttled(): void

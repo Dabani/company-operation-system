@@ -1,0 +1,20 @@
+    'approval_requested' => [
+        'title' => 'Approval needed: :title',
+        'body' => '\':requester\' submitted ":title" and your decision is needed.',
+    ],
+    'approval_approved' => [
+        'title' => 'Approved: :title',
+        'body' => '":title" was approved by :actor.',
+    ],
+    'approval_rejected' => [
+        'title' => 'Rejected: :title',
+        'body' => '":title" was rejected by :actor. Reason: :comment',
+    ],
+    'approval_returned' => [
+        'title' => 'Returned for changes: :title',
+        'body' => '":title" was returned by :actor. Comment: :comment',
+    ],
+    'approval_escalated' => [
+        'title' => 'Reminder: :title is waiting',
+        'body' => '":title" from :requester has waited more than :hours hours for a decision.',
+    ],

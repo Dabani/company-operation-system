@@ -38,6 +38,7 @@ return [
     */
 
     'guards' => [
+        'client' => ['driver' => 'session', 'provider' => 'client_identities'],   // COPS Phase 0 portal
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
@@ -62,6 +63,7 @@ return [
     */
 
     'providers' => [
+        'client_identities' => ['driver' => 'eloquent', 'model' => App\Models\ClientIdentity::class],
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', User::class),

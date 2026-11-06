@@ -145,4 +145,14 @@ return [
         'title' => 'Ukumbusho: :title inasubiri',
         'body' => '":title" ya :requester imesubiri zaidi ya saa :hours kwa uamuzi.',
     ],
+    // COPS Phase 1
+    'task_assigned' => [
+        'title' => 'Umepewa kazi: :title',
+        'body' => ':actor amekupa ":title".',
+    ],
+    // COPS Phase 2a
+    'timer_auto_stopped' => [
+        'title' => 'Kipima muda kimesimamishwa kiotomatiki',
+        'body' => 'Kipima muda chako kwenye :title kilizidi saa :hours na kimesimamishwa. Tafadhali rekebisha rekodi kabla ya kuwasilisha karatasi ya saa.',
+    ],
 ];

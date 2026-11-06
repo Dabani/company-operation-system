@@ -145,4 +145,14 @@ return [
         'title' => 'Rappel : :title est en attente',
         'body' => '« :title » de :requester attend une décision depuis plus de :hours heures.',
     ],
+    // COPS Phase 1
+    'task_assigned' => [
+        'title' => 'Tâche assignée : :title',
+        'body' => ':actor vous a assigné « :title ».',
+    ],
+    // COPS Phase 2a
+    'timer_auto_stopped' => [
+        'title' => 'Chronomètre arrêté automatiquement',
+        'body' => 'Votre chronomètre sur :title a dépassé :hours heures et a été arrêté. Corrigez l\'entrée avant de soumettre votre feuille de temps.',
+    ],
 ];

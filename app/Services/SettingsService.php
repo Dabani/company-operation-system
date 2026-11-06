@@ -13,6 +13,11 @@ class SettingsService
         'archive.transfer_days' => ['integer', 30],          // days after a record becomes inactive before it must reach the central archive
         'archive.default_retention_years' => ['integer', 10], // used when no retention rule exists for a category
         'training.retention_years' => ['integer', 3],         // how long training attendance evidence is kept
+        'time.single_timer' => ['boolean', true],            // one running timer per person; starting another asks to stop the first
+        'time.max_hours' => ['integer', 12],                 // a timer running longer is stopped automatically and flagged for correction
+        'time.manual_allowed' => ['boolean', true],          // allow manual time entries (reason required)
+        'time.manual_max_days_back' => ['integer', 31],      // how far back a manual entry may start
+        'time.idle_warning_minutes' => ['integer', 30],      // the header timer warns after this long without activity
     ];
 
     public static function get(string $orgId, string $key)

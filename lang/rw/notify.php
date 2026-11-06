@@ -145,4 +145,14 @@ return [
         'title' => 'Wibutswe: :title kiratetegereje',
         'body' => '":title" cya :requester kimaze amasaha arenga :hours gitegereje icyemezo.',
     ],
+    // COPS Phase 1
+    'task_assigned' => [
+        'title' => 'Wahawe umurimo: :title',
+        'body' => ':actor yaguhaye ":title".',
+    ],
+    // COPS Phase 2a
+    'timer_auto_stopped' => [
+        'title' => 'Isaha yahagaritswe yonyine',
+        'body' => 'Isaha yawe kuri :title yarengeje amasaha :hours irahagarikwa. Kosora icyanditswe mbere yo gutanga urupapuro rw\'amasaha.',
+    ],
 ];

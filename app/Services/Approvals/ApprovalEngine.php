@@ -49,7 +49,7 @@ class ApprovalEngine
         $flow = $this->usableFlow($resolved?->get('approval_flow'))
             ?? $this->flowForSubject($typeId)
             ?? $this->defaultFlow();
-        $usedDefault = $resolved === null;     // no rule applied -> safe default: explicit approval
+        $usedDefault = $resolved === null && $flow->code === 'default_two_level';     // no rule applied -> safe default: explicit approval
 
         return DB::transaction(function () use ($orgId, $typeId, $subjectId, $requester, $title, $opts, $flow, $resolved, $usedDefault) {
             $now = now();
@@ -238,6 +238,9 @@ class ApprovalEngine
                 $users = $ids->isEmpty() ? collect() : User::query()->tap($active)->whereKey($ids)->get();
                 if ($users->isNotEmpty()) return $users;
             }
+        }
+        if ($resolver = config("cops.step_resolvers.$type")) {
+            return app($resolver)->users($r, $step);      // module-defined step types (Phase 1: project_reviewer)
         }
         return collect();
     }

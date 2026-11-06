@@ -145,4 +145,14 @@ return [
         'title' => 'Reminder: :title is waiting',
         'body' => '":title" from :requester has waited more than :hours hours for a decision.',
     ],
+    // COPS Phase 1
+    'task_assigned' => [
+        'title' => 'Task assigned: :title',
+        'body' => ':actor assigned you ":title".',
+    ],
+    // COPS Phase 2a
+    'timer_auto_stopped' => [
+        'title' => 'Timer stopped automatically',
+        'body' => 'Your timer on :title ran past :hours hours and was stopped. Please correct the entry before submitting your timesheet.',
+    ],
 ];

@@ -8,14 +8,17 @@ use App\Models\Organization;
 use App\Services\OrganizationContext;
 use Dompdf\Dompdf;
 
-/** Invoice PDF with a time-breakdown annex, rendered from the stored snapshot (never from live rates), so it is identical years later. */
+/**
+ * Invoice PDF rendered from the stored snapshot (never from live rates), so it is identical years later.
+ * $withAnnex = false (client portal) omits the internal time breakdown: clients never see people, hours or internal time entries.
+ */
 class InvoicePdf
 {
-    public function render(Invoice $invoice): string
+    public function render(Invoice $invoice, bool $withAnnex = true): string
     {
         $i = Invoice::with(['lines.kind', 'lines.sources.timeEntry.user:id,name', 'lines.sources.timeEntry.task:id,number,title', 'status', 'project:id,code,name', 'payments', 'creditNotes.status'])->findOrFail($invoice->id);
         $org = app(OrganizationContext::class)->organization() ?? Organization::findOrFail($i->organization_id);
-        $annex = $i->lines->flatMap(fn ($l) => $l->sources->map(fn (InvoiceLineSource $s) => [
+        $annex = !$withAnnex ? collect() : $i->lines->flatMap(fn ($l) => $l->sources->map(fn (InvoiceLineSource $s) => [
             'date' => $s->timeEntry->work_date->toDateString(), 'person' => $s->timeEntry->user?->name,
             'task' => $s->timeEntry->task ? "#{$s->timeEntry->task->number} {$s->timeEntry->task->title}" : '-', 'hours' => number_format($s->seconds / 3600, 2, '.', ''),
         ]))->sortBy('date')->values();

@@ -12,8 +12,9 @@ class ClientIdentity extends Authenticatable
     use HasUlids, BelongsToOrganization;
 
     protected $guarded = [];
-    protected $hidden = ['password', 'remember_token'];
-    protected $casts = ['is_active' => 'boolean', 'last_login_at' => 'datetime', 'password' => 'hashed'];
+    protected $hidden = ['password', 'remember_token', 'two_factor_secret'];
+    protected $casts = ['is_active' => 'boolean', 'last_login_at' => 'datetime', 'password' => 'hashed', 'two_factor_secret' => 'encrypted',
+        'two_factor_confirmed_at' => 'datetime', 'invited_at' => 'datetime'];
 
     public function setEmailAttribute(string $value): void
     {
@@ -22,4 +23,6 @@ class ClientIdentity extends Authenticatable
 
     public function client() { return $this->belongsTo(Client::class); }
     public function organization() { return $this->belongsTo(Organization::class); }
+    public function contact() { return $this->belongsTo(ClientContact::class, 'client_contact_id'); }
+    public function hasMfa(): bool { return $this->two_factor_confirmed_at !== null; }
 }

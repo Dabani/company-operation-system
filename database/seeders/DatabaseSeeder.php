@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
             CopsFoundationSeeder::class,
             ProjectsSeeder::class,
             TimeSeeder::class,
-            BillingSeeder::class,            // COPS Phase 2b               // COPS Phase 2a           // COPS Phase 1     // COPS Phase 0: approvals, rules, scope, employees, clients
+            BillingSeeder::class,
+            PortalSeeder::class,             // COPS Phase 3            // COPS Phase 2b               // COPS Phase 2a           // COPS Phase 1     // COPS Phase 0: approvals, rules, scope, employees, clients
         ]);
     }
 }

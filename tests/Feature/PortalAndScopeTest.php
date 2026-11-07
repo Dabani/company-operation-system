@@ -9,17 +9,23 @@ use App\Models\Department;
 use App\Models\Employee;
 use App\Models\LookupValue;
 use App\Models\UserDepartmentAssignment;
+use App\Services\SettingsService;
 use App\Support\Lookup;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
-/** Not executed in the build environment - run `php artisan test`. */
+/** Replaces the Bundle 08 version: the portal now requires two-factor by default, so these tests switch it off and PortalTest covers it. */
 class PortalAndScopeTest extends TestCase
 {
     use RefreshDatabase, CopsTestHelpers;
 
-    protected function setUp(): void { parent::setUp(); $this->bootCops(); }
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->bootCops();
+        SettingsService::set($this->org->id, 'portal.mfa_required', false);
+    }
 
     private function client(string $code): array
     {
@@ -40,7 +46,7 @@ class PortalAndScopeTest extends TestCase
     {
         [, , $id] = $this->client('ACME');
         $this->spa()->postJson('/api/v1/portal/auth/login', ['organization' => $this->org->slug, 'email' => 'ACME@client.test', 'password' => 'wrong-password'])->assertStatus(422);
-        $this->spa()->postJson('/api/v1/portal/auth/login', ['organization' => $this->org->slug, 'email' => 'ACME@client.test', 'password' => 'Str0ng-Passw0rd!x'])->assertOk();
+        $this->spa()->postJson('/api/v1/portal/auth/login', ['organization' => $this->org->slug, 'email' => 'ACME@client.test', 'password' => 'Str0ng-Passw0rd!x'])->assertOk()->assertJsonPath('mfa', 'none');
         $this->assertNotNull($id->refresh()->last_login_at);
     }
 

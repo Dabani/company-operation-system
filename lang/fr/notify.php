@@ -160,4 +160,13 @@ return [
         'title' => 'Facture en retard : :title',
         'body' => 'La facture :title de :client est en retard. Solde : :balance.',
     ],
+    // COPS Phase 3
+    'portal_client_comment' => [
+        'title' => 'Commentaire du client : :title',
+        'body' => ':client a écrit un commentaire sur :title.',
+    ],
+    'portal_client_upload' => [
+        'title' => 'Fichier du client : :title',
+        'body' => ':client a déposé un fichier sur :title. Il a été analysé et se trouve dans les fichiers du projet.',
+    ],
 ];

@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {
-    use HasUlids, SoftDeletes, BelongsToOrganization;
+    use HasUlids, SoftDeletes, BelongsToOrganization, \App\Support\BelongsToClient;
 
     protected $guarded = [];
     protected $casts = ['start_date' => 'date', 'end_date' => 'date', 'budget_amount' => 'decimal:2'];

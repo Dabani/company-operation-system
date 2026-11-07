@@ -10,7 +10,7 @@ use LogicException;
 
 class Invoice extends Model
 {
-    use HasUlids, BelongsToOrganization;
+    use HasUlids, BelongsToOrganization, \App\Support\BelongsToClient;
 
     protected $guarded = [];
     protected $casts = ['issue_date' => 'date', 'due_date' => 'date', 'issued_at' => 'datetime', 'tax_exempt' => 'boolean', 'rounding_minutes' => 'integer',

@@ -160,4 +160,13 @@ return [
         'title' => 'Invoice overdue: :title',
         'body' => 'Invoice :title for :client is overdue. Balance: :balance.',
     ],
+    // COPS Phase 3
+    'portal_client_comment' => [
+        'title' => 'Client comment: :title',
+        'body' => ':client wrote a comment on :title.',
+    ],
+    'portal_client_upload' => [
+        'title' => 'Client upload: :title',
+        'body' => ':client uploaded a file to :title. It was virus-scanned and is waiting in the project files.',
+    ],
 ];

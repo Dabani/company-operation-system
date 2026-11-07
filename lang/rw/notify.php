@@ -160,4 +160,13 @@ return [
         'title' => 'Inyemezabwishyu yarenze igihe: :title',
         'body' => 'Inyemezabwishyu :title ya :client yarenze igihe. Asigaye: :balance.',
     ],
+    // COPS Phase 3
+    'portal_client_comment' => [
+        'title' => 'Igitekerezo cy\'umukiriya: :title',
+        'body' => ':client yanditse igitekerezo kuri :title.',
+    ],
+    'portal_client_upload' => [
+        'title' => 'Dosiye y\'umukiriya: :title',
+        'body' => ':client yashyizeho dosiye kuri :title. Yasuzumwe virusi kandi iri mu madosiye y\'umushinga.',
+    ],
 ];

@@ -160,4 +160,13 @@ return [
         'title' => 'Ankara imechelewa: :title',
         'body' => 'Ankara :title ya :client imechelewa. Salio: :balance.',
     ],
+    // COPS Phase 3
+    'portal_client_comment' => [
+        'title' => 'Maoni ya mteja: :title',
+        'body' => ':client ameandika maoni kwenye :title.',
+    ],
+    'portal_client_upload' => [
+        'title' => 'Faili ya mteja: :title',
+        'body' => ':client amepakia faili kwenye :title. Imekaguliwa virusi na iko kwenye faili za mradi.',
+    ],
 ];

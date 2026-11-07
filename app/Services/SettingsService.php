@@ -21,6 +21,9 @@ class SettingsService
         'billing.rounding_minutes' => ['integer', 1],         // time on invoices is rounded once, to this increment (1 = to the minute)
         'billing.rounding_mode' => ['string', 'half_up'],       // half_up | up | down
         'billing.payment_terms_days' => ['integer', 30],       // default payment terms printed on invoices
+        'portal.mfa_required' => ['boolean', true],           // client users must pass two-factor verification
+        'portal.upload_max_mb' => ['integer', 10],            // client upload size limit (never above the global file limit)
+        'portal.upload_extensions' => ['string', 'pdf,docx,xlsx,pptx,png,jpg,jpeg,txt,csv'],   // allowed client upload types (intersected with the global list)
     ];
 
     public static function get(string $orgId, string $key)

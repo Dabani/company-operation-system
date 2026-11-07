@@ -1,4 +1,4 @@
-    'timer_auto_stopped' => [
-        'title' => 'Kipima muda kimesimamishwa kiotomatiki',
-        'body' => 'Kipima muda chako kwenye :title kilizidi saa :hours na kimesimamishwa. Tafadhali rekebisha rekodi kabla ya kuwasilisha karatasi ya saa.',
+    'invoice_overdue' => [
+        'title' => 'Ankara imechelewa: :title',
+        'body' => 'Ankara :title ya :client imechelewa. Salio: :balance.',
     ],

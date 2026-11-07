@@ -155,4 +155,9 @@ return [
         'title' => 'Timer stopped automatically',
         'body' => 'Your timer on :title ran past :hours hours and was stopped. Please correct the entry before submitting your timesheet.',
     ],
+    // COPS Phase 2b
+    'invoice_overdue' => [
+        'title' => 'Invoice overdue: :title',
+        'body' => 'Invoice :title for :client is overdue. Balance: :balance.',
+    ],
 ];

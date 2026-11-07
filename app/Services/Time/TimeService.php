@@ -208,7 +208,7 @@ class TimeService
     {
         [$p, $level] = $this->access->find($u, $projectId);
         if (!ProjectAccess::canEdit($level)) abort(403, 'forbidden');
-        if (in_array($p->status->code, ['completed', 'cancelled'], true)) $this->fail('project_id', 'entry.project_closed');
+        if (in_array($p->status->code, ['completed', 'cancelled', 'delivered', 'closed'], true)) $this->fail('project_id', 'entry.project_closed');
         $task = null;
         if ($taskId) {
             $task = Task::where('project_id', $p->id)->find($taskId) ?? $this->fail('task_id', 'entry.task_invalid');

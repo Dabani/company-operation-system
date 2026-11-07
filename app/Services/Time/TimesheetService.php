@@ -11,6 +11,7 @@ use App\Services\AuditLogger;
 use App\Support\Lookup;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Database\UniqueConstraintViolationException;
 
 /** Weekly timesheets (Monday-Sunday in the organization's timezone), approved through the Phase 0 approval engine. */
 class TimesheetService
@@ -26,19 +27,27 @@ class TimesheetService
     {
         $weekStart = TimerMath::weekStart($anyDate);
 
-        return Timesheet::query()->createOrFirst(
-            [
+        $find = fn() => Timesheet::query()
+            ->where('organization_id', $u->organization_id)
+            ->where('user_id', $u->id)
+            ->whereDate('week_start', $weekStart);
+
+        if ($existing = $find()->first()) {
+            return $existing;
+        }
+
+        try {
+            return Timesheet::create([
                 'organization_id' => $u->organization_id,
-                'user_id'        => $u->id,
-                'week_start'     => $weekStart,
-            ],
-            [
-                'status_id' => Lookup::id('timesheet_status', 'draft'),
-            ]
-        );
+                'user_id'         => $u->id,
+                'week_start'      => $weekStart,
+                'status_id'       => Lookup::id('timesheet_status', 'draft'),
+            ]);
+        } catch (UniqueConstraintViolationException) {
+            // Lost a race with a concurrent request: the row now exists.
+            return $find()->firstOrFail();
+        }
     }
-
-
 
     public function submit(User $u, string $anyDate): Timesheet
     {

@@ -155,4 +155,9 @@ return [
         'title' => 'Isaha yahagaritswe yonyine',
         'body' => 'Isaha yawe kuri :title yarengeje amasaha :hours irahagarikwa. Kosora icyanditswe mbere yo gutanga urupapuro rw\'amasaha.',
     ],
+    // COPS Phase 2b
+    'invoice_overdue' => [
+        'title' => 'Inyemezabwishyu yarenze igihe: :title',
+        'body' => 'Inyemezabwishyu :title ya :client yarenze igihe. Asigaye: :balance.',
+    ],
 ];

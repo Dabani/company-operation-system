@@ -155,4 +155,9 @@ return [
         'title' => 'Kipima muda kimesimamishwa kiotomatiki',
         'body' => 'Kipima muda chako kwenye :title kilizidi saa :hours na kimesimamishwa. Tafadhali rekebisha rekodi kabla ya kuwasilisha karatasi ya saa.',
     ],
+    // COPS Phase 2b
+    'invoice_overdue' => [
+        'title' => 'Ankara imechelewa: :title',
+        'body' => 'Ankara :title ya :client imechelewa. Salio: :balance.',
+    ],
 ];

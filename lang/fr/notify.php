@@ -155,4 +155,9 @@ return [
         'title' => 'Chronomètre arrêté automatiquement',
         'body' => 'Votre chronomètre sur :title a dépassé :hours heures et a été arrêté. Corrigez l\'entrée avant de soumettre votre feuille de temps.',
     ],
+    // COPS Phase 2b
+    'invoice_overdue' => [
+        'title' => 'Facture en retard : :title',
+        'body' => 'La facture :title de :client est en retard. Solde : :balance.',
+    ],
 ];

@@ -23,6 +23,7 @@ Route::prefix('v1')->group(function () {
         require __DIR__ . '/foundation.php';
         require __DIR__ . '/projects.php';     // COPS Phase 1: projects and tasks   // COPS Phase 0: approvals, rules, scope, employees, clients
         require __DIR__ . '/time.php';         // COPS Phase 2a: timer, timesheets, rate cards
+        require __DIR__ . '/billing.php';      // COPS Phase 2b: invoices, payments, credit notes, tax rates
 
         Route::post('auth/logout', [V1\AuthController::class, 'logout']);
 

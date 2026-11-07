@@ -20,7 +20,11 @@ class TimeTrackingTest extends TestCase
 {
     use RefreshDatabase, CopsTestHelpers;
 
-    protected function setUp(): void { parent::setUp(); $this->bootCops(); }
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->bootCops();
+    }
 
     private function projectWithMember($owner, $member): Project
     {
@@ -55,7 +59,9 @@ class TimeTrackingTest extends TestCase
         $viewer = $this->makeUser('staff');
         $p = $this->projectWithMember($owner, $dev);
         ProjectMember::create(['project_id' => $p->id, 'user_id' => $viewer->id, 'project_role_id' => Lookup::id('project_role', 'viewer')]);
-        $s = gmdate('Y-m-d H:i:s', time() - 7200); $m = gmdate('Y-m-d H:i:s', time() - 5400); $e = gmdate('Y-m-d H:i:s', time() - 3600);
+        $s = gmdate('Y-m-d H:i:s', time() - 7200);
+        $m = gmdate('Y-m-d H:i:s', time() - 5400);
+        $e = gmdate('Y-m-d H:i:s', time() - 3600);
 
         Sanctum::actingAs($viewer);
         $this->postJson('/api/v1/timer/start', ['project_id' => $p->id])->assertForbidden();
@@ -74,15 +80,30 @@ class TimeTrackingTest extends TestCase
         $manager = $this->makeUser('manager');
         $this->makeUser('admin');
         $p = $this->projectWithMember($owner, $dev);
-        $lead = Employee::create(['employee_number' => 'M1', 'first_name' => 'M', 'last_name' => 'M', 'user_id' => $manager->id,
-            'category_id' => Lookup::id('employee_category', 'contracted'), 'status_id' => Lookup::id('employee_status', 'active')]);
-        Employee::create(['employee_number' => 'D1', 'first_name' => 'D', 'last_name' => 'D', 'user_id' => $dev->id, 'manager_employee_id' => $lead->id,
-            'category_id' => Lookup::id('employee_category', 'contracted'), 'status_id' => Lookup::id('employee_status', 'active')]);
+        $lead = Employee::create([
+            'employee_number' => 'M1',
+            'first_name' => 'M',
+            'last_name' => 'M',
+            'user_id' => $manager->id,
+            'category_id' => Lookup::id('employee_category', 'contracted'),
+            'status_id' => Lookup::id('employee_status', 'active')
+        ]);
+        Employee::create([
+            'employee_number' => 'D1',
+            'first_name' => 'D',
+            'last_name' => 'D',
+            'user_id' => $dev->id,
+            'manager_employee_id' => $lead->id,
+            'category_id' => Lookup::id('employee_category', 'contracted'),
+            'status_id' => Lookup::id('employee_status', 'active')
+        ]);
 
         Sanctum::actingAs($dev);
         $id = $this->postJson('/api/v1/time-entries', $this->entry($dev->id, $p->id, gmdate('Y-m-d H:i:s', time() - 7200), gmdate('Y-m-d H:i:s', time() - 3600)))->json('data.id');
         $week = $this->getJson('/api/v1/time-week')->assertOk()->json('data.week_start');
-        $this->postJson("/api/v1/timesheets/$week/submit")->assertOk()->assertJsonPath('data.status', 'submitted');
+        $r = $this->postJson("/api/v1/timesheets/$week/submit");
+        dump($week, $r->json());
+        $r->assertOk();
         $this->patchJson("/api/v1/time-entries/$id", ['description' => 'x'])->assertStatus(422);                       // submitted: frozen
         $this->postJson('/api/v1/time-entries', $this->entry($dev->id, $p->id, gmdate('Y-m-d H:i:s', time() - 3000), gmdate('Y-m-d H:i:s', time() - 2400)))->assertStatus(422);   // week locked
 

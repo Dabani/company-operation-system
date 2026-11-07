@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
             ReportsSeeder::class,            // Bundle 7: reports menu and report permissions per role
             CopsFoundationSeeder::class,
             ProjectsSeeder::class,
-            TimeSeeder::class,               // COPS Phase 2a           // COPS Phase 1     // COPS Phase 0: approvals, rules, scope, employees, clients
+            TimeSeeder::class,
+            BillingSeeder::class,            // COPS Phase 2b               // COPS Phase 2a           // COPS Phase 1     // COPS Phase 0: approvals, rules, scope, employees, clients
         ]);
     }
 }

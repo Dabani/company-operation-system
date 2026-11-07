@@ -18,6 +18,9 @@ class SettingsService
         'time.manual_allowed' => ['boolean', true],          // allow manual time entries (reason required)
         'time.manual_max_days_back' => ['integer', 31],      // how far back a manual entry may start
         'time.idle_warning_minutes' => ['integer', 30],      // the header timer warns after this long without activity
+        'billing.rounding_minutes' => ['integer', 1],         // time on invoices is rounded once, to this increment (1 = to the minute)
+        'billing.rounding_mode' => ['string', 'half_up'],       // half_up | up | down
+        'billing.payment_terms_days' => ['integer', 30],       // default payment terms printed on invoices
     ];
 
     public static function get(string $orgId, string $key)

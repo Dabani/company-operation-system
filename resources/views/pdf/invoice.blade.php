@@ -59,7 +59,7 @@
 
 <p class="muted" style="margin-top:14px">{{ __('billing.pdf.terms', ['days' => $i->payment_terms_days]) }}
   @if($i->lines->contains(fn($l) => $l->kind->code === 'time')) {{ __('billing.pdf.rounding', ['minutes' => $i->rounding_minutes, 'mode' => $i->rounding_mode]) }}@endif</p>
-@if($i->notes)<p><b>{{ __('billing.pdf.notes') }}</b><br>{!! nl2br(e($i->notes)) !!}</p>@endif
+@if($i->notes)<div><b>{{ __('billing.pdf.notes') }}</b>{!! \App\Support\Html::clean($i->notes) !!}</div>@endif
 
 @if($annex->isNotEmpty())
 <div class="annex">

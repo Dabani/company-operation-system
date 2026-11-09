@@ -156,7 +156,7 @@ class TaskController extends Controller
     {
         [$t, , $level] = $this->find($request, $id);
         abort_unless(ProjectAccess::canComment($level), 403, 'forbidden');
-        $d = $request->validate(['body' => 'required|string|max:5000']);
+        $d = $request->validate(['body' => 'required|string|max:20000']);
         $c = TaskComment::create(['task_id' => $t->id, 'user_id' => $request->user()->id, 'body' => trim($d['body'])]);
         AuditLogger::log('task.commented', $t);
         return response()->json(['id' => $c->id], 201);

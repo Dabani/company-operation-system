@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             TimeSeeder::class,
             BillingSeeder::class,
             PortalSeeder::class,             // COPS Phase 3            // COPS Phase 2b               // COPS Phase 2a           // COPS Phase 1     // COPS Phase 0: approvals, rules, scope, employees, clients
+            PolishSeeder::class,             // currency list and menu icons
         ]);
     }
 }

@@ -13,6 +13,7 @@ use App\Services\OrganizationContext;
 use App\Services\Projects\ProjectAccess;
 use App\Support\AppliesListQuery;
 use App\Support\Lookup;
+use App\Support\LookupRule;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -64,7 +65,7 @@ class ProjectController extends Controller
             'owner_id' => ['sometimes', Rule::exists('organization_memberships', 'user_id')->where('organization_id', $org)],
             'status_id' => ['sometimes', Rule::exists('lookup_values', 'id')],
             'start_date' => 'nullable|date', 'end_date' => 'nullable|date|after_or_equal:start_date',
-            'budget_amount' => 'nullable|numeric|min:0|max:9999999999999', 'currency_code' => 'nullable|string|size:3',
+            'budget_amount' => 'nullable|numeric|min:0|max:9999999999999', 'currency_code' => ['nullable', LookupRule::code('currency')],
             'department_ids' => 'array|max:30', 'department_ids.*' => [Rule::exists('departments', 'id')->where('organization_id', $org)],
         ];
     }

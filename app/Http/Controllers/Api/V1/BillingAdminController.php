@@ -11,6 +11,7 @@ use App\Services\Billing\ProjectLifecycle;
 use App\Services\OrganizationContext;
 use App\Services\Projects\ProjectAccess;
 use App\Support\Lookup;
+use App\Support\LookupRule;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -60,7 +61,7 @@ class BillingAdminController extends Controller
     public function setBilling(Request $request, string $id)
     {
         $p = Project::findOrFail($id);
-        $d = $request->validate(['billing_model_id' => ['required', Rule::exists('lookup_values', 'id')], 'currency_code' => 'nullable|string|size:3', 'budget_amount' => 'nullable|numeric|min:0']);
+        $d = $request->validate(['billing_model_id' => ['required', Rule::exists('lookup_values', 'id')], 'currency_code' => ['nullable', LookupRule::code('currency')], 'budget_amount' => 'nullable|numeric|min:0']);
         $p->update(['billing_model_id' => $d['billing_model_id'], 'currency_code' => isset($d['currency_code']) ? strtoupper($d['currency_code']) : $p->currency_code,
             'budget_amount' => $d['budget_amount'] ?? $p->budget_amount]);
         AuditLogger::log('project.billing_set', $p, [], $d);

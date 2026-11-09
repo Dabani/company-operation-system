@@ -214,14 +214,18 @@ class PortalTest extends TestCase
     {
         [, , $i, $p] = $this->world();
         $this->asClient($i);
-        $this->postJson("/api/v1/portal/projects/{$p->id}/comments", ['body' => '<b>Hello</b> team'])->assertCreated();
-        $this->assertSame('Hello team', ProjectComment::first()->body);                                          // markup stripped
+        $this->postJson("/api/v1/portal/projects/{$p->id}/comments", ['body' => '<p>Hello <strong>team</strong></p><script>alert(1)</script>'])->assertCreated();
+        $stored = (string) ProjectComment::first()->body;
+        $this->assertStringContainsString('<strong>team</strong>', $stored);                                      // formatting kept
+        $this->assertStringNotContainsString('<script', $stored);                                                  // script removed by the server
 
         $this->asStaff($this->manager);
-        $this->postJson("/api/v1/projects/{$p->id}/client-comments", ['body' => 'Internal only'])->assertCreated();
-        $this->postJson("/api/v1/projects/{$p->id}/client-comments", ['body' => 'Shared reply', 'is_client_visible' => true])->assertCreated();
+        $this->postJson("/api/v1/projects/{$p->id}/client-comments", ['body' => '<p>Internal only</p>'])->assertCreated();
+        $this->postJson("/api/v1/projects/{$p->id}/client-comments", ['body' => '<p>Shared reply</p>', 'is_client_visible' => true])->assertCreated();
         $this->asClient($i);
-        $comments = $this->getJson("/api/v1/portal/projects/{$p->id}")->json('data.comments');
-        $this->assertSame(['Hello team', 'Shared reply'], array_column($comments, 'body'));
+        $bodies = implode(' ', array_column($this->getJson("/api/v1/portal/projects/{$p->id}")->json('data.comments'), 'body'));
+        $this->assertStringContainsString('Hello', $bodies);
+        $this->assertStringContainsString('Shared reply', $bodies);
+        $this->assertStringNotContainsString('Internal only', $bodies);
     }
 }

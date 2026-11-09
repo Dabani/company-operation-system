@@ -78,9 +78,9 @@ class PortalController extends Controller
     public function comment(Request $request, string $id)
     {
         $p = $this->project($id);
-        $d = $request->validate(['body' => 'required|string|max:3000']);
+        $d = $request->validate(['body' => 'required|string|max:20000']);
         $me = $this->identity();
-        $c = ProjectComment::create(['project_id' => $p->id, 'client_identity_id' => $me->id, 'body' => trim(strip_tags($d['body'])), 'is_client_visible' => true]);
+        $c = ProjectComment::create(['project_id' => $p->id, 'client_identity_id' => $me->id, 'body' => trim($d['body']), 'is_client_visible' => true]);
         $this->notifyTeam($p, 'portal_client_comment');
         AuditLogger::log('portal.comment', $p, [], ['comment' => $c->id]);
         return response()->json(['id' => $c->id], 201);

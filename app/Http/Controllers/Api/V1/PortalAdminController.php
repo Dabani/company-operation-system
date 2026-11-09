@@ -131,8 +131,8 @@ class PortalAdminController extends Controller
     {
         [$p, $level] = $this->access->find($request->user(), $id);
         abort_unless(ProjectAccess::canComment($level), 403, 'forbidden');
-        $d = $request->validate(['body' => 'required|string|max:3000', 'is_client_visible' => 'boolean']);
-        $c = ProjectComment::create(['project_id' => $p->id, 'user_id' => $request->user()->id, 'body' => trim(strip_tags($d['body'])), 'is_client_visible' => $d['is_client_visible'] ?? false]);
+        $d = $request->validate(['body' => 'required|string|max:20000', 'is_client_visible' => 'boolean']);
+        $c = ProjectComment::create(['project_id' => $p->id, 'user_id' => $request->user()->id, 'body' => trim($d['body']), 'is_client_visible' => $d['is_client_visible'] ?? false]);
         AuditLogger::log('project.comment', $p, [], ['visible_to_client' => $c->is_client_visible]);
         return response()->json(['id' => $c->id], 201);
     }

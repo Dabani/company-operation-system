@@ -9,6 +9,7 @@ use App\Models\RateCardLine;
 use App\Services\AuditLogger;
 use App\Services\OrganizationContext;
 use App\Support\Lookup;
+use App\Support\LookupRule;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
@@ -30,7 +31,7 @@ class RateCardController extends Controller
 
     public function store(Request $request)
     {
-        $d = $request->validate(['name' => 'required|string|max:255', 'currency_code' => 'required|string|size:3']);
+        $d = $request->validate(['name' => 'required|string|max:255', 'currency_code' => ['required', LookupRule::code('currency')]]);
         $c = RateCard::create(['name' => $d['name'], 'currency_code' => strtoupper($d['currency_code'])]);
         AuditLogger::log('rate_card.created', $c, [], $d);
         return response()->json(['data' => $this->shape($c)], 201);

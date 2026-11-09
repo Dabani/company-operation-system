@@ -12,7 +12,7 @@ class TimeEntry extends Model
     use HasUlids, BelongsToOrganization;
 
     protected $guarded = [];
-    protected $casts = ['work_date' => 'date', 'started_at' => 'datetime', 'ended_at' => 'datetime', 'approved_at' => 'datetime', 'duration_seconds' => 'integer',
+    protected $casts = ['work_date' => 'date:Y-m-d', 'started_at' => 'datetime', 'ended_at' => 'datetime', 'approved_at' => 'datetime', 'duration_seconds' => 'integer',
         'is_manual' => 'boolean', 'is_billable' => 'boolean', 'auto_stopped' => 'boolean'];
 
     /** Approved and invoiced entries are immutable (Guide 4.6): only the status may advance (approved -> invoiced). Corrections are adjustment entries. */

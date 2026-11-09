@@ -132,10 +132,10 @@ class BillingTest extends TestCase
         $this->tax(true);
         $id = $this->issue($this->draftId())->id;
         Sanctum::actingAs($this->admin);
+        $second = $this->makeUser('admin');                                                                                           // an independent approver must exist (nobody approves their own request)
         $this->postJson("/api/v1/invoices/$id/credit-notes", ['amount' => 80000, 'reason' => 'Too much'])->assertStatus(422);       // exceeds the 75,000 subtotal
         $this->postJson("/api/v1/invoices/$id/credit-notes", ['amount' => 25000, 'reason' => 'Disputed hours'])->assertOk();
         $this->assertSame('88500.00', (string) Invoice::find($id)->balance);                                                          // not issued until approved
-        $second = $this->makeUser('admin');
         $req = ApprovalRequest::where('subject_type_id', Lookup::id('approval_subject_type', 'credit_note'))->firstOrFail();
         app(ApprovalEngine::class)->act($req->id, $second, 'approve');
         $this->assertSame('59000.00', (string) Invoice::find($id)->balance);                                                          // 88,500 - (25,000 + 4,500 tax)

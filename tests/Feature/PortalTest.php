@@ -111,7 +111,7 @@ class PortalTest extends TestCase
         [, , $i] = $this->world();
         $this->asClient($i);
         $this->getJson('/api/v1/portal/projects')->assertForbidden()->assertJsonPath('error.code', 'mfa_setup_required');
-        $this->withSession(['portal_mfa_ok' => $i->id])->getJson('/api/v1/portal/projects')->assertOk();        // a verified session passes
+        $this->spa()->withSession(['portal_mfa_ok' => $i->id])->getJson('/api/v1/portal/projects')->assertOk();        // a verified session passes
 
         $mfa = app(PortalMfa::class);
         $setup = $mfa->begin($i->refresh(), 'COPS');
@@ -126,6 +126,7 @@ class PortalTest extends TestCase
         $this->assertFalse($mfa->verify($i, $codes[0]));
         $this->assertFalse($mfa->verify($i, '000000'));
 
+        $this->flushSession();                                                                                    // the earlier verified session must not leak into this request
         $this->asClient($i->refresh());
         $this->getJson('/api/v1/portal/projects')->assertForbidden()->assertJsonPath('error.code', 'mfa_required');
     }

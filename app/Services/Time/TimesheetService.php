@@ -8,6 +8,7 @@ use App\Models\Timesheet;
 use App\Models\User;
 use App\Services\Approvals\ApprovalEngine;
 use App\Services\AuditLogger;
+use App\Services\OrganizationContext;
 use App\Support\Lookup;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -26,9 +27,10 @@ class TimesheetService
     public function week(User $u, string $anyDate): Timesheet
     {
         $weekStart = TimerMath::weekStart($anyDate);
+        $org = app(OrganizationContext::class)->organizationId();      // users have no organization_id column: it comes from the active context
 
         $find = fn() => Timesheet::query()
-            ->where('organization_id', $u->organization_id)
+            ->where('organization_id', $org)
             ->where('user_id', $u->id)
             ->whereDate('week_start', $weekStart);
 
@@ -38,7 +40,7 @@ class TimesheetService
 
         try {
             return Timesheet::create([
-                'organization_id' => $u->organization_id,
+                'organization_id' => $org,
                 'user_id'         => $u->id,
                 'week_start'      => $weekStart,
                 'status_id'       => Lookup::id('timesheet_status', 'draft'),

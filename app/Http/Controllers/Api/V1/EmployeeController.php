@@ -83,7 +83,7 @@ class EmployeeController extends Controller
     {
         $org = app(OrganizationContext::class)->organizationId();
         $rules = [
-            'employee_number' => [$m ? 'sometimes' : 'required', 'string', 'max:30', Rule::unique('hr_employees', 'employee_number')->where('organization_id', $org)->ignore($m?->id)],
+            // no 'employee_number': system-generated (EMP-0001) and immutable
             'first_name' => [$m ? 'sometimes' : 'required', 'string', 'max:100'], 'last_name' => [$m ? 'sometimes' : 'required', 'string', 'max:100'],
             'email' => 'nullable|email|max:255', 'phone' => 'nullable|string|max:40', 'position_title' => 'nullable|string|max:150',
             'category_id' => [$m ? 'sometimes' : 'required', Rule::exists('lookup_values', 'id')], 'status_id' => ['sometimes', Rule::exists('lookup_values', 'id')],

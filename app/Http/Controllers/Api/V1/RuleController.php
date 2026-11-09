@@ -64,7 +64,7 @@ class RuleController extends Controller
     {
         $org = app(OrganizationContext::class)->organizationId();
         $d = $request->validate([
-            'domain_id' => ['required', Rule::exists('lookup_values', 'id')], 'code' => ['required', 'string', 'max:60', 'regex:/^[a-z0-9_\-]+$/', Rule::unique('rule_sets', 'code')->where('organization_id', $org)],
+            'domain_id' => ['required', Rule::exists('lookup_values', 'id')],      // the set code (RUL-0001) is system-generated
             'name' => 'required|string|max:255', 'description' => 'nullable|string|max:3000',
             'is_legal_profile' => 'boolean', 'requires_full_coverage' => 'boolean',
         ]);
@@ -127,10 +127,16 @@ class RuleController extends Controller
     {
         $d = $request->validate([
             'domain_id' => ['required', Rule::exists('lookup_values', 'id')], 'bound_type_id' => ['required', Rule::exists('lookup_values', 'id')],
-            'code' => 'required|string|max:80', 'name' => 'required|string|max:255', 'value_decimal' => 'required|numeric', 'unit' => 'nullable|string|max:30',
+            'name' => 'required|string|max:255', 'value_decimal' => 'required|numeric', 'unit' => 'nullable|string|max:30',
+            'new_value_of' => ['nullable', Rule::exists('legal_parameters', 'id')->where('organization_id', app(OrganizationContext::class)->organizationId())],
             'valid_from' => 'required|date', 'valid_to' => 'nullable|date|after_or_equal:valid_from', 'source_citation' => 'required|string|max:255',
         ]);
-        $p = LegalParameter::create($d + ['verification_status_id' => Lookup::id('rule_verification_status', 'unverified')]);
+        // The key comes from the name (annual_leave_minimum, _2, _3...). A new value of an existing parameter keeps that parameter's key.
+        $org = app(OrganizationContext::class)->organizationId();
+        $code = isset($d['new_value_of'])
+            ? LegalParameter::findOrFail($d['new_value_of'])->code
+            : \App\Services\CodeGenerator::key($d['name'], fn ($c) => LegalParameter::withoutGlobalScopes()->where('organization_id', $org)->where('code', $c)->exists());
+        $p = LegalParameter::create(collect($d)->except('new_value_of')->all() + ['code' => $code, 'verification_status_id' => Lookup::id('rule_verification_status', 'unverified')]);
         AuditLogger::log('legal_parameter.created', $p, [], $d);
         return response()->json(['id' => $p->id], 201);
     }

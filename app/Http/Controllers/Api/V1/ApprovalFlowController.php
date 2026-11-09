@@ -39,7 +39,8 @@ class ApprovalFlowController extends Controller
     {
         $org = app(OrganizationContext::class)->organizationId();
         $d = $request->validate([
-            'code' => 'required|string|max:60', 'name' => 'required|string|max:255', 'description' => 'nullable|string|max:2000',
+            'name' => 'required|string|max:255', 'description' => 'nullable|string|max:2000',
+            'new_version_of' => ['nullable', Rule::exists('approval_flows', 'id')->where('organization_id', $org)],     // the flow code (FLW-0001) is system-generated
             'subject_type_id' => ['nullable', Rule::exists('lookup_values', 'id')], 'effective_from' => 'required|date',
             'steps' => 'required|array|min:1|max:10',
             'steps.*.label' => 'required|string|max:120',
@@ -55,9 +56,10 @@ class ApprovalFlowController extends Controller
             }
         }
         $flow = DB::transaction(function () use ($d, $request) {
-            $version = (int) ApprovalFlow::where('code', $d['code'])->max('version') + 1;
+            $code = isset($d['new_version_of']) ? ApprovalFlow::findOrFail($d['new_version_of'])->code : null;       // null -> generated
+            $version = $code ? (int) ApprovalFlow::where('code', $code)->max('version') + 1 : 1;
             $f = ApprovalFlow::create([
-                'code' => $d['code'], 'name' => $d['name'], 'description' => $d['description'] ?? null, 'subject_type_id' => $d['subject_type_id'] ?? null,
+                'code' => $code, 'name' => $d['name'], 'description' => $d['description'] ?? null, 'subject_type_id' => $d['subject_type_id'] ?? null,
                 'version' => $version, 'effective_from' => $d['effective_from'], 'is_active' => false, 'created_by' => $request->user()->id,
             ]);
             foreach ($d['steps'] as $i => $s) {

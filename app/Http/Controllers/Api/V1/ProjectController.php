@@ -59,7 +59,7 @@ class ProjectController extends Controller
     {
         $org = $this->org();
         return [
-            'code' => [$m ? 'sometimes' : 'required', 'string', 'max:30', 'regex:/^[A-Za-z0-9_\-]+$/', Rule::unique('projects', 'code')->where('organization_id', $org)->ignore($m?->id)],
+            // no 'code': the project code is system-generated (PRJ-0001) and cannot be typed or changed
             'name' => [$m ? 'sometimes' : 'required', 'string', 'max:255'], 'description' => 'nullable|string|max:10000',
             'client_id' => ['nullable', Rule::exists('clients', 'id')->where('organization_id', $org)],
             'owner_id' => ['sometimes', Rule::exists('organization_memberships', 'user_id')->where('organization_id', $org)],

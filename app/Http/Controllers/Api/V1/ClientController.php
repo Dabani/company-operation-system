@@ -72,7 +72,7 @@ class ClientController extends Controller
     {
         $org = app(OrganizationContext::class)->organizationId();
         return $r->validate([
-            'code' => [$m ? 'sometimes' : 'required', 'string', 'max:30', Rule::unique('clients', 'code')->where('organization_id', $org)->ignore($m?->id)],
+            // no 'code': the client code is system-generated (CLI-0001)
             'name' => [$m ? 'sometimes' : 'required', 'string', 'max:255'], 'status_id' => ['sometimes', Rule::exists('lookup_values', 'id')],
             'email' => 'nullable|email|max:255', 'phone' => 'nullable|string|max:40', 'address' => 'nullable|string|max:2000',
             'tax_number' => 'nullable|string|max:60', 'portal_enabled' => 'boolean',

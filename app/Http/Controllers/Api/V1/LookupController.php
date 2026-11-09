@@ -107,7 +107,9 @@ class LookupController extends Controller
         return $r->validate([
             'lookup_type_id' => [$v ? 'nullable' : 'required', 'exists:lookup_types,id'],
             // typed only for the currency list (ISO 4217); every other value gets a generated key from its English label, and keys never change
-            'code' => [$v === null && $this->isCurrency($typeId) ? 'required' : 'nullable', 'regex:/^[A-Z]{3}$/', Rule::unique('lookup_values', 'code')->where('lookup_type_id', $typeId)->where('organization_id', $org)->ignore($v?->id)],
+            'code' => $v === null && $this->isCurrency($typeId)
+                ? ['required', 'regex:/^[A-Z]{3}$/', Rule::unique('lookup_values', 'code')->where('lookup_type_id', $typeId)->where('organization_id', $org)]
+                : ['nullable'],                                      // anything typed for other lists is ignored; the key is generated
             'color' => 'nullable|string|max:20',
             'icon' => 'nullable|string|max:60',
             'sort_order' => 'nullable|integer|min:0',

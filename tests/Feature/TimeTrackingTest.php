@@ -102,7 +102,6 @@ class TimeTrackingTest extends TestCase
         $id = $this->postJson('/api/v1/time-entries', $this->entry($dev->id, $p->id, gmdate('Y-m-d H:i:s', time() - 7200), gmdate('Y-m-d H:i:s', time() - 3600)))->json('data.id');
         $week = $this->getJson('/api/v1/time-week')->assertOk()->json('data.week_start');
         $r = $this->postJson("/api/v1/timesheets/$week/submit");
-        dump($week, $r->json());
         $r->assertOk();
         $this->patchJson("/api/v1/time-entries/$id", ['description' => 'x'])->assertStatus(422);                       // submitted: frozen
         $this->postJson('/api/v1/time-entries', $this->entry($dev->id, $p->id, gmdate('Y-m-d H:i:s', time() - 3000), gmdate('Y-m-d H:i:s', time() - 2400)))->assertStatus(422);   // week locked

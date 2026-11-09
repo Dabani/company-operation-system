@@ -82,7 +82,6 @@ class RoleController extends Controller
     private function validated(Request $request, ?Role $role = null): array
     {
         $v = $request->validate([
-            'code' => ['required', 'alpha_dash', 'max:60', Rule::unique('roles', 'code')->where('organization_id', $this->ctx->organizationId())->ignore($role?->id)],
             'name' => 'required|string|max:120',
             'description' => 'nullable|string|max:500',
             'level' => 'required|integer|min:1|max:100',

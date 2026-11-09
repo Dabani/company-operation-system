@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
+    use \App\Support\HasGeneratedCode;
+    protected static string $codeEntity = 'role';
     use HasUlids, BelongsToOrganization;
 
     protected $guarded = [];   // controllers only pass validated data; organization_id is set by the tenant trait

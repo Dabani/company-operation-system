@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class RuleSet extends Model
 {
+    use \App\Support\HasGeneratedCode;
+    protected static string $codeEntity = 'rule_set';
     use HasUlids, BelongsToOrganization;
 
     protected $guarded = [];

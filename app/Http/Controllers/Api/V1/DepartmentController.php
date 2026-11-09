@@ -53,7 +53,6 @@ class DepartmentController extends Controller
     {
         $org = app(OrganizationContext::class)->organizationId();
         return $r->validate([
-            'code' => ['required', 'string', 'max:30', Rule::unique('departments', 'code')->where('organization_id', $org)->ignore($m?->id)],
             'name' => 'required|string|max:150',
             'description' => 'nullable|string|max:2000',
             'parent_id' => ['nullable', Rule::exists('departments', 'id')->where('organization_id', $org)],

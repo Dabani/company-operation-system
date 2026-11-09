@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {
+    use \App\Support\HasGeneratedCode;
+    protected static string $codeEntity = 'project';
     use HasUlids, SoftDeletes, BelongsToOrganization, \App\Support\BelongsToClient;
 
     protected $guarded = [];

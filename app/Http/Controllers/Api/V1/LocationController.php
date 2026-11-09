@@ -52,7 +52,6 @@ class LocationController extends Controller
     {
         $org = app(OrganizationContext::class)->organizationId();
         return $r->validate([
-            'code' => ['required', 'string', 'max:30', Rule::unique('locations', 'code')->where('organization_id', $org)->ignore($m?->id)],
             'name' => 'required|string|max:150',
             'description' => 'nullable|string|max:2000',
             'location_type_id' => 'required|exists:lookup_values,id',

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Department extends Model
 {
+    use \App\Support\HasGeneratedCode;
+    protected static string $codeEntity = 'department';
     use HasUlids, BelongsToOrganization;
 
     protected $guarded = [];   // controllers only pass validated data; organization_id is set by the tenant trait

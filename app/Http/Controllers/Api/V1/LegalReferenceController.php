@@ -26,7 +26,6 @@ class LegalReferenceController extends Controller
     private function rules(?LegalReference $l = null): array
     {
         return [
-            'code' => ['required', 'string', 'max:60', Rule::unique('legal_references', 'code')->where('organization_id', $this->ctx->organizationId())->ignore($l?->id)],
             'title' => 'required|string|max:250', 'citation' => 'nullable|string|max:2000', 'jurisdiction' => 'nullable|string|max:60', 'topic' => 'nullable|string|max:120',
             'url' => 'nullable|url|max:250', 'notes' => 'nullable|string|max:2000',
             'status_id' => ['nullable', Rule::exists('lookup_values', 'id')->where(fn ($q) => $q->whereIn('lookup_type_id', LookupType::where('code', 'legal_status')->pluck('id')))],

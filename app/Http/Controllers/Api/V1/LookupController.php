@@ -45,7 +45,7 @@ class LookupController extends Controller
             $v = LookupValue::create([
                 'lookup_type_id' => $d['lookup_type_id'],
                 'organization_id' => app(OrganizationContext::class)->organizationId(),   // org-owned values only
-                'code' => $d['code'], 'color' => $d['color'] ?? null, 'icon' => $d['icon'] ?? null,
+                'code' => $this->isCurrency($d['lookup_type_id']) ? $d['code'] : $this->generatedKey($d['labels']['en'], $d['lookup_type_id']), 'color' => $d['color'] ?? null, 'icon' => $d['icon'] ?? null,
                 'sort_order' => $d['sort_order'] ?? 0, 'is_active' => $d['is_active'] ?? true,
             ]);
             $this->saveLabels($v, $d['labels']);
@@ -62,9 +62,6 @@ class LookupController extends Controller
         $d = $this->validated($request, $v);
         // Global/system values: only colour, icon, order, active flag and labels may change; the code is a stable key.
         $attrs = ['color' => $d['color'] ?? null, 'icon' => $d['icon'] ?? null, 'sort_order' => $d['sort_order'] ?? 0, 'is_active' => $d['is_active'] ?? true];
-        if (!$v->is_system && $v->organization_id) {
-            $attrs['code'] = $d['code'];
-        }
         $old = $v->only(array_keys($attrs));
         $v->update($attrs);
         $this->saveLabels($v, $d['labels']);
@@ -87,6 +84,17 @@ class LookupController extends Controller
         return response()->noContent();
     }
 
+    private function isCurrency(?string $typeId): bool
+    {
+        return $typeId && \App\Models\LookupType::where('id', $typeId)->value('code') === 'currency';
+    }
+
+    private function generatedKey(string $label, string $typeId): string
+    {
+        $org = app(OrganizationContext::class)->organizationId();
+        return \App\Services\CodeGenerator::key($label, fn ($c) => LookupValue::withoutGlobalScopes()->where('lookup_type_id', $typeId)->where('organization_id', $org)->where('code', $c)->exists());
+    }
+
     private function ownedOrGlobal(string $id): LookupValue
     {
         return LookupValue::visible()->findOrFail($id);
@@ -98,7 +106,8 @@ class LookupController extends Controller
         $org = app(OrganizationContext::class)->organizationId();
         return $r->validate([
             'lookup_type_id' => [$v ? 'nullable' : 'required', 'exists:lookup_types,id'],
-            'code' => ['required', 'alpha_dash', 'max:60', Rule::unique('lookup_values', 'code')->where('lookup_type_id', $typeId)->where('organization_id', $org)->ignore($v?->id)],
+            // typed only for the currency list (ISO 4217); every other value gets a generated key from its English label, and keys never change
+            'code' => [$v === null && $this->isCurrency($typeId) ? 'required' : 'nullable', 'regex:/^[A-Z]{3}$/', Rule::unique('lookup_values', 'code')->where('lookup_type_id', $typeId)->where('organization_id', $org)->ignore($v?->id)],
             'color' => 'nullable|string|max:20',
             'icon' => 'nullable|string|max:60',
             'sort_order' => 'nullable|integer|min:0',

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class LegalReference extends Model
 {
+    use \App\Support\HasGeneratedCode;
+    protected static string $codeEntity = 'legal_reference';
     use HasUlids;
 
     protected $table = 'legal_references';

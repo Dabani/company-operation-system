@@ -11,6 +11,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /** Canonical person record. A COPS login (user_id) is optional and one-to-one. */
 class Employee extends Model
 {
+    use \App\Support\HasGeneratedCode;
+    protected static string $codeEntity = 'employee';
+    protected static string $codeColumn = 'employee_number';
     use HasUlids, SoftDeletes, BelongsToOrganization, HasDepartmentScope;
 
     protected $table = 'hr_employees';

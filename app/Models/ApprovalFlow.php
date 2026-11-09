@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ApprovalFlow extends Model
 {
+    use \App\Support\HasGeneratedCode;
+    protected static string $codeEntity = 'approval_flow';
     use HasUlids, BelongsToOrganization;
 
     protected $guarded = [];

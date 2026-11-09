@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ComplianceObligation extends Model
 {
+    use \App\Support\HasGeneratedCode;
+    protected static string $codeEntity = 'obligation';
     use HasUlids, BelongsToOrganization;
 
     protected $table = 'compliance_obligations';

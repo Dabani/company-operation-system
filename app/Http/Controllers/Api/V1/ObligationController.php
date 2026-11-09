@@ -45,7 +45,6 @@ class ObligationController extends Controller
     {
         $org = $this->ctx->organizationId();
         return [
-            'code' => ['required', 'alpha_dash', 'max:60', Rule::unique('compliance_obligations', 'code')->where('organization_id', $org)->ignore($o?->id)],
             'title' => 'required|string|max:200', 'description' => 'nullable|string|max:20000',
             'frequency_id' => ['required', Rule::exists('lookup_values', 'id')->where(fn ($q) => $q->whereIn('lookup_type_id', LookupType::where('code', 'obligation_frequency')->pluck('id')))],
             'responsible_role_id' => ['nullable', Rule::exists('roles', 'id')->where('organization_id', $org)],

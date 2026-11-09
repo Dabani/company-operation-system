@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Client extends Model
 {
+    use \App\Support\HasGeneratedCode;
+    protected static string $codeEntity = 'client';
     use HasUlids, SoftDeletes, BelongsToOrganization;
 
     protected $guarded = [];

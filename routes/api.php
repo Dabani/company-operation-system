@@ -25,6 +25,7 @@ Route::prefix('v1')->group(function () {
         require __DIR__ . '/time.php';         // COPS Phase 2a: timer, timesheets, rate cards
         require __DIR__ . '/billing.php';      // COPS Phase 2b: invoices, payments, credit notes, tax rates
         require __DIR__ . '/portal-admin.php'; // COPS Phase 3: staff side of the client portal
+        require __DIR__ . '/hr.php';           // COPS Phase 4a: positions, grades, employment history, reviews
 
         Route::post('auth/logout', [V1\AuthController::class, 'logout']);
 

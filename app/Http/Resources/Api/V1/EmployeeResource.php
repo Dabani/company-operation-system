@@ -18,6 +18,8 @@ class EmployeeResource extends JsonResource
             'manager_employee_id' => $this->manager_employee_id, 'manager' => $this->whenLoaded('manager', fn () => $this->manager?->full_name),
             'user_id' => $this->user_id, 'has_login' => $this->user_id !== null,
             'hired_on' => $this->hired_on?->toDateString(), 'ended_on' => $this->ended_on?->toDateString(),
+            'position_id' => $this->position_id, 'grade_id' => $this->grade_id,
+            'contract_end_on' => $this->contract_end_on?->toDateString(), 'probation_end_on' => $this->probation_end_on?->toDateString(),
         ];
     }
 }

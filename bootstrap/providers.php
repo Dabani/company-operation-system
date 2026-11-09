@@ -11,4 +11,5 @@ return [
     App\Providers\CopsFoundationServiceProvider::class,
     AppServiceProvider::class,
     DatabaseServiceProvider::class,
+    App\Providers\HrServiceProvider::class,
 ];

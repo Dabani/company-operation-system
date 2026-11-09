@@ -46,6 +46,16 @@ class EmployeeController extends Controller
     {
         $e = $this->q($request)->findOrFail($id);
         $d = $this->validated($request, $e);
+        // Category, department, manager and contract dates have an effective-dated history: they change only through an employment change.
+        foreach (['category_id', 'department_id', 'manager_employee_id', 'contract_end_on', 'probation_end_on'] as $f) {
+            if (array_key_exists($f, $d)) {
+                $cur = $e->{$f} instanceof \DateTimeInterface ? $e->{$f}->format('Y-m-d') : $e->{$f};
+                if (($d[$f] ?: null) !== ($cur ?: null)) {
+                    throw \Illuminate\Validation\ValidationException::withMessages([$f => [__('hr.employment.use_change')]]);
+                }
+                unset($d[$f]);
+            }
+        }
         $old = $e->only(array_keys(collect($d)->except(['national_id', 'bank_account'])->all()));
         $e->update($d);
         AuditLogger::log('employee.updated', $e, $old, collect($d)->except(['national_id', 'bank_account'])->all());
@@ -90,6 +100,7 @@ class EmployeeController extends Controller
             'department_id' => ['nullable', Rule::exists('departments', 'id')->where('organization_id', $org)],
             'manager_employee_id' => ['nullable', Rule::exists('hr_employees', 'id')->where('organization_id', $org), Rule::notIn([$m?->id])],
             'hired_on' => 'nullable|date', 'ended_on' => 'nullable|date|after_or_equal:hired_on',
+            'contract_end_on' => 'nullable|date_format:Y-m-d', 'probation_end_on' => 'nullable|date_format:Y-m-d',
         ];
         if (app(OrganizationContext::class)->can('employee.manage_sensitive')) {
             $rules += ['national_id' => 'nullable|string|max:60', 'bank_account' => 'nullable|string|max:80'];

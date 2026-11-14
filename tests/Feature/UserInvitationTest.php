@@ -39,7 +39,10 @@ class UserInvitationTest extends TestCase
             ->assertCreated()->assertJsonPath('invitation_sent', true)->assertJsonPath('data.status', 'invited');
 
         $url = null;
-        Mail::assertSent(UserInvitationMail::class, function ($m) use (&$url) { $url = $m->url; return true; });
+        Mail::assertSent(UserInvitationMail::class, function ($m) use (&$url) {
+            $url = $m->url;
+            return true;
+        });
         parse_str(parse_url($url, PHP_URL_QUERY), $q);
         return [User::where('email', strtolower($email))->firstOrFail(), $q['token']];
     }
@@ -75,7 +78,8 @@ class UserInvitationTest extends TestCase
     public function test_wrong_or_expired_token_is_refused(): void
     {
         [$user, $token] = $this->invite();
-        $this->postJson('/api/v1/auth/activate', ['email' => $user->email, 'token' => 'x' . substr($token, 1), 'password' => $this->pw, 'password_confirmation' => $this->pw])->assertStatus(422);
+        $bad = ($token[0] === 'x' ? 'y' : 'x') . substr($token, 1);
+        $this->postJson('/api/v1/auth/activate', ['email' => $user->email, 'token' => $bad, 'password' => $this->pw, 'password_confirmation' => $this->pw])->assertStatus(422);
 
         UserInvitation::where('user_id', $user->id)->update(['expires_at' => now()->subMinute()]);
         $this->getJson('/api/v1/auth/activation?' . http_build_query(['email' => $user->email, 'token' => $token]))->assertStatus(422)->assertJsonPath('reason', 'expired');
@@ -105,7 +109,6 @@ class UserInvitationTest extends TestCase
         [$user] = $this->invite();
         $this->deleteJson("/api/v1/users/{$user->id}")->assertOk();
         $this->assertDatabaseMissing('users', ['id' => $user->id]);
-
     }
 
     public function test_forgot_password_for_an_invited_user_sends_an_invitation(): void

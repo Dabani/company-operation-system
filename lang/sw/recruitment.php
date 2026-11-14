@@ -1,0 +1,43 @@
+<?php
+
+// COPS Phase 4b: recruitment messages. rw / sw are first-pass: have native speakers review them.
+return [
+    'cannot_cancel' => 'Ombi hili haliwezi tena kughairiwa.',
+    'requisition_not_approved' => 'Ombi lazima liidhinishwe kabla ya kufungua nafasi.',
+    'vacancy_exists' => 'Nafasi tayari ipo kwa ombi hili.',
+    'vacancy_closed' => 'Nafasi hii imefungwa.',
+    'consent_required' => 'Ridhaa ya mwombaji kuhifadhi data yake lazima irekodiwe.',
+    'duplicate_applicant' => 'Barua pepe hii tayari imeomba nafasi hii.',
+    'stage_locked' => 'Mwombaji yuko hatua isiyoweza kubadilishwa hivi.',
+    'stage_not_allowed' => 'Hatua hiyo haiwezi kuwekwa hivi.',
+    'interview_closed' => 'Usaili huu haujafunguliwa tena.',
+    'scorecard_exists' => 'Tayari umewasilisha kadi ya alama kwa usaili huu.',
+    'scorecard_required' => 'Kadi moja ya alama iliyowasilishwa inahitajika kabla ya uteuzi.',
+    'selection_pending' => 'Ombi la uteuzi tayari linasubiri idhini.',
+    'headcount_reached' => 'Nafasi zote za ajira hii zimejazwa.',
+    'selection_approved' => 'Uteuzi umeidhinishwa.',
+    'not_selected' => 'Mwombaji hajateuliwa.',
+    'offer_exists' => 'Ofa hai tayari ipo kwa mwombaji huyu.',
+    'outside_band' => 'Mshahara uko nje ya kiwango cha daraja hili: toa sababu ya kipekee.',
+    'offer_not_draft' => 'Ofa ya rasimu pekee ndiyo inayoweza kutolewa.',
+    'offer_not_issued' => 'Ofa iliyotolewa pekee ndiyo inayoweza kujibiwa.',
+    'offer_expired' => 'Ofa haikuwa halali tena tarehe hiyo.',
+    'cannot_withdraw' => 'Ofa hii haiwezi tena kuondolewa.',
+    'offer_declined' => 'Ofa imekataliwa na mwombaji.',
+    'offer_withdrawn' => 'Ofa imeondolewa na shirika.',
+    'already_converted' => 'Mwombaji huyu tayari amebadilishwa kuwa mfanyakazi.',
+    'offer_not_accepted' => 'Mwombaji hana ofa iliyokubaliwa.',
+    'hired_reason' => 'Ameajiriwa kupitia uajiri :code.',
+    'retention_date_future' => 'Tarehe mpya ya uhifadhi lazima iwe ya baadaye.',
+    'anonymize_hired' => 'Data ya mwombaji aliyeajiriwa iko kwenye rekodi ya mfanyakazi na haiwezi kufutwa hapa.',
+    'anonymize_not_allowed' => 'Maombi yaliyofungwa pekee (yaliyokataliwa au yaliyopita tarehe ya uhifadhi) ndiyo yanaweza kufutiwa utambulisho.',
+    'setting_invalid' => 'Thamani hii iko nje ya kiwango kinachoruhusiwa.',
+    'approval_title' => [
+        'requisition' => 'Ombi la kuajiri: :title',
+        'selection' => 'Uteuzi: :name kwa :title',
+    ],
+    'retention' => [
+        'title' => 'Data ya waombaji inasubiri mapitio',
+        'body' => 'Rekodi :count za waombaji zimepita tarehe ya uhifadhi. Zipitie, ziongeze muda au zifute utambulisho.',
+    ],
+];

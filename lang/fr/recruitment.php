@@ -1,0 +1,43 @@
+<?php
+
+// COPS Phase 4b: recruitment messages.
+return [
+    'cannot_cancel' => 'Cette demande ne peut plus être annulée.',
+    'requisition_not_approved' => 'La demande doit être approuvée avant d\'ouvrir une vacance.',
+    'vacancy_exists' => 'Une vacance existe déjà pour cette demande.',
+    'vacancy_closed' => 'Cette vacance est clôturée.',
+    'consent_required' => 'Le consentement du candidat à la conservation de ses données doit être enregistré.',
+    'duplicate_applicant' => 'Cet e-mail a déjà postulé à cette vacance.',
+    'stage_locked' => 'Le candidat est dans une étape qui ne peut pas être modifiée ainsi.',
+    'stage_not_allowed' => 'Cette étape ne peut pas être définie ainsi.',
+    'interview_closed' => 'Cet entretien n\'est plus ouvert.',
+    'scorecard_exists' => 'Vous avez déjà soumis une fiche d\'évaluation pour cet entretien.',
+    'scorecard_required' => 'Au moins une fiche d\'évaluation soumise est nécessaire avant la sélection.',
+    'selection_pending' => 'Une demande de sélection est déjà en attente d\'approbation.',
+    'headcount_reached' => 'Tous les postes de cette vacance sont déjà pourvus.',
+    'selection_approved' => 'Sélection approuvée.',
+    'not_selected' => 'Le candidat n\'a pas été sélectionné.',
+    'offer_exists' => 'Une offre active existe déjà pour ce candidat.',
+    'outside_band' => 'Le salaire est hors de la fourchette de ce grade : indiquez le motif de l\'exception.',
+    'offer_not_draft' => 'Seule une offre en brouillon peut être émise.',
+    'offer_not_issued' => 'Seule une offre émise peut recevoir une réponse.',
+    'offer_expired' => 'L\'offre n\'était plus valable à cette date.',
+    'cannot_withdraw' => 'Cette offre ne peut plus être retirée.',
+    'offer_declined' => 'Offre refusée par le candidat.',
+    'offer_withdrawn' => 'Offre retirée par l\'organisation.',
+    'already_converted' => 'Ce candidat a déjà été converti en employé.',
+    'offer_not_accepted' => 'Le candidat n\'a pas d\'offre acceptée.',
+    'hired_reason' => 'Embauché via le recrutement :code.',
+    'retention_date_future' => 'La nouvelle date de conservation doit être dans le futur.',
+    'anonymize_hired' => 'Les données d\'un candidat embauché appartiennent au dossier de l\'employé et ne peuvent pas être anonymisées ici.',
+    'anonymize_not_allowed' => 'Seules les candidatures closes (rejetées ou au-delà de leur date de conservation) peuvent être anonymisées.',
+    'setting_invalid' => 'Cette valeur est hors de la plage autorisée.',
+    'approval_title' => [
+        'requisition' => 'Demande de recrutement : :title',
+        'selection' => 'Sélection : :name pour :title',
+    ],
+    'retention' => [
+        'title' => 'Données de candidats à réviser',
+        'body' => ':count dossier(s) de candidat ont dépassé leur date de conservation. Révisez, prolongez ou anonymisez-les.',
+    ],
+];

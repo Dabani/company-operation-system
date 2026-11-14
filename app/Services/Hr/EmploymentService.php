@@ -25,6 +25,19 @@ class EmploymentService
     public const TYPES = ['promotion', 'confirmation', 'transfer', 'category_change', 'salary_change', 'manager_change'];
     private const TRACKED = ['category_id', 'position_id', 'grade_id', 'department_id', 'manager_employee_id', 'contract_type_id', 'contract_end_on', 'probation_end_on'];
 
+    /** Extra facts for the hire row (salary, contract type, reason) when an employee is created by recruitment conversion. */
+    public static array $hireExtras = [];
+
+    public static function withHireExtras(array $extras, \Closure $fn): mixed
+    {
+        self::$hireExtras = $extras;
+        try {
+            return $fn();
+        } finally {
+            self::$hireExtras = [];
+        }
+    }
+
     public function __construct(private ApprovalEngine $approvals) {}
 
     private function fail(string $field, string $key): never
@@ -52,7 +65,7 @@ class EmploymentService
             'grade_id' => $e->grade_id, 'department_id' => $e->department_id, 'manager_employee_id' => $e->manager_employee_id,
             'contract_end_on' => $e->contract_end_on?->toDateString(), 'probation_end_on' => $e->probation_end_on?->toDateString(),
             'created_by' => $by?->id ?? request()->user()?->id, 'applied_at' => now(),
-        ]);
+        ] + array_intersect_key(self::$hireExtras, array_flip(['salary_amount', 'salary_currency', 'contract_type_id', 'reason'])));
         return $rec;
     }
 

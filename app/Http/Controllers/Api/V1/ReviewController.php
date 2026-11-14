@@ -32,7 +32,10 @@ class ReviewController extends Controller
             'reviewer_employee_id' => $r->reviewer_employee_id, 'reviewer' => $r->reviewer?->full_name, 'status' => $r->status?->code,
             'rating' => $r->rating?->code, 'rating_level' => $r->rating?->sort_order, 'recommendation' => $r->recommendation?->code,
             'summary' => $r->summary, 'goals' => $r->goals, 'employee_comment' => $r->employee_comment,
-            'submitted_at' => $r->submitted_at?->toIso8601String(), 'acknowledged_at' => $r->acknowledged_at?->toIso8601String()];
+            'submitted_at' => $r->submitted_at?->toIso8601String(), 'acknowledged_at' => $r->acknowledged_at?->toIso8601String(),
+            // what the signed-in user may do with this review (the screen shows only these buttons; the API still enforces them)
+            'can_edit' => $this->isReviewer(request(), $r) && $r->status?->code === 'draft' && $r->cycle?->status_id === Lookup::id('review_cycle_status', 'open'),
+            'can_acknowledge' => $this->isSubject(request(), $r) && $r->status?->code === 'submitted'];
     }
 
     private function load(string $id): PerformanceReview

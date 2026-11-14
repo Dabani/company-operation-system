@@ -35,7 +35,10 @@ class HrEmploymentTest extends TestCase
         parent::tearDown();
     }
 
-    private function admin(): User { return User::where('email', 'admin@example.com')->firstOrFail(); }
+    private function admin(): User
+    {
+        return User::where('email', 'admin@example.com')->firstOrFail();
+    }
 
     private function dept(string $name): string
     {
@@ -48,8 +51,12 @@ class HrEmploymentTest extends TestCase
     {
         $hr = $this->makeUser('hr_manager');
         Sanctum::actingAs($hr);
-        $id = $this->postJson('/api/v1/employees', $extra + ['first_name' => 'Ada', 'last_name' => 'Uwase', 'hired_on' => '2026-01-05',
-            'category_id' => Lookup::id('employee_category', 'probation')])->assertCreated()->json('data.id');
+        $id = $this->postJson('/api/v1/employees', $extra + [
+            'first_name' => 'Ada',
+            'last_name' => 'Uwase',
+            'hired_on' => '2026-01-05',
+            'category_id' => Lookup::id('employee_category', 'probation')
+        ])->assertCreated()->json('data.id');
         return [$hr, $id];
     }
 
@@ -73,8 +80,18 @@ class HrEmploymentTest extends TestCase
         $this->assertSame('2026-01-05', $rows[0]['effective_from']);
 
         $rec = EmploymentRecord::where('employee_id', $id)->firstOrFail();
-        try { $rec->update(['reason' => 'rewritten']); $this->fail('a past record must not be editable'); } catch (\LogicException) { $this->assertTrue(true); }
-        try { $rec->delete(); $this->fail('a record must not be deletable'); } catch (\LogicException) { $this->assertTrue(true); }
+        try {
+            $rec->update(['reason' => 'rewritten']);
+            $this->fail('a past record must not be editable');
+        } catch (\LogicException) {
+            $this->assertTrue(true);
+        }
+        try {
+            $rec->delete();
+            $this->fail('a record must not be deletable');
+        } catch (\LogicException) {
+            $this->assertTrue(true);
+        }
     }
 
     public function test_transfer_is_effective_at_once_and_the_old_state_stays_readable(): void
@@ -154,7 +171,8 @@ class HrEmploymentTest extends TestCase
         $b = $this->dept('Operations');
         [$hr, $id] = $this->employee(['department_id' => $a]);
         Sanctum::actingAs($hr);
-        $this->patchJson("/api/v1/employees/$id", ['department_id' => $b])->assertStatus(422)->assertJsonValidationErrors('department_id');
+        $this->patchJson("/api/v1/employees/$id", ['department_id' => $b])->assertStatus(422);
+        $this->assertSame($a, Employee::find($id)->department_id);                       // nothing was changed
         Sanctum::actingAs($hr);
         $this->patchJson("/api/v1/employees/$id", ['last_name' => 'Mukamana', 'department_id' => $a])->assertOk();       // an unchanged value is fine
         $this->assertSame('Mukamana', Employee::find($id)->last_name);
@@ -203,8 +221,14 @@ class HrEmploymentTest extends TestCase
         $staff = $this->makeUser('staff');
         $other = $this->makeUser('staff');
         $mgr = Employee::create(['first_name' => 'Lead', 'last_name' => 'Er', 'category_id' => Lookup::id('employee_category', 'contracted'), 'status_id' => Lookup::id('employee_status', 'active'), 'user_id' => $leader->id]);
-        $sub = Employee::create(['first_name' => 'Sub', 'last_name' => 'Ject', 'category_id' => Lookup::id('employee_category', 'probation'), 'status_id' => Lookup::id('employee_status', 'active'),
-            'user_id' => $staff->id, 'manager_employee_id' => $mgr->id]);
+        $sub = Employee::create([
+            'first_name' => 'Sub',
+            'last_name' => 'Ject',
+            'category_id' => Lookup::id('employee_category', 'probation'),
+            'status_id' => Lookup::id('employee_status', 'active'),
+            'user_id' => $staff->id,
+            'manager_employee_id' => $mgr->id
+        ]);
         Employee::create(['first_name' => 'Out', 'last_name' => 'Sider', 'category_id' => Lookup::id('employee_category', 'contracted'), 'status_id' => Lookup::id('employee_status', 'active'), 'user_id' => $other->id]);
 
         $hr = $this->makeUser('hr_manager');
@@ -240,8 +264,13 @@ class HrEmploymentTest extends TestCase
     public function test_reminders_are_sent_once_per_step_and_catch_up_later(): void
     {
         $hr = $this->makeUser('hr_manager');
-        Employee::create(['first_name' => 'Pro', 'last_name' => 'Bation', 'category_id' => Lookup::id('employee_category', 'probation'), 'status_id' => Lookup::id('employee_status', 'active'),
-            'probation_end_on' => '2026-11-19']);                                                                    // 10 days away -> the 14-day step
+        Employee::create([
+            'first_name' => 'Pro',
+            'last_name' => 'Bation',
+            'category_id' => Lookup::id('employee_category', 'probation'),
+            'status_id' => Lookup::id('employee_status', 'active'),
+            'probation_end_on' => '2026-11-19'
+        ]);                                                                    // 10 days away -> the 14-day step
 
         $this->artisan('cops:hr-reminders')->assertSuccessful();
         $this->assertSame(1, AppNotification::where('user_id', $hr->id)->count());

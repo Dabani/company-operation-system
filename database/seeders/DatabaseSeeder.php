@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
             BillingSeeder::class,
             PortalSeeder::class,             // COPS Phase 3            // COPS Phase 2b               // COPS Phase 2a           // COPS Phase 1     // COPS Phase 0: approvals, rules, scope, employees, clients
             HrSeeder::class,                 // COPS Phase 4a: HR lookups, permissions, hr_manager role, employment-change flow
+            HrRecruitmentSeeder::class,      // COPS Phase 4b: recruitment lookups, permissions, approval flows, onboarding template
+            HrAttendanceSeeder::class,       // COPS Phase 4c: attendance lookups, permissions, correction approval flow
             PolishSeeder::class,             // currency list and menu icons
             CodesSeeder::class,              // system rule sets with fixed keys
         ]);

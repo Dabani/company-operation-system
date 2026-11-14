@@ -1,0 +1,43 @@
+<?php
+
+// COPS Phase 4b: recruitment messages. rw / sw are first-pass: have native speakers review them.
+return [
+    'cannot_cancel' => 'Iri sabwa ntirigishobora guhagarikwa.',
+    'requisition_not_approved' => 'Iri sabwa rigomba kwemezwa mbere yo gufungura umwanya.',
+    'vacancy_exists' => 'Umwanya usanzwe ubaho kuri iri sabwa.',
+    'vacancy_closed' => 'Uyu mwanya wafunzwe.',
+    'consent_required' => 'Ni ngombwa kwandika ko umukandida yemeye ko amakuru ye abikwa.',
+    'duplicate_applicant' => 'Iyi imeri yamaze gusaba uyu mwanya.',
+    'stage_locked' => 'Umukandida ari mu cyiciro kidashobora guhindurwa gutya.',
+    'stage_not_allowed' => 'Icyo cyiciro ntigishobora gushyirwaho gutya.',
+    'interview_closed' => 'Iki kiganiro ntikigifunguye.',
+    'scorecard_exists' => 'Warangije gutanga urupapuro rw\'amanota kuri iki kiganiro.',
+    'scorecard_required' => 'Hakenewe nibura urupapuro rumwe rw\'amanota mbere yo guhitamo.',
+    'selection_pending' => 'Icyifuzo cyo guhitamo gitegereje kwemezwa.',
+    'headcount_reached' => 'Imyanya yose y\'uyu mwanya yamaze kuzuzwa.',
+    'selection_approved' => 'Guhitamo byemejwe.',
+    'not_selected' => 'Umukandida ntarahitwamo.',
+    'offer_exists' => 'Hari icyifuzo cy\'akazi gikora kuri uyu mukandida.',
+    'outside_band' => 'Umushahara uri hanze y\'urwego rw\'iki cyiciro: tanga impamvu.',
+    'offer_not_draft' => 'Icyifuzo cy\'akazi kiri mu igenamigambi gusa ni cyo gishobora gutangwa.',
+    'offer_not_issued' => 'Icyifuzo cyatanzwe gusa ni cyo gishobora gusubizwa.',
+    'offer_expired' => 'Icyifuzo ntikigiraga agaciro kuri iyo tariki.',
+    'cannot_withdraw' => 'Iki cyifuzo ntigishobora gukurwaho.',
+    'offer_declined' => 'Icyifuzo cyanzwe n\'umukandida.',
+    'offer_withdrawn' => 'Icyifuzo cyakuweho n\'umuryango.',
+    'already_converted' => 'Uyu mukandida yamaze guhindurwa umukozi.',
+    'offer_not_accepted' => 'Umukandida nta cyifuzo cyemewe afite.',
+    'hired_reason' => 'Yahawe akazi binyuze mu gutanga akazi :code.',
+    'retention_date_future' => 'Itariki nshya yo kubika igomba kuba iri imbere.',
+    'anonymize_hired' => 'Amakuru y\'umukandida wahawe akazi ari mu dosiye y\'umukozi kandi ntashobora gusibwa hano.',
+    'anonymize_not_allowed' => 'Gusa ibisabwa byafunzwe (byanzwe cyangwa byarenze itariki yo kubika) bishobora gusibwa amazina.',
+    'setting_invalid' => 'Iyi ngano iri hanze y\'ibyemewe.',
+    'approval_title' => [
+        'requisition' => 'Gusaba abakozi: :title',
+        'selection' => 'Guhitamo: :name kuri :title',
+    ],
+    'retention' => [
+        'title' => 'Amakuru y\'abakandida agomba gusuzumwa',
+        'body' => 'Amadosiye :count y\'abakandida yarenze itariki yo kubika. Yasuzume, yongere cyangwa uyasibe amazina.',
+    ],
+];

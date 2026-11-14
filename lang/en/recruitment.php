@@ -1,0 +1,43 @@
+<?php
+
+// COPS Phase 4b: recruitment messages.
+return [
+    'cannot_cancel' => 'This requisition can no longer be cancelled.',
+    'requisition_not_approved' => 'The requisition must be approved before a vacancy is opened.',
+    'vacancy_exists' => 'A vacancy already exists for this requisition.',
+    'vacancy_closed' => 'This vacancy is closed.',
+    'consent_required' => 'The applicant\'s consent to keep their data must be recorded.',
+    'duplicate_applicant' => 'This e-mail already applied to this vacancy.',
+    'stage_locked' => 'The applicant is in a stage that cannot be changed this way.',
+    'stage_not_allowed' => 'That stage cannot be set this way.',
+    'interview_closed' => 'This interview is no longer open.',
+    'scorecard_exists' => 'You already submitted a scorecard for this interview.',
+    'scorecard_required' => 'At least one submitted scorecard is needed before selection.',
+    'selection_pending' => 'A selection request is already waiting for approval.',
+    'headcount_reached' => 'All places of this vacancy are already taken.',
+    'selection_approved' => 'Selection approved.',
+    'not_selected' => 'The applicant has not been selected.',
+    'offer_exists' => 'An active offer already exists for this applicant.',
+    'outside_band' => 'The salary is outside the pay band of this grade: give a reason for the exception.',
+    'offer_not_draft' => 'Only a draft offer can be issued.',
+    'offer_not_issued' => 'Only an issued offer can be answered.',
+    'offer_expired' => 'The offer was no longer valid on that date.',
+    'cannot_withdraw' => 'This offer can no longer be withdrawn.',
+    'offer_declined' => 'Offer declined by the candidate.',
+    'offer_withdrawn' => 'Offer withdrawn by the organization.',
+    'already_converted' => 'This applicant was already converted into an employee.',
+    'offer_not_accepted' => 'The applicant has no accepted offer.',
+    'hired_reason' => 'Hired from recruitment :code.',
+    'retention_date_future' => 'The new retention date must be in the future.',
+    'anonymize_hired' => 'A hired applicant\'s data belongs to the employee record and cannot be anonymised here.',
+    'anonymize_not_allowed' => 'Only closed applications (rejected, or past their retention date) can be anonymised.',
+    'setting_invalid' => 'This value is outside the allowed range.',
+    'approval_title' => [
+        'requisition' => 'Workforce requisition: :title',
+        'selection' => 'Selection: :name for :title',
+    ],
+    'retention' => [
+        'title' => 'Applicant data due for review',
+        'body' => ':count applicant record(s) passed their retention date. Review, extend or anonymise them.',
+    ],
+];

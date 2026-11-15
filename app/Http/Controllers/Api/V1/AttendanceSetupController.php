@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\AttendanceNetwork;
+use App\Models\AttendanceSite;
 use App\Models\Employee;
 use App\Models\PublicHoliday;
 use App\Models\ScheduleAssignment;
@@ -192,6 +193,43 @@ class AttendanceSetupController extends Controller
         $h->delete();
         $svc->recomputeMonth($this->org(), $month);
         AuditLogger::log('attendance.holiday_removed', $h);
+        return response()->noContent();
+    }
+
+    // ---- work sites (optional geolocation) ---------------------------------------------------------------------------------
+    private function siteShape(AttendanceSite $s): array
+    {
+        return ['id' => $s->id, 'name' => $s->name, 'latitude' => (float) $s->latitude, 'longitude' => (float) $s->longitude, 'radius_meters' => $s->radius_meters, 'is_active' => $s->is_active];
+    }
+
+    private function siteRules(bool $create): array
+    {
+        $req = $create ? 'required' : 'sometimes';
+        return ['name' => "$req|string|max:120", 'latitude' => "$req|numeric|between:-90,90", 'longitude' => "$req|numeric|between:-180,180", 'radius_meters' => "$req|integer|min:10|max:5000", 'is_active' => 'sometimes|boolean'];
+    }
+
+    public function sites() { return ['data' => AttendanceSite::orderBy('name')->get()->map(fn ($s) => $this->siteShape($s))]; }
+
+    public function storeSite(Request $request)
+    {
+        $s = AttendanceSite::create($request->validate($this->siteRules(true)));
+        AuditLogger::log('attendance.site_added', $s);
+        return response()->json(['data' => $this->siteShape($s->refresh())], 201);
+    }
+
+    public function updateSite(Request $request, string $id)
+    {
+        $s = AttendanceSite::findOrFail($id);
+        $s->update($request->validate($this->siteRules(false)));
+        AuditLogger::log('attendance.site_updated', $s);
+        return ['data' => $this->siteShape($s->refresh())];
+    }
+
+    public function deleteSite(string $id)
+    {
+        $s = AttendanceSite::findOrFail($id);
+        $s->delete();
+        AuditLogger::log('attendance.site_removed', $s);
         return response()->noContent();
     }
 

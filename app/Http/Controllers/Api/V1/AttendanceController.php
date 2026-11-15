@@ -52,7 +52,7 @@ class AttendanceController extends Controller
             ->map(fn ($x) => ['direction' => $x->direction, 'at' => $x->occurred_at->toIso8601String()]);
         $day = AttendanceDay::with(['status', 'shift', 'employee'])->where('employee_id', $e->id)->whereDate('work_date', $today)->first();
         return ['employee_id' => $e->id, 'name' => $e->full_name, 'state' => $state['state'], 'since' => $state['since']?->toIso8601String(), 'timezone' => $tz, 'server_time' => $now->toIso8601String(),
-            'ip_restricted' => $svc->networkRestricted($this->org()), 'date' => $today, 'shift' => $shift ? ['name' => $shift->name, 'start' => $shift->start_time, 'end' => $shift->end_time] : null,
+            'ip_restricted' => $svc->networkRestricted($this->org()), 'geolocation' => $svc->geoMode($this->org()), 'date' => $today, 'shift' => $shift ? ['name' => $shift->name, 'start' => $shift->start_time, 'end' => $shift->end_time] : null,
             'events' => $events, 'day' => $day ? $this->dayShape($day) : null];
     }
 
@@ -67,8 +67,9 @@ class AttendanceController extends Controller
     {
         $e = $this->me($request);
         abort_unless($e, 404);
-        $d = $request->validate(['direction' => ['nullable', Rule::in(['in', 'out'])]]);
-        $svc->clock($e, $d['direction'] ?? null, $request->ip());
+        $d = $request->validate(['direction' => ['nullable', Rule::in(['in', 'out'])], 'latitude' => 'nullable|numeric|between:-90,90', 'longitude' => 'nullable|numeric|between:-180,180', 'accuracy' => 'nullable|numeric|min:0|max:100000']);
+        $geo = isset($d['latitude'], $d['longitude']) ? ['lat' => $d['latitude'], 'lng' => $d['longitude'], 'accuracy' => $d['accuracy'] ?? null] : null;
+        $svc->clock($e, $d['direction'] ?? null, $request->ip(), $geo);
         return response()->json(['data' => $this->todayPayload($e->refresh(), $svc, $res)], 201);
     }
 

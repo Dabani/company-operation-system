@@ -100,7 +100,8 @@ class RecruitmentController extends Controller
 
     public function updateSettings(Request $request)
     {
-        $d = $request->validate(['applicant_retention_months' => 'sometimes|integer', 'offer_validity_days' => 'sometimes|integer']);
+        // Every key HrSettings knows (recruitment and attendance); HrSettings::set() enforces each key's own allowed range.
+        $d = $request->validate(collect(HrSettings::DEFS)->mapWithKeys(fn ($def, $key) => [$key => 'sometimes|integer'])->all());
         foreach ($d as $k => $v) {
             HrSettings::set($this->ctx()->organizationId(), $k, (int) $v);
             AuditLogger::log('hr.setting_changed', null, [], [$k => $v]);

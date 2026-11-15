@@ -15,6 +15,8 @@ final class HrSettings
         'overtime_min_minutes' => [15, 0, 240],         // attendance: extra time below this is not counted as overtime
         'pairing_window_hours' => [20, 4, 24],          // attendance: longest time between a clock-in and its clock-out
         'punch_min_interval_seconds' => [30, 0, 600],   // attendance: punches closer than this are one tap (double tap)
+        'geolocation_mode' => [0, 0, 2],                // attendance: 0 = off, 1 = record where people clock in, 2 = clocking is only allowed inside a work site
+        'geolocation_max_accuracy_meters' => [100, 10, 1000],   // attendance: a location less precise than this is refused when geolocation is required
     ];
 
     public static function get(string $orgId, string $key): int

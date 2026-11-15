@@ -3,33 +3,15 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Models\AttendanceImport;
 use App\Models\AttendancePeriod;
-use App\Services\Hr\Attendance\AttendanceImporter;
 use App\Services\Hr\Attendance\AttendanceService;
 use App\Services\OrganizationContext;
 use Illuminate\Http\Request;
 
-/** CSV import, month validation (the lock payroll relies on) and recomputation. */
+/** Month validation (the lock payroll relies on) and recomputation. The file import lives in AttendanceImportController. */
 class AttendanceAdminController extends Controller
 {
     private function org(): string { return app(OrganizationContext::class)->organizationId(); }
-
-    private function importShape(AttendanceImport $i): array
-    {
-        return ['id' => $i->id, 'filename' => $i->filename, 'rows_total' => $i->rows_total, 'rows_imported' => $i->rows_imported, 'rows_skipped' => $i->rows_skipped, 'rows_rejected' => $i->rows_rejected,
-            'errors' => $i->errors, 'created_at' => $i->created_at?->toIso8601String()];
-    }
-
-    public function import(Request $request, AttendanceImporter $importer)
-    {
-        $request->validate(['file' => 'required|file|mimes:csv,txt|max:5120']);
-        $f = $request->file('file');
-        $i = $importer->run($f->getRealPath(), $f->getClientOriginalName(), $request->user(), $this->org());
-        return response()->json(['data' => $this->importShape($i)], 201);
-    }
-
-    public function imports() { return ['data' => AttendanceImport::orderByDesc('created_at')->limit(50)->get()->map(fn ($i) => $this->importShape($i))]; }
 
     public function periods(Request $request)
     {

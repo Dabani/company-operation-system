@@ -3,9 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\ApprovalFlow;
+use App\Models\AttendanceImportProfile;
 use App\Models\Language;
 use App\Models\LookupType;
 use App\Models\LookupValue;
+use App\Models\MenuItem;
 use App\Models\Organization;
 use App\Models\Permission;
 use App\Models\Role;
@@ -42,6 +44,7 @@ class HrAttendanceSeeder extends Seeder
         foreach (self::PERMS as $code => $name) {
             Permission::updateOrCreate(['code' => $code], ['group_id' => Lookup::id('permission_group', 'hr'), 'name' => $name]);
         }
+        $this->menu();
         $ids = Permission::pluck('id', 'code');
         foreach (Organization::all() as $org) {
             $role = fn (string $c) => Role::withoutGlobalScopes()->where('organization_id', $org->id)->where('code', $c)->first();
@@ -53,6 +56,43 @@ class HrAttendanceSeeder extends Seeder
                 ['name' => 'Attendance correction (line manager)', 'subject_type_id' => Lookup::id('approval_subject_type', 'attendance_correction'), 'effective_from' => '2026-01-01', 'is_active' => true])
                 ->steps()->withoutGlobalScopes()->updateOrCreate(['step_order' => 1], ['organization_id' => $org->id, 'label' => 'Line manager',
                     'step_type_id' => Lookup::id('approval_step_type', 'line_manager'), 'role_id' => null, 'escalate_after_hours' => 72]);
+            $this->profiles($org->id);
+        }
+    }
+
+    /** Menu entries (the screens ship with web bundle 16). Created after the permissions exist. */
+    private function menu(): void
+    {
+        $perm = fn (string $c) => \App\Models\Permission::where('code', $c)->value('id');
+        foreach ([
+            ['people.attendance_clock', 'IconClockHour4', '/attendance/clock', 'hr.attendance.clock', 9],
+            ['people.attendance_team', 'IconCalendarStats', '/attendance/team', 'hr.attendance.view', 10],
+            ['people.attendance_setup', 'IconAdjustmentsHorizontal', '/attendance/setup', 'hr.attendance.manage', 11],
+            ['people.attendance_import', 'IconFileImport', '/attendance/import', 'hr.attendance.manage', 12],
+        ] as [$code, $icon, $route, $permission, $order]) {
+            MenuItem::updateOrCreate(['code' => $code], ['parent_id' => MenuItem::where('code', 'people')->value('id'), 'label_key' => "menu.$code", 'icon' => $icon,
+                'route' => $route, 'permission_id' => $perm($permission), 'sort_order' => $order, 'is_active' => true]);
+        }
+    }
+
+    /** Shipped import profiles: read-only starting points for the usual device and spreadsheet layouts. Duplicate one to adapt it to a particular device. */
+    private function profiles(string $orgId): void
+    {
+        $daily = [['In', 'in'], ['Out', 'out'], ['In 1', 'in'], ['Out 1', 'out'], ['In 2', 'in'], ['Out 2', 'out'], ['In 3', 'in'], ['Out 3', 'out']];
+        $defs = [
+            ['Automatic', 'Recognises the usual column names: employee number or device code, date and time (in one column or two), direction. Works for most exports and spreadsheets.', ['identify_by' => 'either']],
+            ['Device badge number', 'For devices that export their own user or badge numbers. Map each number to an employee under Device codes first (unknown numbers are listed after an import).', ['identify_by' => 'device_code']],
+            ['Numeric status 0 = in, 1 = out', 'For devices that write a number in the status column: 0 check-in, 1 check-out, 2 break-out, 3 break-in, 4 overtime-in, 5 overtime-out.', ['identify_by' => 'device_code', 'in_values' => '0,3,4', 'out_values' => '1,2,5']],
+            ['Daily report with In / Out columns', 'One row per person and day with the times in separate columns (In, Out, In 1, Out 1, In 2, Out 2...). Set the header row if the report has title lines above it.', ['layout' => 'daily', 'identify_by' => 'either']],
+        ];
+        foreach ($defs as [$name, $description, $settings]) {
+            $p = AttendanceImportProfile::withoutGlobalScopes()->updateOrCreate(['organization_id' => $orgId, 'name' => $name], ['description' => $description, 'is_system' => true] + $settings);
+            if (($settings['layout'] ?? '') === 'daily') {
+                $p->slots()->delete();
+                foreach ($daily as $i => [$column, $direction]) {
+                    $p->slots()->create(['position' => $i, 'column_name' => $column, 'direction' => $direction]);
+                }
+            }
         }
     }
 

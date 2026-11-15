@@ -6,6 +6,7 @@ use App\Models\AttendanceCorrection;
 use App\Models\AttendanceDay;
 use App\Models\AttendanceEvent;
 use App\Models\AttendanceNetwork;
+use App\Models\AttendanceSite;
 use App\Models\AttendancePeriod;
 use App\Models\Employee;
 use App\Models\Organization;
@@ -13,6 +14,7 @@ use App\Models\PublicHoliday;
 use App\Models\User;
 use App\Services\Approvals\ApprovalEngine;
 use App\Services\AuditLogger;
+use App\Services\Hr\Attendance\Import\Geo;
 use App\Services\Hr\HrSettings;
 use App\Support\Lookup;
 use Carbon\CarbonImmutable;
@@ -70,11 +72,26 @@ class AttendanceService
         return AttendanceNetwork::withoutGlobalScopes()->where('organization_id', $orgId)->where('is_active', true)->exists();
     }
 
-    public function clock(Employee $e, ?string $direction, ?string $ip): AttendanceEvent
+    /**
+     * off = nothing asked or kept; record = the place is kept when the browser provides it; required = clocking is only possible inside an active work site.
+     * "Required" with no active site cannot be enforced, so it behaves as "record" until a site exists (it never locks everybody out).
+     */
+    public function geoMode(string $orgId): string
+    {
+        $mode = HrSettings::get($orgId, 'geolocation_mode');
+        if ($mode === 0) {
+            return 'off';
+        }
+        $sites = AttendanceSite::withoutGlobalScopes()->where('organization_id', $orgId)->where('is_active', true)->exists();
+        return $mode === 2 && $sites ? 'required' : 'record';
+    }
+
+    /** @param array{lat:mixed,lng:mixed,accuracy:mixed}|null $geo the position the browser reported */
+    public function clock(Employee $e, ?string $direction, ?string $ip, ?array $geo = null): AttendanceEvent
     {
         $org = $e->organization_id;
         $tz = self::tz($org);
-        $event = DB::transaction(function () use ($e, $direction, $ip, $org, $tz) {
+        $event = DB::transaction(function () use ($e, $direction, $ip, $geo, $org, $tz) {
             $now = $this->now();
             $s = $this->state($e);
             $dir = $direction ?? ($s['state'] === 'in' ? 'out' : 'in');
@@ -99,8 +116,30 @@ class AttendanceService
                 }
                 $storeIp = $ip;
             }
+            $place = [];
+            $mode = $this->geoMode($org);
+            if ($mode !== 'off') {
+                $has = $geo && Geo::validCoordinates($geo['lat'] ?? null, $geo['lng'] ?? null);
+                $site = null;
+                if ($mode === 'required') {
+                    if (!$has) {
+                        $this->fail('location', 'location_required');
+                    }
+                    $max = HrSettings::get($org, 'geolocation_max_accuracy_meters');
+                    if (!isset($geo['accuracy']) || !is_numeric($geo['accuracy']) || (float) $geo['accuracy'] > $max) {
+                        $this->fail('location', 'location_inaccurate', ['max' => $max]);
+                    }
+                }
+                if ($has) {
+                    $site = Geo::insideSite((float) $geo['lat'], (float) $geo['lng'], AttendanceSite::where('is_active', true)->get());
+                    if ($mode === 'required' && !$site) {
+                        $this->fail('location', 'outside_site');
+                    }
+                    $place = ['latitude' => round((float) $geo['lat'], 6), 'longitude' => round((float) $geo['lng'], 6), 'accuracy_m' => isset($geo['accuracy']) && is_numeric($geo['accuracy']) ? (int) round((float) $geo['accuracy']) : null, 'site_id' => $site?->id];
+                }
+            }
             return AttendanceEvent::create(['employee_id' => $e->id, 'direction' => $dir, 'occurred_at' => $now, 'source_id' => Lookup::id('attendance_source', 'web'),
-                'ip_address' => $storeIp, 'created_by' => request()->user()?->id]);
+                'ip_address' => $storeIp, 'created_by' => request()->user()?->id] + $place);
         });
         $local = $this->localDate($tz, $event->occurred_at);
         $this->recompute($e, (new DateTimeImmutable($local))->modify('-1 day')->format('Y-m-d'), $local);

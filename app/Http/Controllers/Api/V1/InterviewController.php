@@ -80,7 +80,7 @@ class InterviewController extends Controller
         $i = Interview::findOrFail($id);
         $me = $this->me($request);
         abort_unless($me, 403, 'forbidden');
-        $d = $request->validate(['score' => 'required|integer|min:1|max:5', 'recommendation' => ['required', Rule::in(['strong_yes', 'yes', 'no', 'strong_no'])], 'strengths' => 'nullable|string|max:3000', 'concerns' => 'nullable|string|max:3000']);
+        $d = $request->validate(['score' => 'required|integer|min:1|max:5', 'recommendation' => ['required', Rule::in(['strong_yes', 'yes', 'no', 'strong_no'])], 'strengths' => 'nullable|string|max:10000', 'concerns' => 'nullable|string|max:10000']);
         $svc->submitScorecard($i, $me, $d);
         return response()->json(['data' => $this->shape($this->query()->findOrFail($id), $me, true)], 201);
     }

@@ -11,7 +11,21 @@ return [
     'asset_prefix' => env('OPS_ASSET_PREFIX', 'AST'),
 
     // Request fields that carry rich text (Tiptap HTML). Purified server-side before validation.
-    'rich_text_fields' => ['rationale', 'description', 'address', 'body', 'notes', 'impact', 'immediate_action', 'root_cause', 'preventive_action_plan', 'summary'],
+    'rich_text_fields' => ['rationale', 'description', 'address', 'body', 'notes', 'impact', 'immediate_action', 'root_cause', 'preventive_action_plan', 'summary',
+        // Phase 4 (HR, recruitment, attendance): names that are rich text wherever they appear.
+        'justification', 'goals', 'employee_comment', 'strengths', 'concerns', 'terms', 'band_exception_reason'],
+
+    // "reason" is rich text only on these routes (the web app edits it with the rich-text editor there). Everywhere else it is a plain one-line
+    // text (suspend a user, revoke access, legal hold, invoice credit note, shift exception...) and must not be HTML-encoded.
+    'rich_text_route_fields' => [
+        'reason' => [
+            '*/time-entries', '*/time-entries/*',                  // manual entry, edit, adjustment
+            '*/attendance/corrections',                            // request a correction
+            '*/attendance/periods/*/reopen',                       // reopen a validated month
+            '*/employees/*/employment-changes',                    // propose an employment change
+            '*/applicants/*/reject', '*/applicants/*/extend-retention',
+        ],
+    ],
 
     'phone_country_code' => env('OPS_PHONE_COUNTRY', '250'),   // used to turn 078... into 25078...
 

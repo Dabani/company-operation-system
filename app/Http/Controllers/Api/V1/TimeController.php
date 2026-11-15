@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Rules\RichTextMin;
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\Project;
@@ -82,7 +83,7 @@ class TimeController extends Controller
     {
         $d = $request->validate([
             'project_id' => 'required|string', 'task_id' => 'nullable|string', 'started_at' => 'required|date_format:Y-m-d H:i:s', 'ended_at' => 'required|date_format:Y-m-d H:i:s',
-            'reason' => 'required|string|min:5|max:1000', 'is_billable' => 'nullable|boolean', 'description' => 'nullable|string|max:500',
+            'reason' => ['required', 'string', 'max:5000', new RichTextMin(5)], 'is_billable' => 'nullable|boolean', 'description' => 'nullable|string|max:500',
         ]);
         return response()->json(['data' => $this->row($this->time->manual($request->user(), $d)->load(['status', 'project:id,code', 'task:id,number,title']))], 201);
     }
@@ -91,7 +92,7 @@ class TimeController extends Controller
     {
         $e = TimeEntry::with('status')->where('user_id', $request->user()->id)->findOrFail($id);
         $d = $request->validate(['description' => 'nullable|string|max:500', 'is_billable' => 'sometimes|boolean', 'task_id' => 'nullable|string',
-            'started_at' => 'sometimes|date_format:Y-m-d H:i:s', 'ended_at' => 'required_with:started_at|date_format:Y-m-d H:i:s', 'reason' => 'nullable|string|max:1000']);
+            'started_at' => 'sometimes|date_format:Y-m-d H:i:s', 'ended_at' => 'required_with:started_at|date_format:Y-m-d H:i:s', 'reason' => 'nullable|string|max:5000']);
         return ['data' => $this->row($this->time->update($e, $request->user(), $d)->load(['status', 'project:id,code', 'task:id,number,title']))];
     }
 
@@ -104,7 +105,7 @@ class TimeController extends Controller
     /** perm: time.adjust */
     public function adjust(Request $request, string $id)
     {
-        $d = $request->validate(['seconds' => 'required|integer', 'reason' => 'required|string|min:5|max:1000', 'work_date' => 'nullable|date_format:Y-m-d']);
+        $d = $request->validate(['seconds' => 'required|integer', 'reason' => ['required', 'string', 'max:5000', new RichTextMin(5)], 'work_date' => 'nullable|date_format:Y-m-d']);
         $orig = TimeEntry::with('status')->findOrFail($id);
         $p = Project::findOrFail($orig->project_id);
         abort_unless($this->access->level($request->user(), $p) === 'manager' || $this->ctx->can('time.view_team'), 404);

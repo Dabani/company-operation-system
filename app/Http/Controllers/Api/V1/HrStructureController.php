@@ -73,7 +73,7 @@ class HrStructureController extends Controller
     {
         $req = $create ? 'required' : 'sometimes';
         return $r->validate([
-            'title' => [$req, 'string', 'max:150'], 'description' => 'nullable|string|max:2000', 'is_active' => 'sometimes|boolean',
+            'title' => [$req, 'string', 'max:150'], 'description' => 'nullable|string|max:10000', 'is_active' => 'sometimes|boolean',
             'department_id' => ['nullable', Rule::exists('departments', 'id')->where('organization_id', $this->org())],
             'grade_id' => ['nullable', Rule::exists('hr_grades', 'id')->where('organization_id', $this->org())],
         ]);
@@ -109,7 +109,7 @@ class HrStructureController extends Controller
         $d = $request->validate([
             'from_grade_id' => ['required', Rule::exists('hr_grades', 'id')->where('organization_id', $org)],
             'to_grade_id' => ['required', 'different:from_grade_id', Rule::exists('hr_grades', 'id')->where('organization_id', $org)],
-            'min_months_in_grade' => 'required|integer|min:0|max:600', 'min_rating_level' => 'nullable|integer|min:1|max:5', 'notes' => 'nullable|string|max:2000',
+            'min_months_in_grade' => 'required|integer|min:0|max:600', 'min_rating_level' => 'nullable|integer|min:1|max:5', 'notes' => 'nullable|string|max:10000',
         ]);
         if (HrGrade::findOrFail($d['to_grade_id'])->level <= HrGrade::findOrFail($d['from_grade_id'])->level) {
             throw ValidationException::withMessages(['to_grade_id' => [__('hr.criteria.must_be_higher')]]);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Rules\RichTextMin;
 use App\Http\Controllers\Controller;
 use App\Models\Applicant;
 use App\Models\Requisition;
@@ -44,7 +45,7 @@ class RecruitmentController extends Controller
         $d = $request->validate([
             'department_id' => ['required', Rule::exists('departments', 'id')->where('organization_id', $org)],
             'position_id' => ['nullable', Rule::exists('hr_positions', 'id')->where('organization_id', $org)],
-            'title' => 'required|string|max:150', 'headcount' => 'required|integer|min:1|max:500', 'justification' => 'required|string|max:5000', 'needed_by' => 'nullable|date_format:Y-m-d|after_or_equal:today',
+            'title' => 'required|string|max:150', 'headcount' => 'required|integer|min:1|max:500', 'justification' => ['required', 'string', 'max:20000', new RichTextMin(1)], 'needed_by' => 'nullable|date_format:Y-m-d|after_or_equal:today',
         ]);
         $r = $svc->createRequisition($d, $request->user());
         return response()->json(['data' => $this->reqShape($r->load(['department', 'status', 'requester', 'vacancy']))], 201);
@@ -75,7 +76,7 @@ class RecruitmentController extends Controller
     public function openVacancy(Request $request, string $requisitionId, RecruitmentService $svc)
     {
         $r = Requisition::findOrFail($requisitionId);
-        $d = $request->validate(['title' => 'nullable|string|max:150', 'description' => 'nullable|string|max:10000', 'closes_on' => 'nullable|date_format:Y-m-d|after_or_equal:today']);
+        $d = $request->validate(['title' => 'nullable|string|max:150', 'description' => 'nullable|string|max:20000', 'closes_on' => 'nullable|date_format:Y-m-d|after_or_equal:today']);
         $v = $svc->openVacancy($r, $d);
         return response()->json(['data' => $this->vacShape($v->load(['status', 'requisition']))], 201);
     }
@@ -83,7 +84,7 @@ class RecruitmentController extends Controller
     public function updateVacancy(Request $request, string $id)
     {
         $v = Vacancy::findOrFail($id);
-        $v->update($request->validate(['title' => 'sometimes|string|max:150', 'description' => 'nullable|string|max:10000', 'closes_on' => 'nullable|date_format:Y-m-d']));
+        $v->update($request->validate(['title' => 'sometimes|string|max:150', 'description' => 'nullable|string|max:20000', 'closes_on' => 'nullable|date_format:Y-m-d']));
         AuditLogger::log('vacancy.updated', $v);
         return ['data' => $this->vacShape($v->refresh()->load(['status', 'requisition']))];
     }

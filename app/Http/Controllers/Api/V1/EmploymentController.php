@@ -89,7 +89,7 @@ class EmploymentController extends Controller
             'position_id' => $exists('hr_positions'), 'grade_id' => $exists('hr_grades'), 'department_id' => $exists('departments'), 'manager_employee_id' => $exists('hr_employees'),
             'contract_end_on' => 'nullable|date_format:Y-m-d', 'probation_end_on' => 'nullable|date_format:Y-m-d',
             'salary_amount' => 'nullable|numeric|min:0|max:9999999999999', 'salary_currency' => ['nullable', LookupRule::code('currency')],
-            'reason' => 'nullable|string|max:2000', 'review_id' => $exists('hr_performance_reviews'),
+            'reason' => 'nullable|string|max:5000', 'review_id' => $exists('hr_performance_reviews'),
         ]);
         if (array_key_exists('salary_amount', $d) && $d['salary_amount'] !== null && !$this->ctx()->can('hr.salary.view')) {
             abort(403, 'forbidden');

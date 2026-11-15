@@ -125,7 +125,7 @@ class ReviewController extends Controller
         abort_unless($p->status?->code === 'draft' && $p->cycle?->status_id === Lookup::id('review_cycle_status', 'open'), 422);
         $d = $request->validate([
             'rating' => ['nullable', Rule::in($this->codes('performance_rating'))], 'recommendation' => ['nullable', Rule::in($this->codes('review_recommendation'))],
-            'summary' => 'nullable|string|max:5000', 'goals' => 'nullable|string|max:5000',
+            'summary' => 'nullable|string|max:20000', 'goals' => 'nullable|string|max:20000',
         ]);
         $upd = array_intersect_key($d, array_flip(['summary', 'goals']));
         if (array_key_exists('rating', $d)) {
@@ -156,7 +156,7 @@ class ReviewController extends Controller
         $p = $this->load($id);
         abort_unless($this->isSubject($request, $p) && $p->submitted_at !== null, 404);
         abort_unless($p->status?->code === 'submitted', 422);
-        $d = $request->validate(['employee_comment' => 'nullable|string|max:3000']);
+        $d = $request->validate(['employee_comment' => 'nullable|string|max:10000']);
         $p->update(['status_id' => Lookup::id('review_status', 'acknowledged'), 'acknowledged_at' => now(), 'employee_comment' => $d['employee_comment'] ?? null]);
         AuditLogger::log('review.acknowledged', $p);
         return ['data' => $this->shape($this->load($id))];

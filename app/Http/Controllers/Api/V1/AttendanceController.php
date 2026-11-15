@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Rules\RichTextMin;
 use App\Http\Controllers\Controller;
 use App\Models\AttendanceCorrection;
 use App\Models\AttendanceDay;
@@ -147,7 +148,7 @@ class AttendanceController extends Controller
     public function storeCorrection(Request $request, AttendanceService $svc)
     {
         $d = $request->validate(['employee_id' => ['nullable', Rule::exists('hr_employees', 'id')->where('organization_id', $this->org())], 'work_date' => 'required|date_format:Y-m-d',
-            'in_at' => 'required|date_format:Y-m-d H:i', 'out_at' => 'required|date_format:Y-m-d H:i', 'reason' => 'required|string|min:3|max:2000']);
+            'in_at' => 'required|date_format:Y-m-d H:i', 'out_at' => 'required|date_format:Y-m-d H:i', 'reason' => ['required', 'string', 'max:5000', new RichTextMin(3)]]);
         $mine = $this->me($request);
         if (empty($d['employee_id']) || ($mine && $d['employee_id'] === $mine->id)) {
             abort_unless($mine && $this->ctx()->can('hr.attendance.clock'), 403, 'forbidden');

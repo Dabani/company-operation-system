@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Rules\RichTextMin;
 use App\Http\Controllers\Controller;
 use App\Models\AttendancePeriod;
 use App\Services\Hr\Attendance\AttendanceService;
@@ -38,7 +39,7 @@ class AttendanceAdminController extends Controller
 
     public function reopenMonth(Request $request, string $month, AttendanceService $svc)
     {
-        $d = $request->validate(['reason' => 'required|string|min:5|max:1000']);
+        $d = $request->validate(['reason' => ['required', 'string', 'max:5000', new RichTextMin(5)]]);
         $svc->reopenMonth($this->org(), $this->month($month), $d['reason'], $request->user());
         return ['data' => ['month' => $month, 'reopened' => true]];
     }

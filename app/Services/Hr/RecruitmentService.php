@@ -163,7 +163,7 @@ class RecruitmentService
             Offer::where('applicant_id', $a->id)->whereIn('status_id', [$this->id('offer_status', 'draft'), $this->id('offer_status', 'issued'), $this->id('offer_status', 'accepted')])
                 ->get()->each(fn ($o) => $o->update(['status_id' => $this->id('offer_status', 'withdrawn')]));
             $a->update(['rejection_reason' => $reason, 'retention_until' => now()->addMonthsNoOverflow(HrSettings::get($a->organization_id, 'applicant_retention_months'))->toDateString(), 'retention_flagged_at' => null]);
-            $this->setStage($a, 'rejected', $reason, $by);
+            $this->setStage($a, 'rejected', \App\Support\Html::plain($reason), $by);
         });
         AuditLogger::log('applicant.rejected', $a, ['stage' => $cur]);
     }
@@ -405,7 +405,7 @@ class RecruitmentService
             $this->fail('until', 'retention_date_future');
         }
         $a->update(['retention_until' => $until, 'retention_flagged_at' => null]);
-        AuditLogger::log('applicant.retention_extended', $a, [], ['until' => $until, 'reason' => $reason]);
+        AuditLogger::log('applicant.retention_extended', $a, [], ['until' => $until, 'reason' => \App\Support\Html::plain($reason)]);
     }
 
     /** Erase the personal data of a closed application. Stage history and scores stay for statistics, without identity. */

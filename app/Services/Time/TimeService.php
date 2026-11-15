@@ -140,7 +140,7 @@ class TimeService
                 'description' => $d['description'] ?? null, 'status_id' => Lookup::id('time_entry_status', 'draft'),
             ]);
             TimeEntrySegment::create(['time_entry_id' => $e->id, 'user_id' => $u->id, 'started_at' => $d['started_at'], 'ended_at' => $d['ended_at']]);
-            AuditLogger::log('time.manual_created', $e, [], ['seconds' => $secs, 'reason' => $d['reason']]);
+            AuditLogger::log('time.manual_created', $e, [], ['seconds' => $secs, 'reason' => \App\Support\Html::plain($d['reason'])]);
             return $e;
         });
     }

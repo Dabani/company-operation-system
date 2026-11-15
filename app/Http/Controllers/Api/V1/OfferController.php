@@ -51,7 +51,7 @@ class OfferController extends Controller
             'position_id' => $exists('hr_positions'), 'grade_id' => $exists('hr_grades'), 'department_id' => $exists('departments'),
             'start_date' => 'required|date_format:Y-m-d', 'probation_months' => 'nullable|integer|min:0|max:24', 'contract_end_on' => 'nullable|date_format:Y-m-d|after:start_date',
             'salary_amount' => 'required|numeric|gt:0|max:9999999999999', 'salary_currency' => ['required', LookupRule::code('currency')], 'salary_period' => ['nullable', Rule::in(['monthly', 'annual'])],
-            'terms' => 'nullable|string|max:10000', 'band_exception_reason' => 'nullable|string|max:1000',
+            'terms' => 'nullable|string|max:30000', 'band_exception_reason' => 'nullable|string|max:5000',
         ]);
         $o = $svc->createOffer($a, $d, $request->user());
         return response()->json(['data' => $this->shape($this->load($o->id))], 201);

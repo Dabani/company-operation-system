@@ -30,6 +30,7 @@ Route::prefix('v1')->group(function () {
         require __DIR__ . '/recruitment.php';  // COPS Phase 4b: requisitions, vacancies, applicants, interviews, offers, onboarding
         require __DIR__ . '/attendance.php';   // COPS Phase 4c: clocking, shifts, schedules, holidays, imports, validation
         require __DIR__ . '/meetings.php';     // COPS Phase 7a: meetings, rooms, agenda, invitations
+        require __DIR__ . '/meetings-attendance.php'; // COPS Phase 7b: meeting attendance and check-in
 
         Route::post('auth/logout', [V1\AuthController::class, 'logout']);
 

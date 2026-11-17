@@ -27,3 +27,4 @@ Homestead.yaml
 Thumbs.db
 .bundle-*-backup/
 .patch-*-backup/
+.cops-backup/

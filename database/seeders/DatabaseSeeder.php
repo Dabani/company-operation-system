@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             HrRecruitmentSeeder::class,      // COPS Phase 4b: recruitment lookups, permissions, approval flows, onboarding template
             HrAttendanceSeeder::class,       // COPS Phase 4c: attendance lookups, permissions, correction approval flow
             MeetingsSeeder::class,          // COPS Phase 7a: meeting lookups, permissions, menu
+            MeetingsAttendanceSeeder::class, // COPS Phase 7b: attendance statuses and check-in methods
             PolishSeeder::class,             // currency list and menu icons
             CodesSeeder::class,              // system rule sets with fixed keys
         ]);

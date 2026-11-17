@@ -209,6 +209,7 @@ class MeetingService
         return DB::transaction(function () use ($meeting, $by) {
             $m = $this->move($meeting, 'in_progress', $by);
             $m->update(['started_at' => now()]);
+            app(MeetingAttendanceService::class)->generate($m, $by);   // the expected list (Phase 7b)
             return $m->refresh();
         });
     }
@@ -219,6 +220,7 @@ class MeetingService
         return DB::transaction(function () use ($meeting, $by) {
             $m = $this->move($meeting, 'held', $by);
             $m->update(['ended_at' => now(), 'started_at' => $m->started_at ?? now()]);
+            app(MeetingAttendanceService::class)->generate($m, $by);   // attendance sheet for a meeting held without being started (Phase 7b)
             return $m->refresh();
         });
     }

@@ -26,6 +26,8 @@ class SettingsService
         'portal.upload_extensions' => ['string', 'pdf,docx,xlsx,pptx,png,jpg,jpeg,txt,csv'],   // allowed client upload types (intersected with the global list)
         'meeting.reminder_offsets' => ['string', '1440,60'],     // minutes before the start at which invitees are reminded (comma separated, 5 to 20160)
         'meeting.reminder_sms' => ['boolean', false],            // also remind by SMS (in-app and e-mail always)
+        'meeting.late_after_minutes' => ['integer', 10],         // arriving within this many minutes of the start still counts as present
+        'meeting.attendance_ack' => ['boolean', false],          // participants confirm their own line of the attendance sheet
     ];
 
     public static function get(string $orgId, string $key)

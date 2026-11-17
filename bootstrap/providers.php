@@ -12,4 +12,5 @@ return [
     AppServiceProvider::class,
     DatabaseServiceProvider::class,
     App\Providers\HrServiceProvider::class,
+    App\Providers\MeetingsServiceProvider::class,
 ];

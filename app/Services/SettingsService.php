@@ -24,6 +24,8 @@ class SettingsService
         'portal.mfa_required' => ['boolean', true],           // client users must pass two-factor verification
         'portal.upload_max_mb' => ['integer', 10],            // client upload size limit (never above the global file limit)
         'portal.upload_extensions' => ['string', 'pdf,docx,xlsx,pptx,png,jpg,jpeg,txt,csv'],   // allowed client upload types (intersected with the global list)
+        'meeting.reminder_offsets' => ['string', '1440,60'],     // minutes before the start at which invitees are reminded (comma separated, 5 to 20160)
+        'meeting.reminder_sms' => ['boolean', false],            // also remind by SMS (in-app and e-mail always)
     ];
 
     public static function get(string $orgId, string $key)

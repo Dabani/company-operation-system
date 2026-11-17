@@ -169,4 +169,32 @@ return [
         'title' => 'Client upload: :title',
         'body' => ':client uploaded a file to :title. It was virus-scanned and is waiting in the project files.',
     ],
+    'meeting_invited' => [
+        'title' => 'Invitation: :title (:ref)',
+        'body' => ':organizer invites you to ":title" on :when. Where: :where.',
+    ],
+    'meeting_updated' => [
+        'title' => 'Meeting updated: :title',
+        'body' => ':title (:ref) changed. Now: :when, :where.',
+    ],
+    'meeting_cancelled' => [
+        'title' => 'Meeting cancelled: :title',
+        'body' => ':title (:ref) planned for :when was cancelled. :reason',
+    ],
+    'meeting_reminder' => [
+        'title' => 'Reminder: :title',
+        'body' => ':title starts in :in (:when). Where: :where.',
+    ],
+    'meeting_agenda_circulated' => [
+        'title' => 'Agenda circulated: :title',
+        'body' => 'The agenda of ":title" (:ref) is available.',
+    ],
+    'meeting_rsvp_declined' => [
+        'title' => 'Declined: :title',
+        'body' => ':who declined ":title". :note',
+    ],
+    'meeting_rsvp_proposed' => [
+        'title' => 'New time proposed: :title',
+        'body' => ':who proposes another time for ":title". :note',
+    ],
 ];

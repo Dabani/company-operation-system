@@ -1,0 +1,25 @@
+<?php
+
+// COPS Phase 7a: meetings messages. rw / sw are first-pass: have native speakers review them.
+return [
+    'room_unavailable' => 'Chumba hiki hakipatikani.',
+    'room_conflict' => 'Chumba :room tayari kimehifadhiwa kuanzia :from hadi :to.',
+    'bad_period' => 'Mwisho lazima uwe baada ya mwanzo.',
+    'bad_recurrence' => 'Marudio hayakubaliki.',
+    'not_editable' => 'Mkutano huu hauwezi kuhaririwa tena.',
+    'transition_not_allowed' => 'Mkutano hauwezi kutoka :from kwenda :to.',
+    'chair_required' => 'Mwenyekiti lazima ateuliwe kabla ya kupanga.',
+    'in_the_past' => 'Mkutano hauwezi kuanza wakati uliopita.',
+    'nobody_invited' => 'Mwalike angalau mtu mmoja kabla ya kupanga.',
+    'bad_order' => 'Mpangilio wa ajenda si sahihi.',
+    'agenda_not_draft' => 'Ajenda si rasimu tena.',
+    'agenda_empty' => 'Ongeza kwanza angalau kipengele kimoja cha ajenda.',
+    'agenda_not_circulated' => 'Ajenda lazima isambazwe kabla ya kuidhinishwa.',
+    'rsvp_closed' => 'Muda wa kujibu umeisha.',
+    'proposal_needs_time' => 'Pendekeza tarehe na saa.',
+    'room_in_use' => 'Chumba hiki kina uhifadhi ujao na hakiwezi kuondolewa.',
+    'cannot_remove_host' => 'Mwandaaji, mwenyekiti na katibu hawawezi kuondolewa.',
+    'files_read_only' => 'Nyaraka za mkutano huu haziwezi kubadilishwa tena.',
+    'file_not_restricted' => 'Daraja la faili hii ni kali mno kwa mkutano.',
+    'confidential_meeting' => 'Mkutano wa siri.',
+];

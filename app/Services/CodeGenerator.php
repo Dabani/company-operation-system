@@ -14,7 +14,7 @@ class CodeGenerator
 {
     public const PREFIXES = [
         'project' => 'PRJ', 'client' => 'CLI', 'employee' => 'EMP', 'department' => 'DEP', 'location' => 'LOC', 'role' => 'ROL',
-        'obligation' => 'OBL', 'legal_reference' => 'LEG', 'rule_set' => 'RUL', 'approval_flow' => 'FLW',
+        'meeting' => 'MTG', 'obligation' => 'OBL', 'legal_reference' => 'LEG', 'rule_set' => 'RUL', 'approval_flow' => 'FLW',
     ];
 
     public static function format(string $prefix, int $n): string { return sprintf('%s-%04d', $prefix, $n); }

@@ -225,4 +225,20 @@ return [
         'title' => 'Action done: :title',
         'body' => '":title" (:ref) from the meeting ":meeting" was marked done and is waiting for your check.',
     ],
+    'event_registered' => [
+        'title' => 'Registered: :title',
+        'body' => 'You are registered for ":title" (:ref) on :when. Place: :where.',
+    ],
+    'event_waitlisted' => [
+        'title' => 'On the waitlist: :title',
+        'body' => 'The event ":title" (:ref) is full. You are on the waitlist and will be told if a seat frees up.',
+    ],
+    'event_waitlist_promoted' => [
+        'title' => 'A seat is available: :title',
+        'body' => 'Good news: a seat freed up and you are now registered for ":title" (:ref) on :when. Place: :where.',
+    ],
+    'event_cancelled' => [
+        'title' => 'Event cancelled: :title',
+        'body' => 'The event ":title" (:ref) planned for :when was cancelled. :reason',
+    ],
 ];

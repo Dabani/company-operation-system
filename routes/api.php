@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
     require __DIR__ . '/portal.php';          // COPS Phase 0: external client portal (own guard)
     require __DIR__ . '/meetings-public.php'; // COPS Phase 7a: external guest RSVP (personal link, rate limited)
+    require __DIR__ . '/events-public.php';   // COPS Phase 7e: event registration and ticket pages (public, rate limited)
 
 
     // ---- public ------------------------------------------------------------------------------
@@ -33,6 +34,7 @@ Route::prefix('v1')->group(function () {
         require __DIR__ . '/meetings-attendance.php'; // COPS Phase 7b: meeting attendance and check-in
         require __DIR__ . '/meetings-minutes.php'; // COPS Phase 7c: meeting minutes
         require __DIR__ . '/meetings-followups.php'; // COPS Phase 7d: resolutions and action items
+        require __DIR__ . '/events.php';       // COPS Phase 7e: events, registration, check-in
 
         Route::post('auth/logout', [V1\AuthController::class, 'logout']);
 

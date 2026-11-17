@@ -225,4 +225,20 @@ return [
         'title' => 'Action faite : :title',
         'body' => '« :title » (:ref) de la réunion « :meeting » a été marquée faite et attend votre vérification.',
     ],
+    'event_registered' => [
+        'title' => 'Inscription confirmée : :title',
+        'body' => 'Vous êtes inscrit à « :title » (:ref) le :when. Lieu : :where.',
+    ],
+    'event_waitlisted' => [
+        'title' => 'Sur liste d\'attente : :title',
+        'body' => 'L\'événement « :title » (:ref) est complet. Vous êtes sur liste d\'attente et serez prévenu si une place se libère.',
+    ],
+    'event_waitlist_promoted' => [
+        'title' => 'Une place est disponible : :title',
+        'body' => 'Bonne nouvelle : une place s\'est libérée et vous êtes inscrit à « :title » (:ref) le :when. Lieu : :where.',
+    ],
+    'event_cancelled' => [
+        'title' => 'Événement annulé : :title',
+        'body' => 'L\'événement « :title » (:ref) prévu le :when a été annulé. :reason',
+    ],
 ];

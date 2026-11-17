@@ -225,4 +225,20 @@ return [
         'title' => 'Hatua imefanyika: :title',
         'body' => '":title" (:ref) wa mkutano ":meeting" umewekwa kuwa umefanyika na unasubiri ukaguzi wako.',
     ],
+    'event_registered' => [
+        'title' => 'Umesajiliwa: :title',
+        'body' => 'Umesajiliwa kwa ":title" (:ref) tarehe :when. Mahali: :where.',
+    ],
+    'event_waitlisted' => [
+        'title' => 'Uko kwenye orodha ya kusubiri: :title',
+        'body' => 'Tukio ":title" (:ref) limejaa. Uko kwenye orodha ya kusubiri na utajulishwa nafasi ikipatikana.',
+    ],
+    'event_waitlist_promoted' => [
+        'title' => 'Nafasi imepatikana: :title',
+        'body' => 'Habari njema: nafasi imepatikana na sasa umesajiliwa kwa ":title" (:ref) tarehe :when. Mahali: :where.',
+    ],
+    'event_cancelled' => [
+        'title' => 'Tukio limeghairiwa: :title',
+        'body' => 'Tukio ":title" (:ref) lililopangwa tarehe :when limeghairiwa. :reason',
+    ],
 ];

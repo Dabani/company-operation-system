@@ -225,4 +225,20 @@ return [
         'title' => 'Igikorwa cyarangiye: :title',
         'body' => '":title" (:ref) cyo mu nama ":meeting" cyashyizweho ko cyakozwe, gitegereje ko ugisuzuma.',
     ],
+    'event_registered' => [
+        'title' => 'Wiyandikishije: :title',
+        'body' => 'Wiyandikishije kuri ":title" (:ref) kuwa :when. Ahantu: :where.',
+    ],
+    'event_waitlisted' => [
+        'title' => 'Uri ku rutonde rw\'abategereje: :title',
+        'body' => '":title" (:ref) imyanya yose yafashwe. Uri ku rutonde rw\'abategereje kandi uzamenyeshwa nihaboneka umwanya.',
+    ],
+    'event_waitlist_promoted' => [
+        'title' => 'Umwanya wabonetse: :title',
+        'body' => 'Inkuru nziza: umwanya wabonetse none wiyandikishije kuri ":title" (:ref) kuwa :when. Ahantu: :where.',
+    ],
+    'event_cancelled' => [
+        'title' => 'Igikorwa cyahagaritswe: :title',
+        'body' => '":title" (:ref) cyari giteganyijwe kuwa :when cyahagaritswe. :reason',
+    ],
 ];

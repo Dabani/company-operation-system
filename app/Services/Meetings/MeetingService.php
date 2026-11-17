@@ -225,6 +225,12 @@ class MeetingService
         });
     }
 
+    /** Close a held meeting (called when its minutes are published, Phase 7c). */
+    public function close(Meeting $meeting, User $by): Meeting
+    {
+        return $this->move($meeting, 'closed', $by);
+    }
+
     // ---- agenda ------------------------------------------------------------------------------------------------------------
     private function requireOpenAgenda(Meeting $m): void
     {

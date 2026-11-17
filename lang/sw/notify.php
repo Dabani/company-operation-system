@@ -197,4 +197,32 @@ return [
         'title' => 'Wakati mwingine umependekezwa: :title',
         'body' => ':who anapendekeza wakati mwingine kwa ":title". :note',
     ],
+    'meeting_minutes_review' => [
+        'title' => 'Muhtasari wa kukagua: :title',
+        'body' => 'Tafadhali kagua muhtasari wa ":title" (:ref). Ombi kutoka :by.',
+    ],
+    'meeting_minutes_returned' => [
+        'title' => 'Muhtasari umerudishwa: :title',
+        'body' => 'Muhtasari wa ":title" (:ref) umerudishwa kwa marekebisho. :note',
+    ],
+    'meeting_minutes_published' => [
+        'title' => 'Muhtasari umechapishwa: :title',
+        'body' => 'Muhtasari wa ":title" (:ref), toleo :version, upatikane.',
+    ],
+    'meeting_followup_assigned' => [
+        'title' => 'Umepewa: :title',
+        'body' => '":title" (:ref) wa mkutano ":meeting" umepewa na :by. Tarehe ya mwisho: :due.',
+    ],
+    'meeting_followup_due' => [
+        'title' => 'Tarehe ya mwisho inakaribia: :title',
+        'body' => '":title" (:ref) wa mkutano ":meeting" unatakiwa kukamilika tarehe :due.',
+    ],
+    'meeting_followup_overdue' => [
+        'title' => 'Imechelewa: :title',
+        'body' => '":title" (:ref) wa mkutano ":meeting" ulitakiwa kukamilika tarehe :due (siku :days za kuchelewa).',
+    ],
+    'meeting_followup_done' => [
+        'title' => 'Hatua imefanyika: :title',
+        'body' => '":title" (:ref) wa mkutano ":meeting" umewekwa kuwa umefanyika na unasubiri ukaguzi wako.',
+    ],
 ];

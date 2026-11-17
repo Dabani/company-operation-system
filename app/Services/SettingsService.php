@@ -28,6 +28,8 @@ class SettingsService
         'meeting.reminder_sms' => ['boolean', false],            // also remind by SMS (in-app and e-mail always)
         'meeting.late_after_minutes' => ['integer', 10],         // arriving within this many minutes of the start still counts as present
         'meeting.attendance_ack' => ['boolean', false],          // participants confirm their own line of the attendance sheet
+        'meeting.followup_due_soon_days' => ['integer', 2],      // resolutions and actions due within this many days are announced to their owner
+        'meeting.followup_overdue_repeat_days' => ['integer', 3], // an overdue item is announced again every this many days
     ];
 
     public static function get(string $orgId, string $key)

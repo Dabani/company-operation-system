@@ -197,4 +197,32 @@ return [
         'title' => 'Autre horaire proposé : :title',
         'body' => ':who propose un autre horaire pour « :title ». :note',
     ],
+    'meeting_minutes_review' => [
+        'title' => 'Procès-verbal à relire : :title',
+        'body' => 'Veuillez relire le procès-verbal de « :title » (:ref). Demandé par :by.',
+    ],
+    'meeting_minutes_returned' => [
+        'title' => 'Procès-verbal renvoyé : :title',
+        'body' => 'Le procès-verbal de « :title » (:ref) a été renvoyé pour modification. :note',
+    ],
+    'meeting_minutes_published' => [
+        'title' => 'Procès-verbal publié : :title',
+        'body' => 'Le procès-verbal de « :title » (:ref), version :version, est disponible.',
+    ],
+    'meeting_followup_assigned' => [
+        'title' => 'Qui vous est confié : :title',
+        'body' => '« :title » (:ref) de la réunion « :meeting » vous a été confié par :by. Échéance : :due.',
+    ],
+    'meeting_followup_due' => [
+        'title' => 'Échéance proche : :title',
+        'body' => '« :title » (:ref) de la réunion « :meeting » arrive à échéance le :due.',
+    ],
+    'meeting_followup_overdue' => [
+        'title' => 'En retard : :title',
+        'body' => '« :title » (:ref) de la réunion « :meeting » était attendu le :due (:days jours de retard).',
+    ],
+    'meeting_followup_done' => [
+        'title' => 'Action faite : :title',
+        'body' => '« :title » (:ref) de la réunion « :meeting » a été marquée faite et attend votre vérification.',
+    ],
 ];

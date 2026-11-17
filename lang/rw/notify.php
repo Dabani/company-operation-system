@@ -197,4 +197,32 @@ return [
         'title' => 'Hatanzwe undi mwanya: :title',
         'body' => ':who atanga undi mwanya ku ":title". :note',
     ],
+    'meeting_minutes_review' => [
+        'title' => 'Raporo yo gusuzuma: :title',
+        'body' => 'Nyamuneka suzuma raporo ya ":title" (:ref). Byasabwe na :by.',
+    ],
+    'meeting_minutes_returned' => [
+        'title' => 'Raporo yasubijwe: :title',
+        'body' => 'Raporo ya ":title" (:ref) yasubijwe ngo ihindurwe. :note',
+    ],
+    'meeting_minutes_published' => [
+        'title' => 'Raporo yatangajwe: :title',
+        'body' => 'Raporo ya ":title" (:ref), verisiyo :version, irahari.',
+    ],
+    'meeting_followup_assigned' => [
+        'title' => 'Wahawe: :title',
+        'body' => '":title" (:ref) wo mu nama ":meeting" wawuhawe na :by. Itariki ntarengwa: :due.',
+    ],
+    'meeting_followup_due' => [
+        'title' => 'Igihe cyegereje: :title',
+        'body' => '":title" (:ref) wo mu nama ":meeting" ugomba kurangira kuwa :due.',
+    ],
+    'meeting_followup_overdue' => [
+        'title' => 'Byatinze: :title',
+        'body' => '":title" (:ref) wo mu nama ":meeting" wagombaga kurangira kuwa :due (hashize iminsi :days).',
+    ],
+    'meeting_followup_done' => [
+        'title' => 'Igikorwa cyarangiye: :title',
+        'body' => '":title" (:ref) cyo mu nama ":meeting" cyashyizweho ko cyakozwe, gitegereje ko ugisuzuma.',
+    ],
 ];

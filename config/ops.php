@@ -13,7 +13,7 @@ return [
     // Request fields that carry rich text (Tiptap HTML). Purified server-side before validation.
     'rich_text_fields' => ['rationale', 'description', 'address', 'body', 'notes', 'impact', 'immediate_action', 'root_cause', 'preventive_action_plan', 'summary',
         // Phase 4 (HR, recruitment, attendance): names that are rich text wherever they appear.
-        'justification', 'goals', 'employee_comment', 'strengths', 'concerns', 'terms', 'band_exception_reason', 'purpose'],
+        'justification', 'goals', 'employee_comment', 'strengths', 'concerns', 'terms', 'band_exception_reason', 'purpose', 'minutes_body'],
 
     // "reason" is rich text only on these routes (the web app edits it with the rich-text editor there). Everywhere else it is a plain one-line
     // text (suspend a user, revoke access, legal hold, invoice credit note, shift exception...) and must not be HTML-encoded.

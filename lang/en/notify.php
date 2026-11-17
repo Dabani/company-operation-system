@@ -197,4 +197,32 @@ return [
         'title' => 'New time proposed: :title',
         'body' => ':who proposes another time for ":title". :note',
     ],
+    'meeting_minutes_review' => [
+        'title' => 'Minutes to review: :title',
+        'body' => 'Please review the minutes of ":title" (:ref). Requested by :by.',
+    ],
+    'meeting_minutes_returned' => [
+        'title' => 'Minutes returned: :title',
+        'body' => 'The minutes of ":title" (:ref) were returned for changes. :note',
+    ],
+    'meeting_minutes_published' => [
+        'title' => 'Minutes published: :title',
+        'body' => 'The minutes of ":title" (:ref), version :version, are available.',
+    ],
+    'meeting_followup_assigned' => [
+        'title' => 'Assigned to you: :title',
+        'body' => '":title" (:ref) from the meeting ":meeting" was assigned to you by :by. Due: :due.',
+    ],
+    'meeting_followup_due' => [
+        'title' => 'Due soon: :title',
+        'body' => '":title" (:ref) from the meeting ":meeting" is due on :due.',
+    ],
+    'meeting_followup_overdue' => [
+        'title' => 'Overdue: :title',
+        'body' => '":title" (:ref) from the meeting ":meeting" was due on :due (:days days late).',
+    ],
+    'meeting_followup_done' => [
+        'title' => 'Action done: :title',
+        'body' => '":title" (:ref) from the meeting ":meeting" was marked done and is waiting for your check.',
+    ],
 ];

@@ -17,4 +17,10 @@ return [
     'event_already_checked_in' => 'Cette personne a déjà été pointée.',
     'event_not_running' => 'Le pointage n\'est possible que pendant l\'événement.',
     'event_not_registered' => 'Seules les personnes inscrites peuvent être pointées.',
+    'expense_currency_required' => 'Définissez une devise sur l\'événement avant d\'enregistrer des dépenses.',
+    'expense_not_editable' => 'Cette dépense ne peut plus être modifiée.',
+    'expense_bad_amount' => 'Le montant doit être supérieur à zéro.',
+    'expense_receipt_required' => 'Joignez un justificatif avant d\'envoyer cette dépense en approbation.',
+    'expense_approval_title' => 'Dépense d\'événement : :event, :what',
+    'expense_over_budget_tag' => '(hors budget)',
 ];

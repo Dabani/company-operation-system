@@ -17,4 +17,10 @@ return [
     'event_already_checked_in' => 'This person has already checked in.',
     'event_not_running' => 'Check-in is only possible while the event is running.',
     'event_not_registered' => 'Only registered people can check in.',
+    'expense_currency_required' => 'Set a currency on the event before recording expenses.',
+    'expense_not_editable' => 'This expense can no longer be changed.',
+    'expense_bad_amount' => 'The amount must be greater than zero.',
+    'expense_receipt_required' => 'Attach a receipt before sending this expense for approval.',
+    'expense_approval_title' => 'Event expense: :event, :what',
+    'expense_over_budget_tag' => '(over budget)',
 ];

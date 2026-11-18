@@ -17,4 +17,10 @@ return [
     'event_already_checked_in' => 'Uyu muntu yamaze kwinjizwa.',
     'event_not_running' => 'Kwinjiza bishoboka gusa igihe igikorwa kiri kuba.',
     'event_not_registered' => 'Abiyandikishije gusa ni bo bashobora kwinjizwa.',
+    'expense_currency_required' => 'Shyiraho ifaranga ku gikorwa mbere yo kwandika ibyakoreshejwe.',
+    'expense_not_editable' => 'Aya mafaranga ntashobora guhindurwa ukundi.',
+    'expense_bad_amount' => 'Umubare ugomba kurenga zero.',
+    'expense_receipt_required' => 'Shyiraho inyemezabwishyu mbere yo kohereza kwemezwa.',
+    'expense_approval_title' => 'Amafaranga y\'igikorwa: :event, :what',
+    'expense_over_budget_tag' => '(arenze ingengo y\'imari)',
 ];

@@ -28,6 +28,9 @@ class SettingsService
         'meeting.reminder_sms' => ['boolean', false],            // also remind by SMS (in-app and e-mail always)
         'meeting.late_after_minutes' => ['integer', 10],         // arriving within this many minutes of the start still counts as present
         'meeting.attendance_ack' => ['boolean', false],          // participants confirm their own line of the attendance sheet
+        'event.expense_receipt_over' => ['integer', 0],          // event expenses from this amount (whole currency units) need a receipt; 0 = off
+        'procurement.split_threshold' => ['integer', 0],         // requisitions by the same requester, cost centre and type that together reach this amount (whole currency units) are flagged as possible splitting; 0 = off
+        'procurement.split_window_days' => ['integer', 30],      // how far back the splitting check looks
         'meeting.followup_due_soon_days' => ['integer', 2],      // resolutions and actions due within this many days are announced to their owner
         'meeting.followup_overdue_repeat_days' => ['integer', 3], // an overdue item is announced again every this many days
     ];

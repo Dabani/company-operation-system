@@ -241,4 +241,20 @@ return [
         'title' => 'Igikorwa cyahagaritswe: :title',
         'body' => '":title" (:ref) cyari giteganyijwe kuwa :when cyahagaritswe. :reason',
     ],
+    'event_expense_returned' => [
+        'title' => 'Amafaranga ntiyemejwe: :title',
+        'body' => 'Amafaranga ":what" ya ":title" yagaragajwe nka :outcome. :note',
+    ],
+    'event_expense_approved' => [
+        'title' => 'Amafaranga yemejwe: :title',
+        'body' => 'Amafaranga ":what" ya ":title" yemejwe.',
+    ],
+    'supplier_decided' => [
+        'title' => 'Isuzuma ry\'utanga serivisi: :name',
+        'body' => 'Isuzuma ry\'utanga serivisi :name ryarangiye: :outcome. :note',
+    ],
+    'requisition_decided' => [
+        'title' => 'Icyifuzo cyo kugura :code: :outcome',
+        'body' => 'Icyifuzo cyawe ":title": :outcome. :note',
+    ],
 ];

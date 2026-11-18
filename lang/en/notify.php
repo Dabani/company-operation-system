@@ -241,4 +241,20 @@ return [
         'title' => 'Event cancelled: :title',
         'body' => 'The event ":title" (:ref) planned for :when was cancelled. :reason',
     ],
+    'event_expense_returned' => [
+        'title' => 'Expense not approved: :title',
+        'body' => 'The expense ":what" for ":title" was :outcome. :note',
+    ],
+    'event_expense_approved' => [
+        'title' => 'Expense approved: :title',
+        'body' => 'The expense ":what" for ":title" was approved.',
+    ],
+    'supplier_decided' => [
+        'title' => 'Supplier review: :name',
+        'body' => 'The review of supplier :name ended: :outcome. :note',
+    ],
+    'requisition_decided' => [
+        'title' => 'Purchase requisition :code: :outcome',
+        'body' => 'Your requisition ":title" was :outcome. :note',
+    ],
 ];

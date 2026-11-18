@@ -241,4 +241,20 @@ return [
         'title' => 'Événement annulé : :title',
         'body' => 'L\'événement « :title » (:ref) prévu le :when a été annulé. :reason',
     ],
+    'event_expense_returned' => [
+        'title' => 'Dépense non approuvée : :title',
+        'body' => 'La dépense « :what » pour « :title » a été :outcome. :note',
+    ],
+    'event_expense_approved' => [
+        'title' => 'Dépense approuvée : :title',
+        'body' => 'La dépense « :what » pour « :title » a été approuvée.',
+    ],
+    'supplier_decided' => [
+        'title' => 'Revue du fournisseur : :name',
+        'body' => 'La revue du fournisseur :name est terminée : :outcome. :note',
+    ],
+    'requisition_decided' => [
+        'title' => 'Demande d\'achat :code : :outcome',
+        'body' => 'Votre demande « :title » : :outcome. :note',
+    ],
 ];

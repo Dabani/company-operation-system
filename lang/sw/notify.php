@@ -241,4 +241,20 @@ return [
         'title' => 'Tukio limeghairiwa: :title',
         'body' => 'Tukio ":title" (:ref) lililopangwa tarehe :when limeghairiwa. :reason',
     ],
+    'event_expense_returned' => [
+        'title' => 'Gharama haijaidhinishwa: :title',
+        'body' => 'Gharama ":what" ya ":title" ilikuwa :outcome. :note',
+    ],
+    'event_expense_approved' => [
+        'title' => 'Gharama imeidhinishwa: :title',
+        'body' => 'Gharama ":what" ya ":title" imeidhinishwa.',
+    ],
+    'supplier_decided' => [
+        'title' => 'Mapitio ya muuzaji: :name',
+        'body' => 'Mapitio ya muuzaji :name yamekwisha: :outcome. :note',
+    ],
+    'requisition_decided' => [
+        'title' => 'Ombi la ununuzi :code: :outcome',
+        'body' => 'Ombi lako ":title": :outcome. :note',
+    ],
 ];

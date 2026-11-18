@@ -157,6 +157,9 @@ class RequisitionService
         if ($to === 'cancelled' && mb_strlen(trim((string) $note)) < 3) {
             $this->fail('note', 'supplier_reason_required');
         }
+        if (\App\Models\PurchaseOrder::where('requisition_id', $r->id)->where('status_id', '!=', Lookup::id('po_status', 'cancelled'))->exists()) {
+            $this->fail('status', 'requisition_has_order');
+        }
         if ($from === 'pending_approval' && $r->approval_request_id) {
             $this->approvals->cancel($r->approval_request_id, $by);       // the handler returns it to draft; it is cancelled just below
             $r->refresh();

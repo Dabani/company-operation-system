@@ -31,6 +31,7 @@ class SettingsService
         'event.expense_receipt_over' => ['integer', 0],          // event expenses from this amount (whole currency units) need a receipt; 0 = off
         'procurement.split_threshold' => ['integer', 0],         // requisitions by the same requester, cost centre and type that together reach this amount (whole currency units) are flagged as possible splitting; 0 = off
         'procurement.split_window_days' => ['integer', 30],      // how far back the splitting check looks
+        'procurement.po_tolerance_percent' => ['integer', 0],    // how far a purchase order may exceed its approved requisition, in percent; 0 = not at all
         'meeting.followup_due_soon_days' => ['integer', 2],      // resolutions and actions due within this many days are announced to their owner
         'meeting.followup_overdue_repeat_days' => ['integer', 3], // an overdue item is announced again every this many days
     ];

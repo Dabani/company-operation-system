@@ -37,6 +37,7 @@ Route::prefix('v1')->group(function () {
         require __DIR__ . '/events.php';       // COPS Phase 7e: events, registration, check-in
         require __DIR__ . '/events-expenses.php'; // COPS Phase 7e: event expenses and budget
         require __DIR__ . '/procurement.php'; // COPS Phase 8a: suppliers and purchase requisitions
+        require __DIR__ . '/procurement-orders.php'; // COPS Phase 8b: purchase orders and goods receipts
 
         Route::post('auth/logout', [V1\AuthController::class, 'logout']);
 

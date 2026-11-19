@@ -51,4 +51,5 @@ return [
     'rfq_award_reason_required' => 'Iki si cyo giciro gito cyujuje ibisabwa. Tanga impamvu yo kugihitamo (nibura inyuguti 10).',
     'rfq_not_awarded' => 'Tanga igiciro mbere yo gukora iteka ry\'ubugure.',
     'requisition_has_rfq' => 'Icyifuzo cy\'ibiciro kiracakora kuri iki cyifuzo cyo kugura. Banza ugihagarike.',
+    'file_not_restricted' => 'Icyiciro cy\'iyi dosiye gifite ibanga ryinshi ku nyandiko z\'ubugure.',
 ];

@@ -51,4 +51,5 @@ return [
     'rfq_award_reason_required' => 'Hii si nukuu ya chini kabisa inayostahili. Toa sababu ya kuichagua (angalau herufi 10).',
     'rfq_not_awarded' => 'Toa nukuu kabla ya kuunda agizo.',
     'requisition_has_rfq' => 'Ombi la nukuu bado linaendelea kwa ombi hili la ununuzi. Lighairi kwanza.',
+    'file_not_restricted' => 'Daraja la faili hii ni la siri mno kwa hati za ununuzi.',
 ];

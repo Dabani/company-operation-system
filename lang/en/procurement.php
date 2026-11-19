@@ -51,4 +51,5 @@ return [
     'rfq_award_reason_required' => 'This is not the lowest eligible quote. Give the reason for choosing it (at least 10 characters).',
     'rfq_not_awarded' => 'Award a quote before creating the order.',
     'requisition_has_rfq' => 'A quotation request is still running for this requisition. Cancel it first.',
+    'file_not_restricted' => 'This file\'s classification is too restricted for procurement documents.',
 ];

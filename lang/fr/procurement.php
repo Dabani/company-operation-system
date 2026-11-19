@@ -51,4 +51,5 @@ return [
     'rfq_award_reason_required' => 'Ce n\'est pas le devis éligible le moins cher. Indiquez pourquoi vous le choisissez (10 caractères minimum).',
     'rfq_not_awarded' => 'Attribuez un devis avant de créer la commande.',
     'requisition_has_rfq' => 'Une demande de devis est encore en cours pour cette réquisition. Annulez-la d\'abord.',
+    'file_not_restricted' => 'La classification de ce fichier est trop restreinte pour des documents d\'achat.',
 ];

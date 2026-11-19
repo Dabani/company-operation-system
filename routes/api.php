@@ -38,6 +38,8 @@ Route::prefix('v1')->group(function () {
         require __DIR__ . '/events-expenses.php'; // COPS Phase 7e: event expenses and budget
         require __DIR__ . '/procurement.php'; // COPS Phase 8a: suppliers and purchase requisitions
         require __DIR__ . '/procurement-orders.php'; // COPS Phase 8b: purchase orders and goods receipts
+        require __DIR__ . '/procurement-rfqs.php'; // COPS Phase 8d: sourcing (RFQ)
+        require __DIR__ . '/procurement-invoices.php'; // COPS Phase 8c: supplier invoices
 
         Route::post('auth/logout', [V1\AuthController::class, 'logout']);
 

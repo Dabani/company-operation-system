@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
     require __DIR__ . '/portal.php';          // COPS Phase 0: external client portal (own guard)
     require __DIR__ . '/meetings-public.php'; // COPS Phase 7a: external guest RSVP (personal link, rate limited)
+    require __DIR__ . '/meetings-online-public.php'; // COPS Phase 7f: online meeting for external guests (personal link, rate limited)
     require __DIR__ . '/events-public.php';   // COPS Phase 7e: event registration and ticket pages (public, rate limited)
 
 
@@ -34,6 +35,7 @@ Route::prefix('v1')->group(function () {
         require __DIR__ . '/meetings-attendance.php'; // COPS Phase 7b: meeting attendance and check-in
         require __DIR__ . '/meetings-minutes.php'; // COPS Phase 7c: meeting minutes
         require __DIR__ . '/meetings-followups.php'; // COPS Phase 7d: resolutions and action items
+        require __DIR__ . '/meetings-online.php'; // COPS Phase 7f: online meetings and interventions
         require __DIR__ . '/events.php';       // COPS Phase 7e: events, registration, check-in
         require __DIR__ . '/events-expenses.php'; // COPS Phase 7e: event expenses and budget
         require __DIR__ . '/procurement.php'; // COPS Phase 8a: suppliers and purchase requisitions

@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
             ProcurementInvoicesSeeder::class, // COPS Phase 8c: invoice statuses, permissions, menu
             ProcurementRfqSeeder::class, // COPS Phase 8d: RFQ statuses and menu
             ProcurementFilesSeeder::class, // COPS Phase 8e: file link types for quote and invoice documents
+            MeetingsOnlineSeeder::class, // COPS Phase 7f: online meeting lookups
             PolishSeeder::class,             // currency list and menu icons
             CodesSeeder::class,              // system rule sets with fixed keys
         ]);

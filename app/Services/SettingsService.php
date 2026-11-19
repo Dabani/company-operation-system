@@ -28,6 +28,8 @@ class SettingsService
         'meeting.reminder_sms' => ['boolean', false],            // also remind by SMS (in-app and e-mail always)
         'meeting.late_after_minutes' => ['integer', 10],         // arriving within this many minutes of the start still counts as present
         'meeting.attendance_ack' => ['boolean', false],          // participants confirm their own line of the attendance sheet
+        'meeting.online_enabled' => ['boolean', false],          // meetings may get a video room (Jitsi, see config/jitsi.php)
+        'meeting.online_early_minutes' => ['integer', 15],       // the online room opens this many minutes before the start
         'event.expense_receipt_over' => ['integer', 0],          // event expenses from this amount (whole currency units) need a receipt; 0 = off
         'procurement.split_threshold' => ['integer', 0],         // requisitions by the same requester, cost centre and type that together reach this amount (whole currency units) are flagged as possible splitting; 0 = off
         'procurement.split_window_days' => ['integer', 30],      // how far back the splitting check looks

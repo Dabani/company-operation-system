@@ -98,4 +98,11 @@ return [
     'intervention_exists' => 'You already have a request waiting or are speaking.',
     'intervention_bad_move' => 'This change of the request is not allowed.',
     'intervention_someone_speaking' => 'Someone is speaking: finish their turn first.',
+    'chat_body_invalid' => 'A message must have between 1 and 1000 characters.',
+    'poll_question_invalid' => 'The question must have between 3 and 300 characters.',
+    'poll_options_invalid' => 'A poll needs 2 to 10 different, non-empty options (and a valid limit of choices).',
+    'poll_closed' => 'This poll is closed.',
+    'poll_not_eligible' => 'You cannot vote in this poll.',
+    'poll_choice_invalid' => 'Choose a valid number of the listed options.',
+    'poll_already_voted' => 'You have already voted in this poll.',
 ];

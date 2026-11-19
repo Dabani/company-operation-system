@@ -98,4 +98,11 @@ return [
     'intervention_exists' => 'Vous avez déjà une demande en attente ou vous avez la parole.',
     'intervention_bad_move' => 'Ce changement de la demande n\'est pas autorisé.',
     'intervention_someone_speaking' => 'Quelqu\'un a la parole : terminez d\'abord son tour.',
+    'chat_body_invalid' => 'Un message doit comporter de 1 à 1000 caractères.',
+    'poll_question_invalid' => 'La question doit comporter de 3 à 300 caractères.',
+    'poll_options_invalid' => 'Un sondage demande de 2 à 10 options différentes et non vides (et une limite de choix valide).',
+    'poll_closed' => 'Ce sondage est clos.',
+    'poll_not_eligible' => 'Vous ne pouvez pas voter à ce sondage.',
+    'poll_choice_invalid' => 'Choisissez un nombre valide d\'options de la liste.',
+    'poll_already_voted' => 'Vous avez déjà voté à ce sondage.',
 ];

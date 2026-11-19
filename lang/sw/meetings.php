@@ -98,4 +98,11 @@ return [
     'intervention_exists' => 'Tayari una ombi linalosubiri au unazungumza.',
     'intervention_bad_move' => 'Mabadiliko haya ya ombi hayaruhusiwi.',
     'intervention_someone_speaking' => 'Mtu anazungumza: maliza zamu yake kwanza.',
+    'chat_body_invalid' => 'Ujumbe lazima uwe na herufi 1 hadi 1000.',
+    'poll_question_invalid' => 'Swali lazima liwe na herufi 3 hadi 300.',
+    'poll_options_invalid' => 'Kura ya maoni inahitaji chaguo 2 hadi 10 tofauti na zisizo tupu (na kikomo halali cha chaguo).',
+    'poll_closed' => 'Kura hii imefungwa.',
+    'poll_not_eligible' => 'Huwezi kupiga kura katika kura hii.',
+    'poll_choice_invalid' => 'Chagua idadi halali ya chaguo zilizoorodheshwa.',
+    'poll_already_voted' => 'Tayari umepiga kura katika kura hii.',
 ];

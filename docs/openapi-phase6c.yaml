@@ -1,0 +1,12 @@
+# Merge into docs/openapi.yaml (paths only; all routes are under /api/v1).
+paths:
+  /payroll/export/fields:   { get: { summary: Fields an export column may use, per kind; run statuses allowed per kind, x-permission: "hr.payroll.export | export.configure" } }
+  /payroll/export-profiles: { get: {}, post: { summary: "Define a layout {code,name,kind_id,layout_id,delimiter?,quote_char?,line_ending,encoding,decimal_separator,date_format,include_header,header_template?,trailer_template?,file_extension,filename_template,agreed_with,columns[{header,source,scheme_id?,component_id?,constant?,format,decimals?,width?,align?,pad_char?,truncate?}]}; created unverified", x-permission: hr.payroll.export.configure } }
+  /payroll/export-profiles/{id}/preview: { get: { summary: The layout applied to invented rows } }
+  /payroll/export-profiles/{id}/verify: { post: { summary: Second-person verification, x-permission: hr.payroll.verify } }
+  /payroll/export-profiles/{id}/active: { patch: { summary: "body {is_active}" } }
+  /payroll/export-profiles/{id}: { delete: { summary: Unverified layouts only } }
+  /payroll/journal-accounts: { get: {}, put: { summary: "body {accounts[{account_key,account_code,label?}]}", x-permission: hr.payroll.export.configure } }
+  /payroll/runs/{id}/journal-accounts: { get: { summary: Account keys this run needs and their mapping } }
+  /payroll/runs/{id}/exports: { get: { summary: Files generated for the run }, post: { summary: "body {profile_id}; 422 with the reason when a rule is not met", x-permission: hr.payroll.export } }
+  /payroll/exports/{exportId}/download: { get: { summary: The stored file (audited), header X-Content-SHA256, x-permission: hr.payroll.export } }

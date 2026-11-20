@@ -47,6 +47,7 @@ class RoleController extends Controller
         abort_if($data['level'] > $this->ctx->level(), 403, __('api.role_above_authority'));
         $role = Role::create($data + ['is_system' => false]);
         $this->syncRelations($role, $request);
+        $role->permissions()->syncWithoutDetaching(\App\Models\Permission::whereIn('code', \Database\Seeders\MeetingBaselineAccessSeeder::CODES)->pluck('id')->all()); // COPS b37: baseline access to own meetings and approvals, added after the chosen permissions
         AuditLogger::log('role.created', $role, [], $data);
         return (new RoleResource($role->load(['permissions', 'widgets'])))->response()->setStatusCode(201);
     }

@@ -45,6 +45,7 @@ class DatabaseSeeder extends Seeder
             ProcurementFilesSeeder::class, // COPS Phase 8e: file link types for quote and invoice documents
             MeetingsOnlineSeeder::class, // COPS Phase 7f: online meeting lookups
             MeetingsCollabSeeder::class, // COPS Phase 7g: poll statuses
+            MeetingBaselineAccessSeeder::class, // COPS b37: every role may open its own meetings and decide its approvals
             PolishSeeder::class,             // currency list and menu icons
             CodesSeeder::class,              // system rule sets with fixed keys
         ]);

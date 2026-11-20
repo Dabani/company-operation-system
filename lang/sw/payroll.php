@@ -1,0 +1,41 @@
+<?php
+
+// COPS Phase 6a: payroll configuration messages (sw). First-pass, native review needed.
+return [
+    'err' => [
+        'verify_not_author' => 'Thamani lazima ithibitishwe na mtu mwingine asiyeitayarisha.',
+        'already_verified' => 'Thamani hii imeshathibitishwa.',
+        'verified_is_final' => 'Thamani iliyothibitishwa haifutwi wala kuhaririwa: imalize na uweke mpya.',
+        'version_overlap' => 'Kipindi hiki kinaingiliana na toleo lingine la mpango. Malizia toleo la awali kwanza.',
+        'rates_required' => 'Weka angalau kiwango kimoja (mfanyakazi au mwajiri).',
+        'rate_in_bands' => 'Mpango wa madaraja una viwango ndani ya madaraja: acha kiwango cha mfanyakazi tupu.',
+        'bands_not_allowed' => 'Mpango huu ni kiwango kimoja: hauna madaraja.',
+        'bracket_empty' => 'Weka angalau daraja moja.',
+        'bracket_bad_value' => 'Daraja lina thamani isiyo sahihi (kiwango kati ya 0 na 100).',
+        'bracket_first_not_zero' => 'Daraja la kwanza lazima lianze 0.',
+        'bracket_gap_or_overlap' => 'Madaraja lazima yafuatane kikamilifu: bila pengo wala kuingiliana.',
+        'bracket_open_band_not_last' => 'Daraja la mwisho tu linaweza kukosa kikomo cha juu.',
+        'bracket_bad_bounds' => 'Kikomo cha juu lazima kiwe kikubwa kuliko cha chini.',
+        'bracket_last_not_open' => 'Daraja la mwisho lisiwe na kikomo cha juu.',
+        'assignment_target' => 'Chagua aina ya wafanyakazi au mfanyakazi mmoja, si zote mbili wala hakuna.',
+        'exception_reason' => 'Isipokuwa kwa mfanyakazi mmoja kinahitaji sababu.',
+        'assignment_overlap' => 'Tayari kuna ugawaji kwa mpango huu na lengo hili katika kipindi hiki.',
+        'component_not_recurring' => 'Kipengele kinachojirudia kinachotumika pekee kinaweza kupewa mfanyakazi.',
+        'one_basic_component' => 'Tayari kuna kipengele cha mshahara wa msingi kinachotumika.',
+    ],
+    'check' => [
+        'no_salary' => 'Hakuna mshahara kwenye rekodi ya ajira iliyokuwepo siku ya mwisho ya kipindi.',
+        'bad_salary' => 'Mshahara kwenye rekodi ya ajira si kiasi halali.',
+        'no_basic_component' => 'Hakuna kipengele cha mshahara wa msingi kilichowekwa.',
+        'several_basic_components' => 'Kuna zaidi ya kipengele kimoja cha mshahara wa msingi.',
+        'bad_extra_line' => 'Mstari wa ziada si sahihi: lazima uwe kipengele kinachobadilika kinachotumika chenye kiasi halali.',
+        'unverified_item' => 'Kipengele kinachojirudia :code hakijathibitishwa: hakitumiki.',
+        'inactive_component' => 'Kipengele :code hakitumiki: kipengee chake hakitumiki.',
+        'no_version' => 'Mpango :code hauna toleo halali kwa kipindi hiki: haujatumika.',
+        'unverified_version' => 'Mpango :code una toleo lisilothibitishwa tu: haujatumika.',
+        'no_assignment' => 'Mpango :code haujapewa aina :category: haujatumika.',
+        'unverified_assignment' => 'Ugawaji wa mpango :code haujathibitishwa: haujatumika.',
+        'partial_period' => 'Mfanyakazi hakufanya kazi kipindi chote: hakuna uwiano uliotumika, kagua kiasi.',
+        'negative_net' => 'Mshahara halisi ni hasi (chini ya sifuri).',
+    ],
+];

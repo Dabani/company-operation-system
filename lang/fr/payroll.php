@@ -1,0 +1,41 @@
+<?php
+
+// COPS Phase 6a: payroll configuration messages (fr).
+return [
+    'err' => [
+        'verify_not_author' => 'Une valeur doit être vérifiée par une autre personne que celle qui l\'a préparée.',
+        'already_verified' => 'Cette valeur est déjà vérifiée.',
+        'verified_is_final' => 'Une valeur vérifiée n\'est jamais supprimée ni modifiée : terminez-la et saisissez-en une nouvelle.',
+        'version_overlap' => 'Cette période chevauche une autre version du régime. Terminez d\'abord la version précédente.',
+        'rates_required' => 'Saisissez au moins un taux (employé ou employeur).',
+        'rate_in_bands' => 'Un régime à tranches porte ses taux dans les tranches : laissez le taux employé vide.',
+        'bands_not_allowed' => 'Ce régime est à taux fixe : il n\'a pas de tranches.',
+        'bracket_empty' => 'Saisissez au moins une tranche.',
+        'bracket_bad_value' => 'Une tranche a une valeur invalide (un taux doit être entre 0 et 100, les bornes des nombres).',
+        'bracket_first_not_zero' => 'La première tranche doit commencer à 0.',
+        'bracket_gap_or_overlap' => 'Les tranches doivent se suivre exactement : sans trou (revenu non imposé) ni chevauchement (imposé deux fois).',
+        'bracket_open_band_not_last' => 'Seule la dernière tranche peut ne pas avoir de limite haute.',
+        'bracket_bad_bounds' => 'La limite haute d\'une tranche doit dépasser sa limite basse.',
+        'bracket_last_not_open' => 'La dernière tranche ne doit pas avoir de limite haute.',
+        'assignment_target' => 'Choisissez soit une catégorie d\'employés, soit un employé, pas les deux ni aucun.',
+        'exception_reason' => 'Une exception pour un employé exige un motif.',
+        'assignment_overlap' => 'Une affectation existe déjà pour ce régime et cette cible sur cette période.',
+        'component_not_recurring' => 'Seul un composant récurrent actif peut être attribué à un employé.',
+        'one_basic_component' => 'Il existe déjà un composant de salaire de base actif.',
+    ],
+    'check' => [
+        'no_salary' => 'Aucun salaire dans la fiche d\'emploi en vigueur le dernier jour de la période.',
+        'bad_salary' => 'Le salaire de la fiche d\'emploi n\'est pas un montant valide.',
+        'no_basic_component' => 'Aucun composant de salaire de base actif n\'est configuré.',
+        'several_basic_components' => 'Plusieurs composants de salaire de base actifs existent.',
+        'bad_extra_line' => 'Une ligne supplémentaire est invalide : elle doit être un composant variable actif avec un montant valide.',
+        'unverified_item' => 'L\'élément récurrent :code n\'est pas vérifié : non appliqué.',
+        'inactive_component' => 'Le composant :code est inactif : son élément n\'est pas appliqué.',
+        'no_version' => 'Le régime :code n\'a aucune version valide pour cette période : non appliqué.',
+        'unverified_version' => 'Le régime :code n\'a qu\'une version non vérifiée pour cette période : non appliqué.',
+        'no_assignment' => 'Le régime :code n\'est pas affecté à la catégorie :category : non appliqué.',
+        'unverified_assignment' => 'L\'affectation du régime :code n\'est pas vérifiée : non appliqué.',
+        'partial_period' => 'L\'employé n\'a pas travaillé toute la période : aucun prorata n\'est appliqué, vérifiez les montants.',
+        'negative_net' => 'Le net à payer est négatif.',
+    ],
+];

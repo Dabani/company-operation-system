@@ -1,0 +1,41 @@
+<?php
+
+// COPS Phase 6a: payroll configuration messages (rw). First-pass, native review needed.
+return [
+    'err' => [
+        'verify_not_author' => 'Agaciro kagomba kwemezwa n\'undi muntu utari uwakateguye.',
+        'already_verified' => 'Aka gaciro kamaze kwemezwa.',
+        'verified_is_final' => 'Agaciro kemejwe ntikavanwaho cyangwa ngo gahindurwe: gakirangize wandike akashya.',
+        'version_overlap' => 'Iki gihe gihuriranye n\'indi nshya y\'uburyo. Banza urangize iyabanje.',
+        'rates_required' => 'Andika nibura igipimo kimwe (umukozi cyangwa umukoresha).',
+        'rate_in_bands' => 'Uburyo bufite ibyiciro bufite ibipimo mu byiciro: reka igipimo cy\'umukozi ubusa.',
+        'bands_not_allowed' => 'Ubu buryo ni igipimo kimwe: nta byiciro bufite.',
+        'bracket_empty' => 'Andika nibura icyiciro kimwe.',
+        'bracket_bad_value' => 'Icyiciro gifite agaciro kitemewe (igipimo kiri hagati ya 0 na 100).',
+        'bracket_first_not_zero' => 'Icyiciro cya mbere kigomba gutangirira kuri 0.',
+        'bracket_gap_or_overlap' => 'Ibyiciro bigomba gukurikirana neza: nta cyuho cyangwa guhuriranya.',
+        'bracket_open_band_not_last' => 'Icyiciro cya nyuma gusa gishobora kutagira umupaka wo hejuru.',
+        'bracket_bad_bounds' => 'Umupaka wo hejuru ugomba kurenga uwo hasi.',
+        'bracket_last_not_open' => 'Icyiciro cya nyuma kigomba kutagira umupaka wo hejuru.',
+        'assignment_target' => 'Hitamo icyiciro cy\'abakozi cyangwa umukozi umwe, si byombi cyangwa nta na kimwe.',
+        'exception_reason' => 'Ibidasanzwe ku mukozi umwe bisaba impamvu.',
+        'assignment_overlap' => 'Hari ihuzwa risanzweho kuri ubu buryo n\'iyi ntego muri iki gihe.',
+        'component_not_recurring' => 'Igice kigisubirwamo gikora gusa nicyo gihabwa umukozi.',
+        'one_basic_component' => 'Hamaze kubaho igice cy\'umushahara fatizo gikora.',
+    ],
+    'check' => [
+        'no_salary' => 'Nta mushahara mu nyandiko y\'akazi yariho ku munsi wa nyuma w\'igihe.',
+        'bad_salary' => 'Umushahara uri mu nyandiko y\'akazi si umubare wemewe.',
+        'no_basic_component' => 'Nta gice cy\'umushahara fatizo gikora cyashyizweho.',
+        'several_basic_components' => 'Hari ibice birenze kimwe by\'umushahara fatizo bikora.',
+        'bad_extra_line' => 'Umurongo w\'inyongera ntiwemewe: ugomba kuba igice gihinduka gikora gifite umubare wemewe.',
+        'unverified_item' => 'Igice gisubirwamo :code ntikiremezwa: ntikikoreshwa.',
+        'inactive_component' => 'Igice :code ntigikora: ntikikoreshwa.',
+        'no_version' => 'Uburyo :code nta nshya ifite ku gihe: ntibukoreshwa.',
+        'unverified_version' => 'Uburyo :code bufite gusa nshya itemejwe: ntibukoreshwa.',
+        'no_assignment' => 'Uburyo :code ntiburahuzwa n\'icyiciro :category: ntibukoreshwa.',
+        'unverified_assignment' => 'Ihuzwa ry\'uburyo :code ntiryemejwe: ntibukoreshwa.',
+        'partial_period' => 'Umukozi ntiyakoze igihe cyose: nta kigereranyo gikoreshwa, genzura imibare.',
+        'negative_net' => 'Umushahara wose usigaye ni mubi (munsi ya zeru).',
+    ],
+];

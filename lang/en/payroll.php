@@ -1,0 +1,41 @@
+<?php
+
+// COPS Phase 6a: payroll configuration messages (en).
+return [
+    'err' => [
+        'verify_not_author' => 'A value must be verified by someone other than the person who prepared it.',
+        'already_verified' => 'This value is already verified.',
+        'verified_is_final' => 'A verified value is never deleted or edited: end it and enter a new one.',
+        'version_overlap' => 'This period overlaps another version of the scheme. End the previous version first.',
+        'rates_required' => 'Enter at least one rate (employee or employer).',
+        'rate_in_bands' => 'A bands scheme has its rates inside the bands: leave the employee rate empty.',
+        'bands_not_allowed' => 'This scheme is a flat rate: it has no bands.',
+        'bracket_empty' => 'Enter at least one band.',
+        'bracket_bad_value' => 'A band has an invalid value (a rate must be between 0 and 100, bounds must be numbers).',
+        'bracket_first_not_zero' => 'The first band must start at 0.',
+        'bracket_gap_or_overlap' => 'The bands must follow each other exactly: no gap (income left untaxed) and no overlap (taxed twice).',
+        'bracket_open_band_not_last' => 'Only the last band can have no upper limit.',
+        'bracket_bad_bounds' => 'A band\'s upper limit must be greater than its lower limit.',
+        'bracket_last_not_open' => 'The last band must have no upper limit.',
+        'assignment_target' => 'Choose either an employee category or one employee, not both and not none.',
+        'exception_reason' => 'An exception for one employee needs a reason.',
+        'assignment_overlap' => 'An assignment already exists for this scheme and target in this period.',
+        'component_not_recurring' => 'Only an active recurring component can be given to an employee.',
+        'one_basic_component' => 'There is already an active basic-salary component.',
+    ],
+    'check' => [
+        'no_salary' => 'No salary in the employment record in force on the last day of the period.',
+        'bad_salary' => 'The salary in the employment record is not a valid amount.',
+        'no_basic_component' => 'No active basic-salary component is configured.',
+        'several_basic_components' => 'More than one active basic-salary component exists.',
+        'bad_extra_line' => 'An extra line is invalid: it must be an active variable component with a valid amount.',
+        'unverified_item' => 'Recurring item :code is not verified: not applied.',
+        'inactive_component' => 'Component :code is inactive: its item is not applied.',
+        'no_version' => 'Scheme :code has no version valid for this period: not applied.',
+        'unverified_version' => 'Scheme :code has only an unverified version for this period: not applied.',
+        'no_assignment' => 'Scheme :code is not assigned to category :category: not applied.',
+        'unverified_assignment' => 'The assignment of scheme :code is not verified: not applied.',
+        'partial_period' => 'The employee did not work the whole period: no proration is applied, check the amounts.',
+        'negative_net' => 'The net pay is negative.',
+    ],
+];

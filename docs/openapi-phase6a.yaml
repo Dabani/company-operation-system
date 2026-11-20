@@ -1,0 +1,17 @@
+# Merge into docs/openapi.yaml (paths only; all routes are under /api/v1).
+paths:
+  /payroll/components:      { get: { x-permission: "hr.payroll.view|configure|verify|prepare" }, post: { summary: "body {code,name,kind_id,source_id,is_taxable,is_pensionable (required, no default),ledger_account?,sort_order?}", x-permission: hr.payroll.configure } }
+  /payroll/components/{id}: { patch: { summary: "name, ledger_account, sort_order, is_active only: tax flags are fixed", x-permission: hr.payroll.configure } }
+  /payroll/schemes:         { get: { summary: Schemes with versions and bands }, post: { summary: "body {code,name,statutory_type_id,mode_id,calc_order,base_kind_id,reduces_taxable_base,rounding_id,decimals,round_each_band?}", x-permission: hr.payroll.configure } }
+  /payroll/schemes/{id}:    { patch: { summary: "name, is_active only" } }
+  /payroll/schemes/{id}/versions: { post: { summary: "body {employee_rate?,employer_rate?,base_cap?,valid_from,valid_to?,source_citation,brackets?[{lower,upper,rate}]}; created unverified; bands contiguous, last open", x-permission: hr.payroll.configure } }
+  /payroll/scheme-versions/{id}/verify: { post: { summary: Second-person verification (not the preparer), x-permission: hr.payroll.verify } }
+  /payroll/scheme-versions/{id}/end: { post: { summary: "body {valid_to}" } }
+  /payroll/scheme-versions/{id}: { delete: { summary: Unverified versions only } }
+  /payroll/assignments:     { get: {}, post: { summary: "body {scheme_id, category_id XOR employee_id, applies, valid_from, valid_to?, reason (required for an employee)}", x-permission: hr.payroll.configure } }
+  /payroll/assignments/{id}/verify: { post: { x-permission: hr.payroll.verify } }
+  /payroll/assignments/{id}/end: { post: {} }
+  /payroll/items:           { get: { summary: "Recurring items in scope; ?employee_id; read is audited" }, post: { summary: "body {employee_id,component_id (recurring),amount,valid_from,valid_to?,reason?}", x-permission: hr.payroll.configure } }
+  /payroll/items/{id}/verify: { post: { x-permission: hr.payroll.verify } }
+  /payroll/dry-run:         { post: { summary: "body {employee_id,period_from,period_to,lines?[{component_id (variable),amount}]} -> {blockers[],warnings[],result{lines,totals,warnings},meta}; persists nothing", x-permission: hr.payroll.prepare } }
+  /payroll/setup-status:    { get: { summary: Unverified counts, schemes without a verified version, single basic component } }

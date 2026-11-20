@@ -1,0 +1,15 @@
+{
+  "name": "Synthetic: one flat contribution, employee and employer, on pensionable earnings",
+  "source": "invented numbers to prove the mechanism",
+  "signed_off": false,
+  "input": {
+    "earnings": [ { "code": "basic", "amount": "500000.00", "taxable": true, "pensionable": true } ],
+    "deductions": [],
+    "schemes": [ { "code": "SCH_A", "type": "pension", "order": 1, "mode": "flat", "base_kind": "pensionable_earnings", "employee_rate": "6", "employer_rate": "6", "base_cap": null,
+                   "reduces_taxable_base": false, "rounding": "nearest", "decimals": 0, "version_id": "v1" } ]
+  },
+  "expected": {
+    "totals": { "gross": "500000.00", "taxable_earnings": "500000.00", "pensionable_earnings": "500000.00", "employee_contributions": "30000.00", "deductions": "0.00", "net": "470000.00", "employer_contributions": "30000.00", "employer_cost": "530000.00" },
+    "lines": [ { "kind": "earning", "code": "basic", "amount": "500000.00" }, { "kind": "scheme_employee", "code": "SCH_A", "amount": "30000" }, { "kind": "scheme_employer", "code": "SCH_A", "amount": "30000" } ]
+  }
+}

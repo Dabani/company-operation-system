@@ -1,0 +1,21 @@
+{
+  "name": "Synthetic: a contribution that reduces the taxable base, then progressive bands on what is left, plus an after-tax deduction",
+  "source": "invented numbers to prove the mechanism",
+  "signed_off": false,
+  "input": {
+    "earnings": [
+      { "code": "basic", "amount": "400000.00", "taxable": true, "pensionable": true },
+      { "code": "allowance", "amount": "100000.00", "taxable": true, "pensionable": false }
+    ],
+    "deductions": [ { "code": "loan", "amount": "25000.50" } ],
+    "schemes": [
+      { "code": "TAX_B", "type": "paye", "order": 2, "mode": "brackets", "base_kind": "taxable_after_deductions", "base_cap": null, "reduces_taxable_base": false, "rounding": "nearest", "decimals": 0, "round_each_band": false, "version_id": "v2",
+        "brackets": [ { "lower": "0", "upper": "100000", "rate": "0" }, { "lower": "100000", "upper": "200000", "rate": "10" }, { "lower": "200000", "upper": null, "rate": "25" } ] },
+      { "code": "SCH_P", "type": "pension", "order": 1, "mode": "flat", "base_kind": "pensionable_earnings", "employee_rate": "5", "employer_rate": "0", "base_cap": null, "reduces_taxable_base": true, "rounding": "nearest", "decimals": 0, "version_id": "v3" }
+    ]
+  },
+  "expected": {
+    "totals": { "gross": "500000.00", "taxable_earnings": "500000.00", "pensionable_earnings": "400000.00", "employee_contributions": "100000.00", "deductions": "25000.50", "net": "374999.50", "employer_contributions": "0.00", "employer_cost": "500000.00" },
+    "lines": [ { "kind": "scheme_employee", "code": "SCH_P", "amount": "20000" }, { "kind": "scheme_employee", "code": "TAX_B", "amount": "80000" }, { "kind": "deduction", "code": "loan", "amount": "25000.50" } ]
+  }
+}

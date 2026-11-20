@@ -1,0 +1,22 @@
+# Merge into docs/openapi.yaml (paths only; all routes are under /api/v1).
+paths:
+  /payroll/runs:            { get: { summary: "Runs, ?status", x-permission: "hr.payroll.view or any stage permission" }, post: { summary: "body {period_from,period_to,currency_id,note?}; one regular run per period", x-permission: hr.payroll.prepare } }
+  /payroll/runs/{id}:       { get: { summary: "Run with totals, stage actors and dates, inputs, exclusions" } }
+  /payroll/runs/{id}/adjustments: { post: { summary: "body {employee_ids[],note?}; only from a locked regular run", x-permission: hr.payroll.prepare } }
+  /payroll/runs/{id}/inputs: { post: { summary: "body {employee_id,component_id (variable),amount,note?}; before review only", x-permission: hr.payroll.prepare } }
+  /payroll/runs/{id}/exclusions: { post: { summary: "body {employee_id,reason}" } }
+  /payroll/runs/{id}/calculate: { post: { summary: "(Re)calculate every payslip; draft or calculated only", x-permission: hr.payroll.prepare } }
+  /payroll/runs/{id}/review: { post: { x-permission: hr.payroll.review } }
+  /payroll/runs/{id}/approve-finance: { post: { x-permission: hr.payroll.approve } }
+  /payroll/runs/{id}/approve-md: { post: { x-permission: hr.payroll.approve_md } }
+  /payroll/runs/{id}/return: { post: { summary: "body {reason}; reviewed or approved only" } }
+  /payroll/runs/{id}/lock:  { post: { x-permission: hr.payroll.lock } }
+  /payroll/runs/{id}/pay:   { post: { summary: "body {paid_on,reference?}", x-permission: hr.payroll.pay } }
+  /payroll/runs/{id}/declare: { post: { summary: "body {declared_on,reference?}", x-permission: hr.payroll.declare } }
+  /payroll/runs/{id}/cancel: { post: { summary: "body {reason}; draft, calculated or reviewed only" } }
+  /payroll/runs/{id}/payslips: { get: { summary: Payslips of a run with status, totals and flag counts } }
+  /payroll/payslips/{payslipId}: { get: { summary: "Stored payslip: lines, bands, flags (audited)" } }
+  /payroll/payslips/{payslipId}/pdf: { get: { summary: "PDF, ?locale=en|fr|rw|sw (audited)" } }
+  /payroll/me/payslips:     { get: { summary: "My payslips of paid runs", x-permission: hr.payslip.own } }
+  /payroll/me/payslips/{id}: { get: { summary: "My payslip (404 for anyone else's)" } }
+  /payroll/me/payslips/{id}/pdf: { get: {} }

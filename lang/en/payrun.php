@@ -1,0 +1,45 @@
+<?php
+
+// COPS Phase 6b: payroll run and payslip texts (en).
+return [
+    'err' => [
+        'cannot_transition' => 'A run in status ":status" cannot do ":action".',
+        'segregation' => 'Separation of duties: the people who prepared, calculated, reviewed or approved earlier stages cannot do this step.',
+        'blocked_payslips' => 'Some payslips are blocked. Fix the cause or exclude the employee with a reason, then recalculate.',
+        'empty_run' => 'The run has no calculated payslip.',
+        'duplicate_period' => 'A payroll run already exists for this period.',
+        'bad_period' => 'The period is invalid (the end must not be before the start, at most 62 days).',
+        'finance_first' => 'The Finance approval comes first.',
+        'md_not_required' => 'This run does not require the Managing Director\'s approval.',
+        'already_done' => 'This approval is already recorded.',
+        'input_not_variable' => 'Only an active variable component can be entered in a run.',
+        'run_not_editable' => 'The run can only be changed before review. Return it to draft first.',
+        'parent_not_locked' => 'An adjustment can only correct a locked regular run.',
+        'not_in_original' => 'Choose employees who have a calculated payslip in the original run.',
+        'reason_required' => 'A reason is required.',
+    ],
+    'flag' => [
+        'currency_mismatch' => 'The salary currency (:salary) differs from the run currency (:run).',
+        'no_hire_date' => 'The employee has no hire date: the period cannot be checked.',
+        'prorated' => 'Part of the period worked: :worked of :total days.',
+        'partial_period_unprorated' => 'Part of the period worked but the proration rule is "none": the full amount is paid. Check it.',
+        'no_original' => 'No original payslip found for this employee in the corrected run.',
+    ],
+    'slip' => [
+        'title' => 'Payslip',
+        'employee' => 'Employee',
+        'number' => 'Number',
+        'days' => 'Days worked',
+        'earnings' => 'Earnings',
+        'gross' => 'Gross pay',
+        'deductions' => 'Contributions and deductions',
+        'item' => 'Item',
+        'base' => 'Base',
+        'amount' => 'Amount',
+        'total_deductions' => 'Total deductions',
+        'net' => 'Net pay',
+        'employer' => 'Employer contributions',
+        'employer_note' => 'Paid by the employer; not deducted from your pay.',
+        'paid_on' => 'Paid on',
+    ],
+];

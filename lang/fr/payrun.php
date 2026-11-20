@@ -1,0 +1,45 @@
+<?php
+
+// COPS Phase 6b: payroll run and payslip texts (fr).
+return [
+    'err' => [
+        'cannot_transition' => 'Une paie au statut « :status » ne peut pas faire « :action ».',
+        'segregation' => 'Séparation des tâches : les personnes qui ont préparé, calculé, vérifié ou approuvé les étapes précédentes ne peuvent pas faire cette étape.',
+        'blocked_payslips' => 'Des bulletins sont bloqués. Corrigez la cause ou excluez l\'employé avec un motif, puis recalculez.',
+        'empty_run' => 'La paie n\'a aucun bulletin calculé.',
+        'duplicate_period' => 'Une paie existe déjà pour cette période.',
+        'bad_period' => 'La période est invalide (la fin ne doit pas précéder le début, 62 jours au plus).',
+        'finance_first' => 'L\'approbation de la Finance vient en premier.',
+        'md_not_required' => 'Cette paie n\'exige pas l\'approbation du Directeur général.',
+        'already_done' => 'Cette approbation est déjà enregistrée.',
+        'input_not_variable' => 'Seul un composant variable actif peut être saisi dans une paie.',
+        'run_not_editable' => 'La paie ne peut être modifiée qu\'avant la vérification. Remettez-la d\'abord en brouillon.',
+        'parent_not_locked' => 'Une régularisation ne peut corriger qu\'une paie normale verrouillée.',
+        'not_in_original' => 'Choisissez des employés ayant un bulletin calculé dans la paie d\'origine.',
+        'reason_required' => 'Un motif est obligatoire.',
+    ],
+    'flag' => [
+        'currency_mismatch' => 'La devise du salaire (:salary) diffère de celle de la paie (:run).',
+        'no_hire_date' => 'L\'employé n\'a pas de date d\'embauche : la période ne peut pas être vérifiée.',
+        'prorated' => 'Période partiellement travaillée : :worked jours sur :total.',
+        'partial_period_unprorated' => 'Période partielle mais la règle de prorata est « aucune » : le montant complet est payé. À vérifier.',
+        'no_original' => 'Aucun bulletin d\'origine trouvé pour cet employé dans la paie corrigée.',
+    ],
+    'slip' => [
+        'title' => 'Bulletin de paie',
+        'employee' => 'Employé',
+        'number' => 'Matricule',
+        'days' => 'Jours travaillés',
+        'earnings' => 'Gains',
+        'gross' => 'Salaire brut',
+        'deductions' => 'Cotisations et retenues',
+        'item' => 'Élément',
+        'base' => 'Base',
+        'amount' => 'Montant',
+        'total_deductions' => 'Total des retenues',
+        'net' => 'Net à payer',
+        'employer' => 'Cotisations patronales',
+        'employer_note' => 'À la charge de l\'employeur ; non déduit de votre salaire.',
+        'paid_on' => 'Payé le',
+    ],
+];

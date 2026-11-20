@@ -17,6 +17,9 @@ final class HrSettings
         'punch_min_interval_seconds' => [30, 0, 600],   // attendance: punches closer than this are one tap (double tap)
         'geolocation_mode' => [0, 0, 2],                // attendance: 0 = off, 1 = record where people clock in, 2 = clocking is only allowed inside a work site
         'geolocation_max_accuracy_meters' => [100, 10, 1000],   // attendance: a location less precise than this is refused when geolocation is required
+        'payroll_md_approval_required' => [1, 0, 1],      // payroll (6b): the Managing Director must approve a run (1) or not (0)
+        'payroll_proration_mode' => [0, 0, 2],             // payroll (6b): part-period pay: 0 none, 1 calendar days, 2 working days (the accountant decides)
+        'payroll_earnings_decimals' => [2, 0, 2],          // payroll (6b): decimals of a prorated earning
     ];
 
     public static function get(string $orgId, string $key): int

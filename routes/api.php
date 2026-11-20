@@ -33,6 +33,7 @@ Route::prefix('v1')->group(function () {
         require __DIR__ . '/recruitment.php';  // COPS Phase 4b: requisitions, vacancies, applicants, interviews, offers, onboarding
         require __DIR__ . '/attendance.php';   // COPS Phase 4c: clocking, shifts, schedules, holidays, imports, validation
         require __DIR__ . '/payroll.php';        // COPS Phase 6a: payroll configuration and dry-run
+        require __DIR__ . '/payroll_runs.php';        // COPS Phase 6b: payroll runs, payslips, self-service
         require __DIR__ . '/meetings.php';     // COPS Phase 7a: meetings, rooms, agenda, invitations
         require __DIR__ . '/meetings-attendance.php'; // COPS Phase 7b: meeting attendance and check-in
         require __DIR__ . '/meetings-minutes.php'; // COPS Phase 7c: meeting minutes

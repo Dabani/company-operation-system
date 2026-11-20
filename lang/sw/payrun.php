@@ -1,0 +1,45 @@
+<?php
+
+// COPS Phase 6b: payroll run and payslip texts (sw). First-pass, native review needed.
+return [
+    'err' => [
+        'cannot_transition' => 'Malipo yenye hali ":status" hayawezi kufanya ":action".',
+        'segregation' => 'Mgawanyo wa majukumu: waliotayarisha, kuhesabu, kukagua au kuidhinisha hatua za awali hawawezi kufanya hatua hii.',
+        'blocked_payslips' => 'Baadhi ya hati za mshahara zimezuiwa. Rekebisha chanzo au mwondoe mfanyakazi kwa sababu, kisha hesabu upya.',
+        'empty_run' => 'Malipo hayana hati ya mshahara iliyohesabiwa.',
+        'duplicate_period' => 'Malipo tayari yapo kwa kipindi hiki.',
+        'bad_period' => 'Kipindi si sahihi (mwisho usiwe kabla ya mwanzo, siku 62 kwa juu).',
+        'finance_first' => 'Idhini ya Fedha hutangulia.',
+        'md_not_required' => 'Malipo haya hayahitaji idhini ya Mkurugenzi Mkuu.',
+        'already_done' => 'Idhini hii tayari imerekodiwa.',
+        'input_not_variable' => 'Kipengele kinachobadilika kinachotumika pekee kinaweza kuingizwa kwenye malipo.',
+        'run_not_editable' => 'Malipo yanaweza kubadilishwa kabla ya ukaguzi tu. Yarudishe kwa rasimu kwanza.',
+        'parent_not_locked' => 'Marekebisho yanaweza kurekebisha malipo ya kawaida yaliyofungwa tu.',
+        'not_in_original' => 'Chagua wafanyakazi wenye hati iliyohesabiwa kwenye malipo ya awali.',
+        'reason_required' => 'Sababu inahitajika.',
+    ],
+    'flag' => [
+        'currency_mismatch' => 'Sarafu ya mshahara (:salary) inatofautiana na ya malipo (:run).',
+        'no_hire_date' => 'Mfanyakazi hana tarehe ya kuajiriwa: kipindi hakiwezi kukaguliwa.',
+        'prorated' => 'Sehemu ya kipindi imefanyiwa kazi: siku :worked kati ya :total.',
+        'partial_period_unprorated' => 'Kipindi kidogo lakini kanuni ya uwiano ni "hakuna": kiasi chote kinalipwa. Kagua.',
+        'no_original' => 'Hakuna hati ya awali ya mfanyakazi huyu kwenye malipo yanayorekebishwa.',
+    ],
+    'slip' => [
+        'title' => 'Hati ya mshahara',
+        'employee' => 'Mfanyakazi',
+        'number' => 'Namba',
+        'days' => 'Siku zilizofanya kazi',
+        'earnings' => 'Mapato',
+        'gross' => 'Mshahara ghafi',
+        'deductions' => 'Michango na makato',
+        'item' => 'Kipengele',
+        'base' => 'Msingi',
+        'amount' => 'Kiasi',
+        'total_deductions' => 'Jumla ya makato',
+        'net' => 'Mshahara halisi',
+        'employer' => 'Michango ya mwajiri',
+        'employer_note' => 'Hulipwa na mwajiri; haikatwi kwenye mshahara wako.',
+        'paid_on' => 'Ililipwa tarehe',
+    ],
+];

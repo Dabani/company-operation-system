@@ -1,0 +1,45 @@
+<?php
+
+// COPS Phase 6b: payroll run and payslip texts (rw). First-pass, native review needed.
+return [
+    'err' => [
+        'cannot_transition' => 'Ishyirwa riri ku rwego ":status" ntirishobora gukora ":action".',
+        'segregation' => 'Gutandukanya inshingano: abateguye, babaze, basuzumye cyangwa bemeje intambwe zabanje ntibashobora gukora iyi ntambwe.',
+        'blocked_payslips' => 'Hari amafishi yahagaritswe. Kosora impamvu cyangwa ukureho umukozi utanze impamvu, hanyuma wongere ubare.',
+        'empty_run' => 'Ishyirwa nta fishi yabazwe.',
+        'duplicate_period' => 'Ishyirwa rya mushahara rimaze kubaho kuri iki gihe.',
+        'bad_period' => 'Igihe si cyo (iherezo ntirigomba kuba mbere y\'itangira, iminsi 62 ntarengwa).',
+        'finance_first' => 'Kwemezwa n\'ubushinzwe imari bibanza.',
+        'md_not_required' => 'Iri shyirwa ntirikeneye kwemezwa n\'Umuyobozi Mukuru.',
+        'already_done' => 'Uku kwemeza kwamaze kwandikwa.',
+        'input_not_variable' => 'Igice gihinduka gikora gusa nicyo cyinjizwa mu ishyirwa.',
+        'run_not_editable' => 'Ishyirwa rihindurwa mbere yo gusuzumwa gusa. Ribanze urisubize ku gishushanyo.',
+        'parent_not_locked' => 'Ukosora gukosora gusa ishyirwa risanzwe ryafunzwe.',
+        'not_in_original' => 'Hitamo abakozi bafite fishi yabazwe mu ishyirwa ry\'ibanze.',
+        'reason_required' => 'Impamvu irakenewe.',
+    ],
+    'flag' => [
+        'currency_mismatch' => 'Ifaranga ry\'umushahara (:salary) riratandukanye n\'iry\'ishyirwa (:run).',
+        'no_hire_date' => 'Umukozi nta tariki yatangiriyeho: igihe ntigishobora kugenzurwa.',
+        'prorated' => 'Igice cy\'igihe cyakozwe: iminsi :worked kuri :total.',
+        'partial_period_unprorated' => 'Igice cy\'igihe ariko amategeko y\'ikigereranyo ni "nta": amafaranga yose arishyurwa. Genzura.',
+        'no_original' => 'Nta fishi y\'ibanze yabonetse y\'uyu mukozi mu ishyirwa rikosorwa.',
+    ],
+    'slip' => [
+        'title' => 'Fishi y\'umushahara',
+        'employee' => 'Umukozi',
+        'number' => 'Nomero',
+        'days' => 'Iminsi yakozwe',
+        'earnings' => 'Amafaranga yinjiye',
+        'gross' => 'Umushahara mbumbe',
+        'deductions' => 'Imisanzu n\'ibikatwa',
+        'item' => 'Igice',
+        'base' => 'Ishingiro',
+        'amount' => 'Amafaranga',
+        'total_deductions' => 'Ibikatwa byose',
+        'net' => 'Umushahara usigaye',
+        'employer' => 'Imisanzu y\'umukoresha',
+        'employer_note' => 'Yishyurwa n\'umukoresha; ntikurwa ku mushahara wawe.',
+        'paid_on' => 'Yishyuwe ku itariki',
+    ],
+];

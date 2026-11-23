@@ -1,0 +1,43 @@
+<?php
+
+// COPS Phase 5a: ubutumwa bw'ikiruhuko (rw: first-pass, native review needed).
+return [
+    'approval_title' => 'Ikiruhuko: :name, :type, kuva :from kugeza :to',
+    'adjust_zero' => 'Ihindurwa ntirishobora kuba zeru.',
+    'adjust_reason' => 'Impamvu irakenewe mu guhindura umubare w\'ikiruhuko.',
+    'type_unavailable' => 'Ubu bwoko bw\'ikiruhuko ntibuboneka.',
+    'type_no_balance' => 'Ubu bwoko bw\'ikiruhuko nta mubare bufite wo guhindura.',
+    'accrues_needs_balance' => 'Ikiruhuko cyiyongera kigomba kugira umubare.',
+    'verify_not_author' => 'Itegeko rigomba kwemezwa n\'undi muntu utari uwaryanditse.',
+    'already_verified' => 'Iri tegeko ryamaze kwemezwa.',
+    'not_approved' => 'Gusa ubusabe bwemejwe nibwo bushobora guhagarikwa gutya.',
+    'already_started' => 'Ikiruhuko cyatangiye gihagarikwa n\'ushinzwe abakozi gusa.',
+    'type' => [
+        'annual' => 'Ikiruhuko cy\'umwaka',
+        'sick' => 'Ikiruhuko cy\'uburwayi',
+        'maternity' => 'Ikiruhuko cyo kubyara',
+        'paternity' => 'Ikiruhuko cya se w\'umwana',
+        'circumstantial' => 'Ikiruhuko cy\'impamvu zihariye',
+        'authorized_absence' => 'Kubura byemewe',
+        'compensatory' => 'Ikiruhuko cy\'impinduranyo',
+        'unpaid' => 'Ikiruhuko kitishyurwa',
+    ],
+    'check' => [
+        'dates_inverted' => 'Itariki yo kurangiriraho iri mbere y\'itangira.',
+        'no_days' => 'Nta minsi y\'ikiruhuko muri iki gihe (weekend n\'iminsi mikuru ntibibarwa).',
+        'before_hired' => 'Ikiruhuko gitangira mbere y\'uko akazi gatangira.',
+        'after_ended' => 'Ikiruhuko kirangira nyuma y\'uko akazi karangiye.',
+        'overlap' => 'Usanzwe ufite ikiruhuko muri iki gihe.',
+        'period_validated' => 'Ukwitaba kw\'uku kwezi kwemejwe kandi gufunzwe.',
+        'blackout' => 'Ikiruhuko ntigishoboka mu gihe ":name".',
+        'retroactive' => 'Ubu bwoko bw\'ikiruhuko ntibusabwa nyuma yo gutangira.',
+        'notice' => 'Hasabwa nibura iminsi :days yo kubimenyesha.',
+        'min_service' => 'Ikiruhuko gifatwa nyuma y\'amezi :months y\'akazi gusa.',
+        'max_per_request' => 'Ubusabe bumwe ntibushobora kurenza iminsi :max.',
+        'min_per_request' => 'Ubusabe bugomba kuba nibura iminsi :min.',
+        'max_per_year' => 'Ibi byarenza iminsi :max y\'iki kiruhuko mu mwaka w\'ikiruhuko.',
+        'insufficient_balance' => 'Nta kiruhuko gihagije (iminsi :available).',
+        'team_conflict' => 'Ikibazo mu itsinda: abakozi :away bamaze kubura kandi ntarengwa ni :max icyarimwe.',
+        'document_required' => 'Hategerejwe icyemezo: kiguhuze n\'ubusabe.',
+    ],
+];

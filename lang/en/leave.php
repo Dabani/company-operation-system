@@ -1,0 +1,43 @@
+<?php
+
+// COPS Phase 5a: leave messages.
+return [
+    'approval_title' => 'Leave: :name, :type, :from to :to',
+    'adjust_zero' => 'The adjustment cannot be zero.',
+    'adjust_reason' => 'A reason is required for a balance adjustment.',
+    'type_unavailable' => 'This leave type is not available.',
+    'type_no_balance' => 'This leave type has no balance to adjust.',
+    'accrues_needs_balance' => 'A leave type that accrues must use a balance.',
+    'verify_not_author' => 'A statutory rule must be verified by someone other than the person who entered it.',
+    'already_verified' => 'This rule is already verified.',
+    'not_approved' => 'Only an approved request can be cancelled this way.',
+    'already_started' => 'Leave that has started can only be cancelled by HR.',
+    'type' => [
+        'annual' => 'Annual leave',
+        'sick' => 'Sick leave',
+        'maternity' => 'Maternity leave',
+        'paternity' => 'Paternity leave',
+        'circumstantial' => 'Circumstantial leave',
+        'authorized_absence' => 'Authorized absence',
+        'compensatory' => 'Compensatory leave',
+        'unpaid' => 'Unpaid leave',
+    ],
+    'check' => [
+        'dates_inverted' => 'The end date is before the start date.',
+        'no_days' => 'There are no leave days in this period (weekends and public holidays are not counted).',
+        'before_hired' => 'The leave starts before the employment began.',
+        'after_ended' => 'The leave ends after the employment ended.',
+        'overlap' => 'You already have leave in this period.',
+        'period_validated' => 'Attendance for this month is validated and locked.',
+        'blackout' => 'Leave is not possible in the period ":name".',
+        'retroactive' => 'This type of leave cannot be requested after it has started.',
+        'notice' => 'At least :days days of notice are required.',
+        'min_service' => 'Leave can be taken only after :months months of service.',
+        'max_per_request' => 'A single request cannot exceed :max days.',
+        'min_per_request' => 'A request must be at least :min days.',
+        'max_per_year' => 'This would exceed :max days of this leave in the leave year.',
+        'insufficient_balance' => 'Not enough leave available (:available days).',
+        'team_conflict' => 'Team conflict: :away colleague(s) are already away and the limit is :max at the same time.',
+        'document_required' => 'A supporting document is expected: attach it to the request.',
+    ],
+];

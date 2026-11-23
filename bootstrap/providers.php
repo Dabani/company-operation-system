@@ -15,4 +15,6 @@ return [
     App\Providers\MeetingsServiceProvider::class,
     App\Providers\ProcurementServiceProvider::class,
     App\Providers\PayrollServiceProvider::class,     // COPS Phase 6b: payroll runs
+    App\Providers\LeaveServiceProvider::class,        // COPS Phase 5a: leave
+    App\Providers\TripServiceProvider::class,        // COPS Phase 5b: business trips
 ];

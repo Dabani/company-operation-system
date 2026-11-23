@@ -269,4 +269,9 @@ return [
         'title' => 'Goods received: :code',
         'body' => 'Receipt :receipt was recorded on order :code (":title").',
     ],
+    // COPS Phase 5b trips
+    'trip_advance_overdue' => [
+        'title' => 'Advance not justified: :trip',
+        'body' => 'The advance of :name for ":trip" is :days day(s) past its retirement date.',
+    ],
 ];

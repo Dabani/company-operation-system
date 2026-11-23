@@ -51,7 +51,7 @@ class FileController extends Controller
 
     private function hiddenLinkTypeIds(): array
     {
-        return [Lookup::id('file_link_type', 'user_avatar'), Lookup::id('file_link_type', 'org_logo')];
+        return [Lookup::id('file_link_type', 'user_avatar'), Lookup::id('file_link_type', 'org_logo'), ...array_filter([rescue(fn () => Lookup::id('file_link_type', 'trip_expense'), null, false)]), ...array_filter([rescue(fn () => Lookup::id('file_link_type', 'leave_request'), null, false)])];
     }
 
     // ---- library ------------------------------------------------------------------------------

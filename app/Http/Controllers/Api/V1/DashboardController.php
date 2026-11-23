@@ -70,7 +70,7 @@ class DashboardController extends Controller
             'stat_my_cases' => SupportCase::where('requester_id', request()->user()->id)->whereHas('status', fn ($q) => $q->whereNotIn('code', ['resolved', 'closed', 'cancelled']))->count(),
             'chart_cases_by_status' => $this->casesByStatus(),
             'stat_files' => FileAccess::scopeVisible(FileAsset::query())->whereHas('status', fn ($q) => $q->where('code', 'active'))
-                ->whereDoesntHave('links', fn ($l) => $l->whereIn('link_type_id', [Lookup::id('file_link_type', 'user_avatar'), Lookup::id('file_link_type', 'org_logo')]))->count(),
+                ->whereDoesntHave('links', fn ($l) => $l->whereIn('link_type_id', [Lookup::id('file_link_type', 'user_avatar'), Lookup::id('file_link_type', 'org_logo'), ...array_filter([rescue(fn () => Lookup::id('file_link_type', 'trip_expense'), null, false)]), ...array_filter([rescue(fn () => Lookup::id('file_link_type', 'leave_request'), null, false)])]))->count(),
             'stat_pending_deletions' => FileDeletionRequest::whereHas('status', fn ($q) => $q->where('code', 'pending'))->count(),
             'stat_assets' => Asset::whereHas('status', fn ($q) => $q->where('code', '!=', 'retired'))->count(),
             'stat_overdue_equipment' => EquipmentMovement::whereHas('status', fn ($q) => $q->where('code', 'checked_out'))->whereDate('expected_return_date', '<', today())->count(),

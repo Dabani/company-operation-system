@@ -1,0 +1,20 @@
+# Merge into docs/openapi.yaml (paths only; all routes are under /api/v1).
+paths:
+  /trips:                   { get: { summary: "Trips I requested, or whose traveller is in my scope (finance: all). ?status", x-permission: "hr.trip.request | view | finance" }, post: { summary: "Request a trip. body {purpose,destination,zone_id,start_date,end_date,currency_id,budget_estimate,project_id?,linked_meeting?,itinerary?,traveler_ids?,advances?[{employee_id,amount}]}", x-permission: "hr.trip.request | finance" } }
+  /trips/estimate:          { post: { summary: "Per diem estimate {zone_id,currency_id,start_date,end_date,traveler_ids[]} -> rate, days, amount (null = no rate)" } }
+  /trips/{id}:              { get: { summary: "Detail: travellers, advances (overdue flag), bookings, expenses (needs_receipt), settlements" } }
+  /trips/{id}/cancel:       { post: { summary: "Pending: requester withdraws. Approved: body {reason}; refused after an advance was paid" } }
+  /trips/{id}/authorization: { get: { summary: Mission authorization data (404 before approval) } }
+  /trips/{id}/bookings:     { post: {}, x-delete: /trips/{id}/bookings/{bookingId} }
+  /trips/{id}/advances/{advanceId}/pay: { post: { summary: "body {paid_on}", x-permission: hr.trip.finance } }
+  /trips/unretired-advances: { get: { summary: Paid advances past their due date, x-permission: hr.trip.finance } }
+  /trips/{id}/per-diem:     { post: { summary: "Generate/refresh per diem lines from the rate table -> {created, missing_rate[], locked[]}" } }
+  /trips/{id}/expenses:     { post: { summary: "body {category_id,expense_date,description,amount,employee_id?}" } }
+  /trips/expenses/{expenseId}: { patch: { summary: Edit a draft expense }, delete: { summary: Delete a draft expense } }
+  /trips/expenses/{expenseId}/files: { get: {}, post: { summary: Upload a receipt (Controlled File, link type trip_expense) } }
+  /trips/{id}/report:       { post: { summary: "body {report_text}; refused while a non-per-diem expense has no receipt" } }
+  /trips/expenses/{expenseId}/review: { post: { summary: "body {decision: accept|reject, note?}; reject needs a note", x-permission: hr.trip.finance } }
+  /trips/{id}/settlement-preview: { get: { summary: "?employee_id -> accepted_total, advance_total, balance, direction", x-permission: hr.trip.finance } }
+  /trips/{id}/settle:       { post: { summary: "body {employee_id, resolution, note?, consent?{consented_on,lawful_basis}}", x-permission: hr.trip.finance } }
+  /trips/rates:             { get: { x-permission: "hr.trip.configure | finance" }, post: { summary: "body {kind_id,zone_id,currency_id,amount,grade_id?,valid_from,valid_to?,source_note?}", x-permission: hr.trip.configure } }
+  /trips/rates/{id}/end:    { post: { summary: "body {valid_to}: a rate is ended, never edited", x-permission: hr.trip.configure } }

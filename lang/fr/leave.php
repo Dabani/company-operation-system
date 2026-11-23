@@ -1,0 +1,43 @@
+<?php
+
+// COPS Phase 5a : messages des congés.
+return [
+    'approval_title' => 'Congé : :name, :type, du :from au :to',
+    'adjust_zero' => 'L\'ajustement ne peut pas être nul.',
+    'adjust_reason' => 'Un motif est obligatoire pour ajuster un solde.',
+    'type_unavailable' => 'Ce type de congé n\'est pas disponible.',
+    'type_no_balance' => 'Ce type de congé n\'a pas de solde à ajuster.',
+    'accrues_needs_balance' => 'Un type de congé qui s\'acquiert doit utiliser un solde.',
+    'verify_not_author' => 'Une règle légale doit être vérifiée par une autre personne que celle qui l\'a saisie.',
+    'already_verified' => 'Cette règle est déjà vérifiée.',
+    'not_approved' => 'Seule une demande approuvée peut être annulée ainsi.',
+    'already_started' => 'Un congé commencé ne peut être annulé que par les RH.',
+    'type' => [
+        'annual' => 'Congé annuel',
+        'sick' => 'Congé de maladie',
+        'maternity' => 'Congé de maternité',
+        'paternity' => 'Congé de paternité',
+        'circumstantial' => 'Congé pour événement familial',
+        'authorized_absence' => 'Absence autorisée',
+        'compensatory' => 'Congé compensatoire',
+        'unpaid' => 'Congé sans solde',
+    ],
+    'check' => [
+        'dates_inverted' => 'La date de fin précède la date de début.',
+        'no_days' => 'Aucun jour de congé sur cette période (week-ends et jours fériés non comptés).',
+        'before_hired' => 'Le congé commence avant le début du contrat.',
+        'after_ended' => 'Le congé se termine après la fin du contrat.',
+        'overlap' => 'Vous avez déjà un congé sur cette période.',
+        'period_validated' => 'La présence de ce mois est validée et verrouillée.',
+        'blackout' => 'Congé impossible pendant la période « :name ».',
+        'retroactive' => 'Ce type de congé ne peut pas être demandé après son début.',
+        'notice' => 'Un préavis d\'au moins :days jours est requis.',
+        'min_service' => 'Le congé n\'est possible qu\'après :months mois d\'ancienneté.',
+        'max_per_request' => 'Une demande ne peut pas dépasser :max jours.',
+        'min_per_request' => 'Une demande doit porter sur au moins :min jours.',
+        'max_per_year' => 'Cela dépasserait :max jours de ce congé dans l\'année de congé.',
+        'insufficient_balance' => 'Solde insuffisant (:available jours).',
+        'team_conflict' => 'Conflit d\'équipe : :away collègue(s) sont déjà absents et la limite est de :max en même temps.',
+        'document_required' => 'Un justificatif est attendu : joignez-le à la demande.',
+    ],
+];

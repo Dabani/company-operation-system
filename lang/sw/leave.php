@@ -1,0 +1,43 @@
+<?php
+
+// COPS Phase 5a: ujumbe wa likizo (sw: first-pass, native review needed).
+return [
+    'approval_title' => 'Likizo: :name, :type, kuanzia :from hadi :to',
+    'adjust_zero' => 'Marekebisho hayawezi kuwa sifuri.',
+    'adjust_reason' => 'Sababu inahitajika kurekebisha salio.',
+    'type_unavailable' => 'Aina hii ya likizo haipatikani.',
+    'type_no_balance' => 'Aina hii ya likizo haina salio la kurekebisha.',
+    'accrues_needs_balance' => 'Likizo inayojilimbikiza lazima itumie salio.',
+    'verify_not_author' => 'Kanuni ya kisheria lazima ithibitishwe na mtu mwingine asiyeiingiza.',
+    'already_verified' => 'Kanuni hii imeshathibitishwa.',
+    'not_approved' => 'Ombi lililoidhinishwa pekee ndilo linaweza kughairiwa hivi.',
+    'already_started' => 'Likizo iliyoanza inaweza kughairiwa na HR pekee.',
+    'type' => [
+        'annual' => 'Likizo ya mwaka',
+        'sick' => 'Likizo ya ugonjwa',
+        'maternity' => 'Likizo ya uzazi',
+        'paternity' => 'Likizo ya baba',
+        'circumstantial' => 'Likizo ya matukio maalum',
+        'authorized_absence' => 'Kutokuwepo kwa idhini',
+        'compensatory' => 'Likizo ya fidia',
+        'unpaid' => 'Likizo bila malipo',
+    ],
+    'check' => [
+        'dates_inverted' => 'Tarehe ya mwisho ni kabla ya tarehe ya kuanza.',
+        'no_days' => 'Hakuna siku za likizo katika kipindi hiki (wikendi na sikukuu hazihesabiwi).',
+        'before_hired' => 'Likizo inaanza kabla ya ajira kuanza.',
+        'after_ended' => 'Likizo inaisha baada ya ajira kuisha.',
+        'overlap' => 'Tayari una likizo katika kipindi hiki.',
+        'period_validated' => 'Mahudhurio ya mwezi huu yamethibitishwa na kufungwa.',
+        'blackout' => 'Likizo haiwezekani katika kipindi ":name".',
+        'retroactive' => 'Aina hii ya likizo haiwezi kuombwa baada ya kuanza.',
+        'notice' => 'Angalau siku :days za taarifa zinahitajika.',
+        'min_service' => 'Likizo inaweza kuchukuliwa baada ya miezi :months ya utumishi tu.',
+        'max_per_request' => 'Ombi moja haliwezi kuzidi siku :max.',
+        'min_per_request' => 'Ombi lazima liwe angalau siku :min.',
+        'max_per_year' => 'Hii ingezidi siku :max za likizo hii katika mwaka wa likizo.',
+        'insufficient_balance' => 'Likizo haitoshi (siku :available).',
+        'team_conflict' => 'Mgongano wa timu: wenzako :away tayari hawapo na kikomo ni :max kwa wakati mmoja.',
+        'document_required' => 'Hati ya kuunga mkono inatarajiwa: iambatanishe na ombi.',
+    ],
+];

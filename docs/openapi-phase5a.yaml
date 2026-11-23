@@ -1,0 +1,23 @@
+# Merge into docs/openapi.yaml (paths only; all routes are under /api/v1 and use the Sanctum cookie session).
+paths:
+  /leave/me/summary:        { get:  { summary: My balances per leave type, pending and upcoming requests, x-permission: hr.leave.request } }
+  /leave/requests/preview:  { post: { summary: "Dry run. body {leave_type_id, start_date, end_date, start_half?, end_half?, employee_id?} -> days, blockers[], warnings[], balance, available, balance_after", x-permission: "hr.leave.request | hr.leave.manage (employee_id = on behalf)" } }
+  /leave/requests:          { get:  { summary: Requests, x-permission: "hr.leave.request | view | manage", x-scope: own or Employee::visibleTo }, post: { summary: Submit (same checks as preview; 422 with messages when blocked), x-permission: "hr.leave.request | hr.leave.manage" } }
+  /leave/requests/{id}:     { get:  { summary: One request, x-scope: own or department scope; otherwise 404 } }
+  /leave/requests/{id}/cancel: { post: { summary: "Pending: requester withdraws. Approved: body {reason}; requester before start, HR any time; refused in a validated month" } }
+  /leave/requests/{id}/files: { get: {}, post: { summary: Upload a supporting document (Controlled File, confidential, link type leave_request) } }
+  /leave/calendar:          { get:  { summary: "Pending and approved leave in ?from&to (max 62 days)", x-permission: "hr.leave.view | hr.leave.manage", x-scope: department } }
+  /leave/balances:          { get:  { summary: Balance and pending days per person and balance type, x-permission: "hr.leave.view | hr.leave.manage", x-scope: department } }
+  /leave/balances/{employeeId}/ledger: { get: { summary: Last 200 ledger entries, x-scope: self or department } }
+  /leave/adjustments:       { post: { summary: "body {employee_id, leave_type_id, days (+/-), reason, entry_date?}; audited", x-permission: hr.leave.manage } }
+  /leave/types:             { get: {}, x-permission: "hr.leave.request | view | manage" }
+  /leave/types/{id}:        { patch: { summary: "Day basis, balance, accrual, paid, document, retroactive, blackout, half days, requestable, active", x-permission: hr.leave.manage } }
+  /leave/periods:           { get: {}, post: { x-permission: hr.leave.manage }, put: { x-path: /leave/periods/{id} }, delete: { x-path: /leave/periods/{id} } }
+  /leave/profiles/{employeeId}: { get: { summary: "Date of birth, sex, weekly hours (audited read)", x-permission: hr.leave.profile }, put: { x-permission: hr.leave.profile } }
+  /leave/legal-rules:       { get: { x-permission: "hr.leave.legal.manage | hr.leave.manage | rules.view" }, post: { summary: "body {rule_key, bound_type_id, value, unit?, valid_from, valid_to?, source_citation, leave_type_id?, sex_id?, min_age?, max_age?}; created unverified", x-permission: hr.leave.legal.manage } }
+  /leave/legal-rules/{id}/verify: { post: { summary: Verify (not the author), x-permission: rules.signoff } }
+  /leave/legal-rules/{id}/end: { post: { summary: "body {valid_to}: a verified rule is ended, never edited", x-permission: hr.leave.legal.manage } }
+  /leave/policy/keys:       { get: { summary: Policy outcome keys with type and unit } }
+  /leave/policy/preview:    { get: { summary: "?employee_id&leave_type_id&date -> company value, floor, ceiling, effective value per key, annual entitlement, missing profile facts" } }
+  /leave/policy/violations: { get: { summary: Leave policy versions that break a verified statutory limit } }
+  /leave/setup-status:      { get: { summary: Go-live checklist counts } }
